@@ -1,0 +1,21 @@
+image: node:20
+
+stages:
+  - lint
+  - unit
+
+lint:
+  stage: lint
+  script:
+    - npm install
+    - npm run lint .
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+
+unit:
+  stage: unit
+  script:
+    - npm install
+    - npm run test
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'

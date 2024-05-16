@@ -1,4 +1,4 @@
-import generateFiscalReceiptReceipt from "./lib/generateFiscalReceipt/generateFiscalReceipt.js";
+import generateFiscalReceipt from "./lib/generateFiscalReceipt/generateFiscalReceipt.js";
 import generateServiceInputReceipt from "./lib/generateServiceInputReceipt/generateServiceInputReceipt.js";
 
-export { generateFiscalReceiptReceipt, generateServiceInputReceipt };
+export { generateFiscalReceipt, generateServiceInputReceipt };

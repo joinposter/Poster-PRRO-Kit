@@ -1,4 +1,4 @@
-import receiptConfig from "../../../config/receiptConfig.js";
+import receiptConfig from "./config/receiptConfig.js";
 
 export const cashboxConfig = {
   name: "ТОВ ТЕСТ ПРРО",

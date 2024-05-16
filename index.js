@@ -1,4 +1,4 @@
-import generateReceipt from "./lib/generateReceipt.js";
+import generateFiscalReceiptReceipt from "./lib/generateFiscalReceipt/generateFiscalReceipt.js";
+import generateServiceInputReceipt from "./lib/generateServiceInputReceipt/generateServiceInputReceipt.js";
 
-// eslint-disable-next-line import/prefer-default-export
-export { generateReceipt };
+export { generateFiscalReceiptReceipt, generateServiceInputReceipt };

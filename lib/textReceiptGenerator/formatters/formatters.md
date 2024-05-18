@@ -25,20 +25,23 @@
 Це просто рядок символів, які вказані в конфігурації, за замовчуванням це `-`. 
 Використовується для розділення різних блоків чека.
 ```
-Data example:                         Receipt example:
-[                                     '--------------------'
+Data example:                        
+[                                     
   { type: 'ruler'}    
 ]
+
+Receipt example:
+'--------------------'
 ```
 
 ## Text
 Текст з можливістю вирівнювання по лівому, центральному та правому краю.
 ```
-Data example:                         Receipt example:
-[                                     'Test value left                         ',  
-   {                                  '         Test value center line1        ',
-      type: 'text',                   '         Test value center line2        ',
-      value: 'Test value left',       '                        Test value right',
+Data example:                        
+[                                      
+   {                                  
+      type: 'text',                   
+      value: 'Test value left',       
       align: 'left',
    },
    {
@@ -55,15 +58,24 @@ Data example:                         Receipt example:
       align: 'right',
    }
 ]
+
+Receipt example:
+'Test value left                         ', 
+'         Test value center line1        ',
+'         Test value center line2        ',
+'                        Test value right',
 ```
 
 ## Empty
 Порожній рядок, який використовується для розділення різних блоків чека.
 ```
-Data example:                         Receipt example:
-[                                     ' ',
+Data example:                        
+[                                     
   { type: 'empty'}    
 ]
+
+Receipt example:
+' ',
 ```
 
 ## SmartProperties
@@ -71,11 +83,11 @@ Data example:                         Receipt example:
 `properties`, де колонка назв отримує ширину найдовшого рядка назви, ширина колонок 
 буде у пропорції 4:6. Також є можливість приховувати деякі рядки.
 ```
-Data example:                                              Receipt example:
-[                                                          'Официан             Сергей                        ',
-  {                                                        'Цех                 Кухня                         ',
-    type: 'smartProperties',                               'Стіл №              1 (Основний зал)              ',
-    lines: [                                               'Тип замовлення      У закладі                     ',
+Data example:                                             
+[                                                          
+  {                                                        
+    type: 'smartProperties',                              
+    lines: [                                             
       { name: "Официан", value: "Сергей" },
       { name: "Цех", value: "Кухня" },
       { name: "Стіл №", value: "1 (Основний зал)" },
@@ -84,6 +96,12 @@ Data example:                                              Receipt example:
     ],
   },
 ]
+
+Receipt example:
+'Официан             Сергей                        ',
+'Цех                 Кухня                         ',
+'Стіл №              1 (Основний зал)              ',
+'Тип замовлення      У закладі                     ',
 ```
 
 ## SmartTable
@@ -97,12 +115,12 @@ NarrowTable - таблиця для чеків малої ширини. Вирі
 другому рядку. Ігнорує заголовок таблиці. (Повторює старий формат текстового чека). 
 Дані однакові як для `narrowTable`, так і для `wideTable`.
 ``` 
-Data example with long line:                                           Receipt example:
-[                                                                      '------------------------------',
-  {                                                                    'Сирна паличка                 ',
-     type: 'smartTable',                                               '   1 шт. 200.00грн. 200.00грн.',
-     headers: [                                                        'Морозиво                      ',
-        {name: 'Назва', relation: 10},                                 '    2 шт. 92.13грн. 184.26грн.',
+Data example with long line:                                          
+[                                                                      
+  {                                                                    
+     type: 'smartTable',                                               
+     headers: [                                                        
+        {name: 'Назва', relation: 10},                                 
         {name: 'Кількість', relation: 10},
         {name: 'Ціна', relation: 10},
         {name: 'Сума', relation: 10},
@@ -114,16 +132,29 @@ Data example with long line:                                           Receipt e
   },
 ]
 
-Data example short line:                                               Receipt example:
-[                                                                      '------------------------------',
-  {                                                                    'Сирна паличка             1шт.',
-     type: 'smartTable',                                               'Морозиво                  2шт.',
+Receipt example:
+'------------------------------',
+'Сирна паличка                 ',
+'   1 шт. 200.00грн. 200.00грн.',
+'Морозиво                      ',
+'    2 шт. 92.13грн. 184.26грн.',
+
+
+Data example short line:                                               
+[                                                                      
+  {                                                                    
+     type: 'smartTable',                                               
      items: [
         ['Сирна паличка', '1шт.'],
         ['Морозиво', '2шт.'],
      ],
   },
 ]
+
+Receipt example:
+'------------------------------',
+'Сирна паличка             1шт.',
+'Морозиво                  2шт.',
 ```
 
 ### WideTable
@@ -131,13 +162,13 @@ WideTable - таблиця для чеків "широкої" ширини. Фо
 заголовком, так і без нього. Ширину стовбців можна задати за допомогою властивості 
 relation.
 ```
-Data example whit header:                                             Receipt example:
-[                                                                     '---------------------------------',
-  {                                                                   'Назва           Кількість   Ціна ',
-     type: 'smartTable',                                              '                                 ',
-     headers: [                                                       'Сирна паличка   1 шт.      200.00',
-        {name: 'Назва', relation: 10},                                'Морозиво        2 шт.       92.13',
-        {name: 'Кількість', relation: 5},                             '---------------------------------',
+Data example whit header:                                            
+[                                                                    
+  {                                                                 
+     type: 'smartTable',                                             
+     headers: [                                                      
+        {name: 'Назва', relation: 10},                                
+        {name: 'Кількість', relation: 5},                            
         {name: 'Ціна', relation: 5},
      ],
      items: [
@@ -147,14 +178,55 @@ Data example whit header:                                             Receipt ex
   },
 ]
 
-Data example without header:                                          Receipt example:
-[                                                                     '---------------------------------',
-  {                                                                   'Сирна паличка              200.00',
-     type: 'smartTable',                                              'Морозиво                    92.13',
+Receipt example:
+'---------------------------------',
+'Назва           Кількість   Ціна ',
+'                                 ',
+'Сирна паличка   1 шт.      200.00',
+'Морозиво        2 шт.       92.13',
+'---------------------------------',
+
+
+Data example without header:                                         
+[                                                                     
+  {                                                                  
+     type: 'smartTable',                                             
      items: [
         ['Сирна паличка',  200.00'],
         ['Морозиво',       '92.13'],
      ],
   },
 ]
+
+Receipt example:
+'---------------------------------',
+'Сирна паличка              200.00',
+'Морозиво                    92.13',
+```
+
+### Summary
+Формує таблицю з двома колонками: назва та значення та точками між ними. 
+Якщо значення не строка, то значеться рендериться одразу після назви.
+```
+Data example:
+{
+  type: 'summary',
+  lines: [
+    {name: 'Загальний обіг', value: priceFormat(12.20)},
+    {name: 'Готівка', value: priceFormat(5.10)},
+    {name: 'Картка', value: priceFormat(7.10)},
+    {name: 'Кількість чеків', value: 20},
+  ],
+  delimeter: '.',
+  hideTopBorder: false,
+  hideBottomBorder: false,
+}
+
+Receipt example:
+'--------------------------------------------------',
+'Загальний обіг ............................. 12,20',
+'Готівка ..................................... 5,10',
+'Картка ...................................... 7,10',
+'Кількість чеків  20',
+'--------------------------------------------------',
 ```

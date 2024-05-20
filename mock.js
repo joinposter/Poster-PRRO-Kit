@@ -40,10 +40,9 @@ export const productsInfo = [
     uktzed: "2204109600#",
     barcode: "12345678",
     exciseStamp: "ADCC123123",
-    name: "Вино",
+    name: "Вино игристое вкусное",
     amount: 2,
     price: 130.02,
-    guestAmount: 2,
     taxPrograms: "ДГ",
   },
   {
@@ -53,22 +52,21 @@ export const productsInfo = [
     name: "Сир",
     amount: 4,
     price: 260,
-    guestAmount: 2,
     taxPrograms: "Д",
   },
 ];
 
 export const taxesInfo = {
   total: 1300.04,
+  card: 1100,
+  cash: 200,
   taxes: [
     { name: "ПДВ 20%", value: 214.6 },
     { name: "Акциз 5%", value: 12.38 },
   ],
 };
 
-export const paymentInfo = [
-  { name: "Готівкою", value: 200 },
-  { name: "Карткою", value: 1100 },
+export const roundInfo = [
   { name: "До сплати", value: 1300 },
   { name: "Заокруглення", value: 0.04 },
 ];

@@ -1,6 +1,21 @@
-export const addFormatter = (receipt, name, formatter) => {
-  if (!receipt.formatters[name]) {
-    receipt.addFormatter(name, formatter);
+import receipt from "receipt";
+import smartTableFormatter from "../lib/textReceiptGenerator/formatters/smartTable/smartTableFormatter.js";
+import summaryFormatter from "../lib/textReceiptGenerator/formatters/summaryFormatter.js";
+import smartPropertiesFormatter from "../lib/textReceiptGenerator/formatters/smartPropertiesFormatter.js";
+
+export const initReceipt = (receiptConfig) => {
+  receipt.config.currency = receiptConfig.currency;
+  receipt.config.width = receiptConfig.width;
+  receipt.config.ruler = receiptConfig.ruler;
+
+  addFormatter(receipt, "smartTable", smartTableFormatter);
+  addFormatter(receipt, "summary", summaryFormatter);
+  addFormatter(receipt, "smartProperties", smartPropertiesFormatter);
+};
+
+export const addFormatter = (rec, name, formatter) => {
+  if (!rec.formatters[name]) {
+    rec.addFormatter(name, formatter);
   }
 };
 

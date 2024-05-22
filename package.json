@@ -19,15 +19,16 @@
     "url": "https://github.com/joinposter/Poster-PRRO-Kit"
   },
   "dependencies": {
+    "qrcode-generator": "^1.4.4",
+    "ramda": "^0.29.1",
     "receipt": "1.4.0",
-    "table": "6.8.2",
-    "ramda": "^0.29.1"
+    "table": "6.8.2"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.24.4",
-    "eslint-config-airbnb-base": "^15.0.0",
     "eslint": "^8.57.0",
     "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-prettier": "^5.1.3",

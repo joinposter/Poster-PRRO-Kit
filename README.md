@@ -6,7 +6,7 @@
 
 ## Генерація чеків
 Для того, щоб згенерувати текст чека, необхідно завантажити цей пакет і 
-викликати метод `generateServiceInputReceipt`, `generateServiceOutputReceipt` чи 
+викликати метод `index`, `index` чи 
 `generateFiscalReceipt` з даними, які отримали від PRRO, приклад можно 
 знайти в [тут](mock.js).
 

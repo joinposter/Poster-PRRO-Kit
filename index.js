@@ -1,9 +1,11 @@
-import generateFiscalReceipt from "./lib/generateFiscalReceipt/generateFiscalReceipt.js";
-import generateServiceInputReceipt from "./lib/generateServiceInputReceipt/generateServiceInputReceipt.js";
-import generateServiceOutputReceipt from "./lib/generateServiceOutputReceipt/generateServiceOutputReceipt.js";
+import generateTextFiscalReceipt from "./lib/generateTextFiscalReceipt/index.js";
+import generateTextServiceInputReceipt from "./lib/generateTextServiceInputReceipt/index.js";
+import generateTextServiceOutputReceipt from "./lib/generateTextServiceOutputReceipt/index.js";
+import getQRCodeReceiptData from "./lib/getQRCodeReceiptData.js";
 
 export {
-  generateFiscalReceipt,
-  generateServiceInputReceipt,
-  generateServiceOutputReceipt,
+  generateTextFiscalReceipt,
+  generateTextServiceInputReceipt,
+  generateTextServiceOutputReceipt,
+  getQRCodeReceiptData,
 };

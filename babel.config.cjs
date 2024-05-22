@@ -1,6 +1,11 @@
 const presets = [
   [
-    "@babel/preset-env",
+    '@babel/preset-env',
+    {
+      targets: {
+        browsers: "since 2017",
+      },
+    },
   ]
 ];
 

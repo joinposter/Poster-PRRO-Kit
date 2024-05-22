@@ -1,20 +1,19 @@
 import receiptConfig from "./config/receiptConfig.js";
 
-export const cashboxConfig = {
+export const cashboxData = {
   name: "ТОВ ТЕСТ ПРРО",
-  unit: 'Кафе "Мʼята"',
-  address:
+  pointName: 'Кафе "Мʼята"',
+  pointAddress:
     "Дніпропетровська область, м. Дніпро, Амур-Нижньодніпровський район, вул. Шолом-Алейхема, 4, кв. (Офіс) 31",
-  kodPdv: null,
-  inn: "12345678",
-  fn: "4000244601",
+  tin: "12345678",
+  cashbox: "4000244601",
 };
 export const getServiceInputBodyMock = {
   sum: 2850,
   date: "16.05.2024",
   time: "19:28:35",
   receiptConfig,
-  cashboxConfig,
+  cashboxConfig: cashboxData,
 };
 
 export const getServiceOutputBodyMock = {
@@ -22,7 +21,7 @@ export const getServiceOutputBodyMock = {
   date: "16.05.2024",
   time: "19:48:35",
   receiptConfig,
-  cashboxConfig,
+  cashboxData,
 };
 
 export const orderInfo = {
@@ -85,11 +84,10 @@ export const bankInfo = {
 
 export const footerInfo = {
   idDFS: "13eG45ty",
-  inn: cashboxConfig.inn,
   printDate: "16.05.2024 19:29:35",
-  fn: cashboxConfig.fn,
+  fn: cashboxData.fn,
   status: "ОНЛАЙН",
-  kodPdv: cashboxConfig.kodPdv,
+  kodPdv: cashboxData.kodPdv,
 };
 
 // eslint-disable-next-line no-unused-vars

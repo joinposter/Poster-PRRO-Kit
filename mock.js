@@ -72,6 +72,7 @@ export const roundData = [
 
 export const sstData = {
   bank: "ПриватБанк",
+  actionType: "Оплата",
   terminal: "S1260S6Y",
   paymentSystem: "MASTERCARD",
   cardNumber: "1234********5678",

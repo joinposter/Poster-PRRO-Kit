@@ -13,7 +13,7 @@ export const getServiceInputBodyMock = {
   date: "16.05.2024",
   time: "19:28:35",
   receiptConfig,
-  cashboxConfig: cashboxData,
+  cashboxData,
 };
 
 export const getServiceOutputBodyMock = {
@@ -34,28 +34,28 @@ export const orderInfo = {
   guestAmount: 2,
 };
 
-export const productsInfo = [
+export const productsData = [
   {
     uktzed: "2204109600#",
-    barcode: "12345678",
+    barcodes: "12345678",
     exciseStamp: "ADCC123123",
     name: "Вино игристое вкусное",
-    amount: 2,
+    count: 2,
     price: 130.02,
     taxPrograms: "ДГ",
   },
   {
     uktzed: "2204888600#",
-    barcode: "",
+    barcodes: "",
     exciseStamp: "",
     name: "Сир",
-    amount: 4,
+    count: 4,
     price: 260,
     taxPrograms: "Д",
   },
 ];
 
-export const taxesInfo = {
+export const taxesData = {
   total: 1300.04,
   card: 1100,
   cash: 200,
@@ -65,15 +65,14 @@ export const taxesInfo = {
   ],
 };
 
-export const roundInfo = [
+export const roundData = [
   { name: "До сплати", value: 1300 },
   { name: "Заокруглення", value: 0.04 },
 ];
 
-export const bankInfo = {
+export const sstData = {
   bank: "ПриватБанк",
   terminal: "S1260S6Y",
-  actionType: "Оплата",
   paymentSystem: "MASTERCARD",
   cardNumber: "1234********5678",
   authCode: 199016,
@@ -82,12 +81,13 @@ export const bankInfo = {
   holder: "..........",
 };
 
-export const footerInfo = {
-  idDFS: "13eG45ty",
-  printDate: "16.05.2024 19:29:35",
-  fn: cashboxData.fn,
+export const footerData = {
+  dfsDocumentFiscalId: "13eG45ty",
+  dateTime: "16.05.2024 19:29:35",
+  cashbox: cashboxData.cashbox,
   status: "ОНЛАЙН",
-  kodPdv: cashboxData.kodPdv,
+  docType: "ФІСКАЛЬНИЙ ЧЕК",
+  software: "Poster POS",
 };
 
 // eslint-disable-next-line no-unused-vars

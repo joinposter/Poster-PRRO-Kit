@@ -92,14 +92,6 @@ const getFooterData = ({
   software,
 });
 
-const getQrCodeData = ({ dfsDocumentFiscalId, cashbox, total, dateTime }) => ({
-  dfsDocumentFiscalId,
-  cashbox,
-  total,
-  date: getDateTime({ date: dateTime, format: "date" }),
-  time: getDateTime({ date: dateTime, format: "time" }),
-});
-
 const getSstData = ({ sstData, type }) => {
   if (!sstData) return null;
   return {
@@ -133,10 +125,8 @@ export const prepareDataForTextPrintReceipt = (data) => ({
   sstData: getSstData(data),
   footerData: getFooterData({
     ...data,
-    status: "ОНЛАЙН",
     docType: "ФІСКАЛЬНИЙ ЧЕК",
     software: "Poster POS",
   }),
-  qrCodeData: getQrCodeData(data),
   receiptConfig: data.receiptConfig || receiptConfig,
 });

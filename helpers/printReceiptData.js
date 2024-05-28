@@ -57,7 +57,8 @@ const getTaxesData = (data) => {
   };
 };
 
-const isFiscalReceiptReturnType = (type) => type === DOCUMENT_TYPE_RECEIPT;
+const isFiscalReceiptReturnType = (type) =>
+  type === DOCUMENT_TYPE_RETURN_RECEIPT;
 
 const getRoundReceiptData = (data) => {
   const isReturnType = isFiscalReceiptReturnType(data.type);

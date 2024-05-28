@@ -57,12 +57,16 @@ const getTaxesData = (data) => {
   };
 };
 
+export const isFiscalReceiptReturnType = (type) =>
+  type === DOCUMENT_TYPE_RETURN_RECEIPT;
+
 const getRoundReceiptData = (data) => {
+  const isReturnType = isFiscalReceiptReturnType(data.type);
   const roundDiff = getRoundedDiff(data);
   return roundDiff
     ? [
         {
-          name: "До сплати",
+          name: isReturnType ? "До повернення" : "До сплати",
           value: formatToFixedDecimal(data.total - roundDiff),
         },
         { name: "Заокруглення", value: formatToFixedDecimal(roundDiff) },
@@ -111,6 +115,7 @@ export const prepareDataForTextPrintReceipt = (data) => ({
   dfsDocumentFiscalId: data.dfsDocumentFiscalId,
   dateTime: getDateTime({ data: data.dateTime }),
   cashboxData: data.cashboxData,
+  type: data.type,
   productsData: data.products.map((product) => ({
     uktzed: getProductUktzed(product.name),
     barcodes: product.barcodes?.join(" ") || null,
@@ -125,7 +130,9 @@ export const prepareDataForTextPrintReceipt = (data) => ({
   sstData: getSstData(data),
   footerData: getFooterData({
     ...data,
-    docType: "ФІСКАЛЬНИЙ ЧЕК",
+    docType: isFiscalReceiptReturnType(data.type)
+      ? "ВИДАТКОВИЙ ЧЕК"
+      : "ФІСКАЛЬНИЙ ЧЕК",
     software: "Poster POS",
   }),
   receiptConfig: data.receiptConfig || receiptConfig,

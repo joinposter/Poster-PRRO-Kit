@@ -41,11 +41,5 @@ export const priceFormat = (number) => {
   return changeComa(parsed);
 };
 
-export const getDFSReceiptLink = ({
-  dfsDocumentFiscalId,
-  cashbox,
-  total,
-  date,
-  time,
-}) =>
-  `${FISCAL_RECEIPT_SERVER_ADDRESS}?id=${dfsDocumentFiscalId}&date=${date}&time=${time}&fn=${cashbox}&sm=${total}`;
+export const getDFSReceiptLink = ({ fiscalId, cashbox, total, date, time }) =>
+  `${FISCAL_RECEIPT_SERVER_ADDRESS}?id=${fiscalId}&date=${date}&time=${time}&fn=${cashbox}&sm=${total}`;

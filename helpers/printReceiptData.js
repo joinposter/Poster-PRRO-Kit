@@ -77,14 +77,14 @@ const getReceiptType = (type) => {
 };
 
 const getFooterData = ({
-  dfsDocumentFiscalId,
+  fiscalId,
   dateTime,
   cashbox,
   status,
   docType,
   software,
 }) => ({
-  dfsDocumentFiscalId,
+  fiscalId,
   dateTime: getDateTime({ date: dateTime }),
   cashbox,
   status,
@@ -108,8 +108,8 @@ const getSstData = ({ sstData, type }) => {
 };
 
 export const prepareDataForTextPrintReceipt = (data) => ({
-  dfsDocumentFiscalId: data.dfsDocumentFiscalId,
-  dateTime: getDateTime({ data: data.dateTime }),
+  fiscalId: data.fiscalId,
+  dateTime: getDateTime({ date: data.dateTime }),
   cashboxData: data.cashboxData,
   productsData: data.products.map((product) => ({
     uktzed: getProductUktzed(product.name),

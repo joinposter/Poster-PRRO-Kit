@@ -9,5 +9,7 @@ export const RECEIPT_TYPE = "Оплата";
 export const RECEIPT_RETURN_TYPE = "Повернення";
 export const DOCUMENT_TYPE_RECEIPT = "receipt";
 export const DOCUMENT_TYPE_RETURN_RECEIPT = "returnReceipt";
+export const DOCUMENT_TYPE_X_REPORT = "XReport";
+export const DOCUMENT_TYPE_Z_REPORT = "ZReport";
 export const FISCAL_RECEIPT_SERVER_ADDRESS =
   "https://cabinet.tax.gov.ua/cashregs/check";

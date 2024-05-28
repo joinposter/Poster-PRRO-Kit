@@ -26,16 +26,6 @@ export const getServiceOutputBodyMock = {
   cashboxData,
 };
 
-export const orderInfo = {
-  orderNumber: 1650,
-  orderType: "У закладі",
-  openDate: "16 травня 2024 19:28:35",
-  printDate: "16 травня 2024 19:29:35",
-  tableId: 1,
-  hallName: "Зал 1",
-  guestAmount: 2,
-};
-
 export const productsData = [
   {
     barcodes: ["12345678"],
@@ -53,21 +43,6 @@ export const productsData = [
     price: 260,
     taxPrograms: "Д",
   },
-];
-
-export const taxesData = {
-  total: 1300.04,
-  card: 1100,
-  cash: 200,
-  taxes: [
-    { name: "ПДВ Г 20%", value: 214.6, program: "Г" },
-    { name: "Акцизний податок Д 5%", value: 12.38, program: "Д" },
-  ],
-};
-
-export const roundData = [
-  { name: "До сплати", value: 1300 },
-  { name: "Заокруглення", value: 0.04 },
 ];
 
 export const sstData = {
@@ -113,13 +88,142 @@ export const sstData = {
   txnType: "1",
 };
 
-export const footerData = {
-  dfsDocumentFiscalId: "13eG45ty",
-  dateTime: "16.05.2024 19:29:35",
+export const fiscalReceiptDataMock = {
+  cashboxData,
+  fiscalId: "2462757750",
+  type: "receipt",
   cashbox: cashboxData.cashbox,
-  status: "ОНЛАЙН",
-  docType: "ФІСКАЛЬНИЙ ЧЕК",
-  software: "Poster POS",
+  total: 384.26,
+  payments: [
+    {
+      sum: 284.26,
+      type: "cash",
+    },
+    {
+      sum: 100,
+      type: "card",
+    },
+  ],
+  products: productsData,
+  uid: "587989ce-f05d-4d66-b2a8-4138f13bfe88",
+  dateTime: "2024-05-16T16:29:35.710Z",
+  taxes: [
+    {
+      type: 5,
+      name: "Акциз 5%",
+      percent: 5,
+      sum: 18.29,
+      turnover: 384.26,
+      sourceSum: 0,
+      program: "Д",
+    },
+    {
+      type: 4,
+      name: "ПДВ 20%",
+      percent: 20,
+      sum: 29.25,
+      turnover: 184.26,
+      sourceSum: 0,
+      program: "Г",
+    },
+  ],
+  sstData,
+};
+
+export const xReportDataMock = {
+  type: "XReport",
+  realiz: {
+    sum: 2681.7999999999997,
+    receiptCount: 31,
+    payments: [
+      {
+        payFormCode: 0,
+        payFormName: "ГОТІВКА",
+        sum: 2020.8,
+      },
+      {
+        payFormCode: 1,
+        payFormName: "КАРТКА",
+        sum: 661,
+      },
+    ],
+    taxes: [
+      {
+        type: 5,
+        name: "Акцизний податок",
+        percent: 5,
+        sum: 127.54,
+        turnover: 2681.6,
+        sourceSum: 0,
+        program: "Д",
+      },
+      {
+        type: 3,
+        name: "ПДВ",
+        percent: 7,
+        sum: 23.31,
+        turnover: 376.04,
+        sourceSum: 0,
+        program: "В",
+      },
+      {
+        type: 4,
+        name: "ПДВ",
+        percent: 20,
+        sum: 175.5,
+        turnover: 1105.56,
+        sourceSum: 0,
+        program: "Г",
+      },
+    ],
+  },
+  return: {
+    sum: 31,
+    receiptCount: 2,
+    payments: [
+      {
+        payFormCode: 0,
+        payFormName: "ГОТІВКА",
+        sum: 30,
+      },
+      {
+        payFormCode: 1,
+        payFormName: "КАРТКА",
+        sum: 1,
+      },
+    ],
+    taxes: [
+      {
+        type: 5,
+        name: "Акцизний податок",
+        percent: 5,
+        sum: 1.47,
+        turnover: 31.04,
+        sourceSum: 0,
+        program: "Д",
+      },
+      {
+        type: 3,
+        name: "ПДВ",
+        percent: 7,
+        sum: 1.92,
+        turnover: 31.04,
+        sourceSum: 0,
+        program: "В",
+      },
+    ],
+  },
+  serviceInput: null,
+  serviceOutput: null,
+  cashboxData,
+  shiftOpenData: {
+    dateTime: "2024-05-24T13:20:05.407Z",
+  },
+  lastFiscalDocumentData: {
+    dateTime: "2024-05-27T17:22:06.973Z",
+    documentNumber: 516,
+  },
+  dateTime: "2024-05-27T17:22:06.973Z",
 };
 
 // eslint-disable-next-line no-unused-vars
@@ -190,48 +294,3 @@ const expectedReceiptWithASCIIQR = [
   " █▄▄▄█ █▀██▀▀█▄ ▀▄█ ▀██ ▄█▄ ▀▄▀█▀▄▀▀▄▀ ▄ ",
   "       ▀  ▀ ▀     ▀▀    ▀   ▀▀   ▀ ▀▀▀ ▀▀",
 ].join("\n");
-
-export const fiscalReceiptDataMock = {
-  code: 200,
-  result: {
-    cashboxData,
-    dfsDocumentFiscalId: "2462757750",
-    type: "receipt",
-    cashbox: cashboxData.cashbox,
-    total: 384.26,
-    payments: [
-      {
-        sum: 284.26,
-        type: "cash",
-      },
-      {
-        sum: 100,
-        type: "card",
-      },
-    ],
-    products: productsData,
-    uid: "587989ce-f05d-4d66-b2a8-4138f13bfe88",
-    dateTime: "2024-05-16T16:29:35.710Z",
-    taxes: [
-      {
-        type: 5,
-        name: "Акциз 5%",
-        percent: 5,
-        sum: 18.29,
-        turnover: 384.26,
-        sourceSum: 0,
-        program: "Д",
-      },
-      {
-        type: 4,
-        name: "ПДВ 20%",
-        percent: 20,
-        sum: 29.25,
-        turnover: 184.26,
-        sourceSum: 0,
-        program: "Г",
-      },
-    ],
-    sstData,
-  },
-};

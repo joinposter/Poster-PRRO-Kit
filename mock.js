@@ -222,6 +222,7 @@ export const xReportDataMock = {
   lastFiscalDocumentData: {
     dateTime: "2024-05-27T17:22:06.973Z",
     documentNumber: 516,
+    fiscalId: "2469255615",
   },
   dateTime: "2024-05-27T17:22:06.973Z",
 };

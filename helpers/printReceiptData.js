@@ -42,18 +42,19 @@ const expandedTaxesName = (tax) => {
 const getTaxesData = (data) => {
   const card = data.payments.find(findCardPayment)?.sum;
 
-  const rowCash = data.payments.find(findCashPayment)?.sum;
-  const cash = rowCash ? rowCash - getRoundedDiff(data) : null;
+  const cash = data.payments.find(findCashPayment)?.sum;
 
   return {
     total: data.total,
     card: card ? formatToFixedDecimal(card) : null,
     cash: cash ? formatToFixedDecimal(cash) : null,
-    taxes: data.taxes.map((tax) => ({
-      name: expandedTaxesName(tax),
-      value: tax.sum,
-      program: tax.program,
-    })),
+    taxes: data.taxes
+      .sort((a, b) => a.type - b.type)
+      .map((tax) => ({
+        name: expandedTaxesName(tax),
+        value: tax.sum,
+        program: tax.program,
+      })),
   };
 };
 

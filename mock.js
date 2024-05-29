@@ -12,16 +12,14 @@ export const cashboxData = {
 };
 export const getServiceInputBodyMock = {
   sum: 2850,
-  date: "16.05.2024",
-  time: "19:28:35",
+  dateTime: "2024-05-16T16:28:35.679Z",
   receiptConfig,
   cashboxData,
 };
 
 export const getServiceOutputBodyMock = {
-  sum: 750,
-  date: "16.05.2024",
-  time: "19:48:35",
+  sum: -750,
+  dateTime: "2024-05-16T16:28:35.679Z",
   receiptConfig,
   cashboxData,
 };

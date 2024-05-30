@@ -1,0 +1,14 @@
+.mb-3.mt-3
+    table.table
+        tbody
+            each rowItem in item.items
+                if rowItem.additionalData
+                    each val, index in rowItem.additionalData
+                        tr
+                            td.text-secondary.border-0.pt-0.pb-0.p-1= rowItem.additionalData[index]
+                tr
+                    each val, index in rowItem.row
+                        if rowItem.styles && rowItem.styles[index] && rowItem.styles[index].color
+                            td.border-0.p-1(class=`${rowItem.styles[index].color}`)= val
+                        else
+                            td.border-0.p-1= val

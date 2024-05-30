@@ -112,7 +112,8 @@ const getSstData = ({ sstData, type }) => {
   };
 };
 
-export const prepareDataForTextPrintReceipt = (data) => ({
+export const prepareDataForPrintReceipt = (data) => ({
+  qrOptions: data.qrOptions,
   fiscalId: data.fiscalId,
   dateTime: getDateTime({ date: data.dateTime }),
   cashboxData: data.cashboxData,
@@ -138,3 +139,13 @@ export const prepareDataForTextPrintReceipt = (data) => ({
   }),
   receiptConfig: data.receiptConfig || receiptConfig,
 });
+
+export const getCashboxStatus = (data) =>
+  data.cashboxData.isOffline ? "ОФФЛАЙН" : "ОНЛАЙН";
+
+export const getControlSum = (data) => {
+  if (data?.cashboxData?.isOffline && data.fiscalId) {
+    return data.fiscalId?.toString()?.split(".")?.pop();
+  }
+  return null;
+};

@@ -1,0 +1,14 @@
+.container.p-5
+    .row
+        .col
+            each item in fiscalReceiptData
+                if item.type === 'text'
+                    include text.pug
+                else if item.type === 'ruler'
+                    hr
+                else if item.type === 'smartTable'
+                    include smartTable.pug
+                else if item.type === 'summary' && item.lines
+                    include summary.pug
+                else if item.type === 'footer'
+                    include footer.pug

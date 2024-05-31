@@ -1,9 +1,0 @@
-.bg-light.p-2.rounded
-    each line in item.lines
-        if line && !line.hidden
-            if line.type === "ruler"
-                hr
-            if line.name && line.value
-                .d-flex.justify-content-between.mb-2
-                    div(class=`${line.bold ? 'fw-bold' : ''}`)= line.name
-                    div(class=`${line.bold ? 'fw-bold' : ''}`)= line.value

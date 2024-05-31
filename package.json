@@ -19,7 +19,6 @@
     "url": "https://github.com/joinposter/Poster-PRRO-Kit"
   },
   "dependencies": {
-    "pug": "^3.0.3",
     "qrcode-generator": "^1.4.4",
     "ramda": "^0.29.1",
     "receipt": "1.4.0",

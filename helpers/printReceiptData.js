@@ -140,12 +140,12 @@ export const prepareDataForPrintReceipt = (data) => ({
   receiptConfig: data.receiptConfig || receiptConfig,
 });
 
-export const getCashboxStatus = (data) =>
-  data.cashboxData.isOffline ? "ОФФЛАЙН" : "ОНЛАЙН";
+export const getCashboxStatus = ({ cashboxData }) =>
+  cashboxData?.isOffline ? "ОФФЛАЙН" : "ОНЛАЙН";
 
-export const getControlSum = (data) => {
-  if (data?.cashboxData?.isOffline && data.fiscalId) {
-    return data.fiscalId?.toString()?.split(".")?.pop();
+export const getControlSum = ({ cashboxData, fiscalId }) => {
+  if (cashboxData?.isOffline && fiscalId) {
+    return fiscalId?.toString()?.split(".")?.pop();
   }
   return null;
 };

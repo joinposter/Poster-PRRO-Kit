@@ -1,4 +1,4 @@
-import receiptConfig from "../../../config/receiptConfig.js";
+import receiptConfig from "../../../../config/receiptConfig.js";
 import getFiscalCompanyData from "./blocks/fiscalCompanyBlock.js";
 import getProductsData from "./blocks/productsBlock.js";
 import getSummaryBlock from "./blocks/summaryBlock.js";

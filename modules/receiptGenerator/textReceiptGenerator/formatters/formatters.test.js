@@ -1,7 +1,7 @@
 /* eslint-disable no-magic-numbers */
 import receipt from "receipt";
-import { priceFormat, initReceipt } from "../../../helpers/receipt.js";
-import { getServiceInputBodyMock } from "../../../mock.js";
+import { priceFormat, initReceipt } from "../../helpers/receipt.js";
+import { getServiceInputBodyMock } from "../../../../mock.js";
 
 describe("receipt libs", () => {
   beforeAll(() => {

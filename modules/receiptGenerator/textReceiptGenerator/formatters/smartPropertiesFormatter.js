@@ -1,6 +1,6 @@
 /* eslint-disable no-magic-numbers, no-control-regex */
 import { table, getBorderCharacters } from "table";
-import { pipe } from "../../../helpers/functional.js";
+import { pipe } from "../../../../helpers/functional.js";
 
 /**
  * Data example:

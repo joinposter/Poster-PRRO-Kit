@@ -1,5 +1,5 @@
 /* eslint-disable no-magic-numbers */
-import { pipe } from "../../../helpers/functional.js";
+import { pipe } from "../../../../helpers/functional.js";
 
 /**
  * Data example:

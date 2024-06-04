@@ -1,7 +1,7 @@
 import receipt from "receipt";
-import smartTableFormatter from "../lib/textReceiptGenerator/formatters/smartTable/smartTableFormatter.js";
-import summaryFormatter from "../lib/textReceiptGenerator/formatters/summaryFormatter.js";
-import smartPropertiesFormatter from "../lib/textReceiptGenerator/formatters/smartPropertiesFormatter.js";
+import smartTableFormatter from "../textReceiptGenerator/formatters/smartTable/smartTableFormatter.js";
+import summaryFormatter from "../textReceiptGenerator/formatters/summaryFormatter.js";
+import smartPropertiesFormatter from "../textReceiptGenerator/formatters/smartPropertiesFormatter.js";
 import { FISCAL_RECEIPT_SERVER_ADDRESS } from "../const/receipt.js";
 
 export const initReceipt = (receiptConfig) => {

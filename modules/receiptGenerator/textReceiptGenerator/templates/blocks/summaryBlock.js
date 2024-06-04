@@ -1,4 +1,4 @@
-import { priceFormat } from "../../../../helpers/receipt.js";
+import { priceFormat } from "../../../helpers/receipt.js";
 
 const getSummaryBlock = ({ taxesData, roundData, currency }) => [
   {

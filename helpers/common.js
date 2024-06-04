@@ -1,7 +1,7 @@
-import { DECIMAL_PLACES } from "../const/receipt.js";
+import { DECIMAL_PLACES } from "../modules/receiptGenerator/const/receipt.js";
 
 export const formatToFixedDecimal = (sum) =>
-  Math.abs(Number(sum)).toFixed(DECIMAL_PLACES);
+  Number(sum).toFixed(DECIMAL_PLACES);
 
 export const formatNumber = (num, format) =>
   num.toString().padStart(format.length, "0");

@@ -1,6 +1,6 @@
 import getFiscalCompanyData from "./blocks/fiscalCompanyBlock.js";
-import { priceFormat } from "../../../helpers/receipt.js";
-import { getDateTime } from "../../../helpers/common.js";
+import { priceFormat } from "../../helpers/receipt.js";
+import { getDateTime } from "../../../../helpers/common.js";
 import textFooterBlock from "./blocks/smartFooterBlock/textFooterBlock.js";
 
 const getServiceTransactionBody = ({ sum, receiptConfig }) => {

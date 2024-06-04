@@ -1,4 +1,4 @@
-import { priceFormat } from "../../../../helpers/receipt.js";
+import { priceFormat } from "../../../helpers/receipt.js";
 
 const createProductRow = (product) => ({
   row: [

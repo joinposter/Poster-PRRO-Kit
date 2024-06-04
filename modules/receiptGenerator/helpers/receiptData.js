@@ -10,8 +10,8 @@ import {
   decimalRounding,
   formatToFixedDecimal,
   getDateTime,
-} from "./common.js";
-import receiptConfig from "../config/receiptConfig.js";
+} from "../../../helpers/common.js";
+import receiptConfig from "../../../config/receiptConfig.js";
 
 const getProductUktzed = (name) =>
   name.includes("#") ? `${name.split("#")[0]}#` : null;
@@ -70,7 +70,10 @@ const getRoundReceiptData = (data) => {
           name: isReturnType ? "До повернення" : "До сплати",
           value: formatToFixedDecimal(data.total - roundDiff),
         },
-        { name: "Заокруглення", value: formatToFixedDecimal(roundDiff) },
+        {
+          name: "Заокруглення",
+          value: formatToFixedDecimal(Math.abs(roundDiff)),
+        },
       ]
     : null;
 };

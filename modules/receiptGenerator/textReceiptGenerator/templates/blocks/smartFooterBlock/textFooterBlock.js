@@ -1,7 +1,7 @@
 import {
   getCashboxStatus,
   getControlSum,
-} from "../../../../../helpers/printReceiptData.js";
+} from "../../../../helpers/receiptData.js";
 
 const textFooterBlock = (data) =>
   [

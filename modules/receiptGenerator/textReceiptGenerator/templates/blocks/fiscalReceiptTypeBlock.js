@@ -1,4 +1,4 @@
-import { isFiscalReceiptReturnType } from "../../../../helpers/printReceiptData.js";
+import { isFiscalReceiptReturnType } from "../../../helpers/receiptData.js";
 
 const getFiscalReceiptType = (type) =>
   isFiscalReceiptReturnType(type)

@@ -2,6 +2,7 @@ import { pipe } from "ramda";
 import { createHash } from "crypto-browserify";
 import { crc32 } from "crc";
 import { Buffer } from "buffer";
+import { v4 as uuidv4 } from "uuid";
 import { PAYMENT_TYPE_CARD, PAYMENT_TYPE_CASH } from "../const/fiscal.js";
 import { decimalRounding, roundWithPrecision } from "../../../helpers/round.js";
 
@@ -51,7 +52,7 @@ export const getProductSum = (price, amount) =>
   roundWithPrecision(price * amount);
 
 const fillUid = (request) => {
-  const uid = crypto.randomUUID();
+  const uid = uuidv4();
 
   return { ...request, uid };
 };

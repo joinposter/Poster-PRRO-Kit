@@ -1,5 +1,5 @@
 import { pipe } from "ramda";
-import { createHash } from "crypto";
+import { createHash } from "crypto-browserify";
 import { crc32 } from "crc";
 import { PAYMENT_TYPE_CARD, PAYMENT_TYPE_CASH } from "../const/fiscal.js";
 import { decimalRounding, roundWithPrecision } from "../../../helpers/round.js";

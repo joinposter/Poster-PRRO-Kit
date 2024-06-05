@@ -1,14 +1,16 @@
-import { getTaxesData } from "../taxes/index.js";
-import { getDocument, getDocumentHash } from "../XMLDocuments/index.js";
-import { expandDocumentData } from "./helpers/offline.js";
 import {
   DOCUMENT_TYPE_RECEIPT,
   DOCUMENT_TYPE_RETURN_RECEIPT,
   DOCUMENT_TYPE_SERVICE_DELIVERY,
   DOCUMENT_TYPE_SERVICE_ENTRY,
   DOCUMENT_TYPE_SHIFT_CLOSE,
-  DOCUMENT_TYPE_SHIFT_OPEN, DOCUMENT_TYPE_Z_REPORT,
+  DOCUMENT_TYPE_SHIFT_OPEN,
+  DOCUMENT_TYPE_Z_REPORT,
 } from "./const/types.js";
+import { getTaxesData } from "../taxes/index.js";
+import { getDocument, getDocumentHash } from "../XMLDocuments/index.js";
+import { expandDocumentData } from "./helpers/offline.js";
+import { createXZReportData } from "./helpers/XZReportData.js";
 
 const generateOfflineReceiptDocument = (data) => {
   if (
@@ -90,24 +92,14 @@ const generateOfflineCloseShiftDocument = (data) => {
 const generateOfflineZReportDocument = (data) => {
   if (data?.type !== DOCUMENT_TYPE_Z_REPORT) return "Invalid data type";
 
-  // const taxes = getTaxesData(data?.taxesConfig)(data?.products);
-  // const XML = getDocument({ ...expandDocumentData(data), taxes });
-  // const documentHash = getDocumentHash(XML);
-  // const fiscalId = XML?.CHECK?.CHECKHEAD?.ORDERTAXNUM;
-  // const uid = XML?.CHECK?.CHECKHEAD?.UID;
-  // return {
-  //   type: data?.type,
-  //   fiscalId,
-  //   uid,
-  //   dateTime: expandDocumentData(data).dateTime,
-  //   cashboxData: data?.cashboxData,
-  //   total: data?.total,
-  //   payments: data?.payments,
-  //   products: data?.products,
-  //   taxes,
-  //   documentHash,
-  // };
-  return "generateOfflineZReportDocument";
+  const XML = getDocument({ ...createXZReportData(expandDocumentData(data)) });
+  const documentHash = getDocumentHash(XML);
+  const fiscalId = XML?.ZREP?.ZREPHEAD?.ORDERTAXNUM;
+  return {
+    ...createXZReportData(expandDocumentData(data)),
+    fiscalId,
+    documentHash,
+  };
 };
 
 export {

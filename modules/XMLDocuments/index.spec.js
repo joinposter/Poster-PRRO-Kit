@@ -1,9 +1,9 @@
 import xml2js from "xml2js";
 import { XML_ENCODING } from "./const/xml.js";
-import { getReceiptDocument } from "./generators/receiptXMLGenerator.js";
 import { getDateTimeFields } from "./generators/commonXMLTagGenerator.js";
-import { getShiftOpenDocument } from "./generators/shiftOpenXMLGenerator.js";
-import { getZReportDocument } from "./generators/zReportXMLGenerator.js";
+import getReceiptDocument from "./generators/receiptXMLGenerator.js";
+import getShiftOpenDocument from "./generators/shiftOpenXMLGenerator.js";
+import getZReportDocument from "./generators/zReportXMLGenerator.js";
 import { getTaxesData, getTaxPrograms } from "../taxes/index.js";
 import { cashboxData, receiptRequestData, zReportData } from "./mock/data.js";
 import { mockCustomTaxes } from "../taxes/mock/taxes.js";

@@ -212,4 +212,4 @@ const getReceiptDocument = (data) => {
   };
 };
 
-export { paymentMapper, getReceiptHeader, getReceiptDocument };
+export default getReceiptDocument;

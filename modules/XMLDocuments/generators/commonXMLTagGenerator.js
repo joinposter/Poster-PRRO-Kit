@@ -1,7 +1,5 @@
 import { formatNumber } from "../../../helpers/common.js";
 import { getFiscalNumberControlCode } from "../helpers/xmlGenerator.js";
-// import { getCashboxData, isCashboxModeOffline } from "../cashbox.js";
-// import { getOfflineSessionData } from "../queue.js";
 
 const getDateTimeFields = (date) => {
   if (!Date.parse(date)) {

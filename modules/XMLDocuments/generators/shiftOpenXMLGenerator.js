@@ -14,5 +14,4 @@ const getShiftOpenDocument = (data) => {
   };
 };
 
-// eslint-disable-next-line import/prefer-default-export
-export { getShiftOpenDocument };
+export default getShiftOpenDocument;

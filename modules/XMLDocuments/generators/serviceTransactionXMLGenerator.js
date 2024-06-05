@@ -62,5 +62,4 @@ const getServiceTransactionDocument = (data) => {
   };
 };
 
-// eslint-disable-next-line import/prefer-default-export
-export { getServiceTransactionDocument };
+export default getServiceTransactionDocument;

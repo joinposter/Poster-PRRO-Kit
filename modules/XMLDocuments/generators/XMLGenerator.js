@@ -14,13 +14,13 @@ import {
   DOCUMENT_TYPE_Z_REPORT,
 } from "../const/request.js";
 import { fromBase64ToBuffer, sha256 } from "../helpers/xmlGenerator.js";
-import { getReceiptDocument } from "./receiptXMLGenerator.js";
-import { getServiceTransactionDocument } from "./serviceTransactionXMLGenerator.js";
+import getReceiptDocument from "./receiptXMLGenerator.js";
+import getServiceTransactionDocument from "./serviceTransactionXMLGenerator.js";
 import getOfflineStartDocument from "./offlineStartXMLGenerator.js";
 import getOfflineFinishDocument from "./offlineFinishXMLGenerator.js";
-import { getZReportDocument } from "./zReportXMLGenerator.js";
-import { getShiftCloseDocument } from "./shiftCloseXMLGenerator.js";
-import { getShiftOpenDocument } from "./shiftOpenXMLGenerator.js";
+import getZReportDocument from "./zReportXMLGenerator.js";
+import getShiftCloseDocument from "./shiftCloseXMLGenerator.js";
+import getShiftOpenDocument from "./shiftOpenXMLGenerator.js";
 
 const builder = new xml2js.Builder({ xmldec: { encoding: XML_ENCODING } });
 

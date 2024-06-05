@@ -14,5 +14,4 @@ const getShiftCloseDocument = (data) => {
   };
 };
 
-// eslint-disable-next-line import/prefer-default-export
-export { getShiftCloseDocument };
+export default getShiftCloseDocument;

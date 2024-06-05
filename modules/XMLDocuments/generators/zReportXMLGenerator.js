@@ -85,5 +85,4 @@ const getZReportDocument = (data) => {
   };
 };
 
-// eslint-disable-next-line import/prefer-default-export
-export { getZReportDocument };
+export default getZReportDocument;

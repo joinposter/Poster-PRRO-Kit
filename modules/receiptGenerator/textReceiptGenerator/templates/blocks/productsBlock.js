@@ -22,13 +22,13 @@ const createProductRow = (product) => ({
 const isVisibleProduct = (product) => !product.hidden;
 
 const addEmptySpaces = (products) => {
-  return products.flatMap((product, index) => {
+  return products.reduce((acc, product, index) => {
     if (index === 0) {
-      return [product];
+      return [...acc, product];
     }
     const emptyArrows = new Array(product.row.length).fill("");
-    return [{ row: emptyArrows }, product];
-  });
+    return [...acc, { row: emptyArrows }, product];
+  }, []);
 };
 
 const getProductsData = (data) => {

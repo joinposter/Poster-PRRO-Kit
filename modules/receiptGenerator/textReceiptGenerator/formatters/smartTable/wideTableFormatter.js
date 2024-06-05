@@ -50,8 +50,11 @@ const prepareHeader = (chunk) =>
     ? [chunk.headers.map(extractName), Array(chunk.headers.length).fill(" ")]
     : [];
 
-const prepareBody = (chunk) =>
-  chunk.items.flatMap((item) => [...prepareAdditionalData(item), item.row]);
+const prepareBody = (chunk) => {
+  return chunk.items.reduce((acc, item) => {
+    return [...acc, ...prepareAdditionalData(item), item.row];
+  }, []);
+};
 
 const prepareAdditionalData = (item) =>
   (item.additionalData || [])

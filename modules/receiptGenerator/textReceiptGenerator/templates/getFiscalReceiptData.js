@@ -1,4 +1,4 @@
-import receiptConfig from "../../../../config/receiptConfig.js";
+import defaultReceiptConfig from "../../config/receipt.js";
 import getFiscalCompanyData from "./blocks/fiscalCompanyBlock.js";
 import getProductsData from "./blocks/productsBlock.js";
 import getSummaryBlock from "./blocks/summaryBlock.js";
@@ -16,7 +16,7 @@ const summaryData = (data) =>
   getSummaryBlock({
     taxesData: data.taxesData,
     roundData: data.roundData,
-    currency: data.receiptConfig?.currency || receiptConfig.currency,
+    currency: data.receiptConfig?.currency || defaultReceiptConfig.currency,
   });
 
 const sstData = (data) => (data.sstData ? getSstData(data.sstData) : null);

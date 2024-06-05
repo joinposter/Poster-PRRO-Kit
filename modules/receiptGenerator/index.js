@@ -1,6 +1,6 @@
 import receipt from "receipt";
 import qrcode from "qrcode-generator";
-import receiptConfig from "../../config/receiptConfig.js";
+import defaultReceiptConfig from "./config/receipt.js";
 import { prepareDataForPrintReceipt } from "./helpers/receiptData.js";
 import { getDFSReceiptLink, initReceipt } from "./helpers/receipt.js";
 import { getDateTime } from "../../helpers/common.js";
@@ -17,20 +17,20 @@ const generateHtmlFiscalReceipt = (data) => {
 };
 
 const generateTextFiscalReceipt = (data) => {
-  initReceipt(data.receiptConfig || receiptConfig);
+  initReceipt(data.receiptConfig || defaultReceiptConfig);
   const receiptData = prepareDataForPrintReceipt(data);
   const fiscalReceiptData = getFiscalReceiptData(receiptData);
   return receipt.create(fiscalReceiptData);
 };
 
 const generateTextServiceTransactionReceipt = (data) => {
-  initReceipt(data.receiptConfig || receiptConfig);
+  initReceipt(data.receiptConfig || defaultReceiptConfig);
   const serviceTransactionReceiptData = getServiceTransactionReceiptData(data);
   return receipt.create(serviceTransactionReceiptData);
 };
 
 const generateXZReport = (data) => {
-  initReceipt(data.receiptConfig || receiptConfig);
+  initReceipt(data.receiptConfig || defaultReceiptConfig);
   const xzReportData = getXZReportData(data);
   return receipt.create(xzReportData);
 };

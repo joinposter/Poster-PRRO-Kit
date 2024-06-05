@@ -1,4 +1,4 @@
-import receiptConfig from "./config/receiptConfig.js";
+import defaultReceiptConfig from "./modules/receiptGenerator/config/receipt.js";
 
 export const cashboxData = {
   isOffline: false,
@@ -13,14 +13,14 @@ export const cashboxData = {
 export const getServiceInputBodyMock = {
   sum: 2850,
   dateTime: "2024-05-16T16:28:35.679Z",
-  receiptConfig,
+  receiptConfig: defaultReceiptConfig,
   cashboxData,
 };
 
 export const getServiceOutputBodyMock = {
   sum: -750,
   dateTime: "2024-05-16T16:28:35.679Z",
-  receiptConfig,
+  receiptConfig: defaultReceiptConfig,
   cashboxData,
 };
 

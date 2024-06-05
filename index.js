@@ -5,6 +5,15 @@ import {
   generateQRCodeReceiptData,
   generateHtmlFiscalReceipt,
 } from "./modules/receiptGenerator/index.js";
+import {
+  generateOfflineReceiptDocument,
+  generateOfflineTransactionDocument,
+  generateOfflineOpenShiftDocument,
+  generateOfflineCloseShiftDocument,
+  generateOfflineZReportDocument,
+  generateOfflineStartDocument,
+  generateOfflineFinishDocument,
+} from "./modules/offlineMode/index.js";
 
 export {
   generateTextFiscalReceipt,
@@ -12,4 +21,11 @@ export {
   generateXZReport,
   generateQRCodeReceiptData,
   generateHtmlFiscalReceipt,
+  generateOfflineReceiptDocument,
+  generateOfflineTransactionDocument,
+  generateOfflineOpenShiftDocument,
+  generateOfflineCloseShiftDocument,
+  generateOfflineZReportDocument,
+  generateOfflineStartDocument,
+  generateOfflineFinishDocument,
 };

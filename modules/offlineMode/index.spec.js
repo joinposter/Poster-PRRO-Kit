@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from "uuid";
 import { cashboxData } from "./mock/data.js";
 import { mockCustomTaxes } from "../taxes/mock/taxes.js";
 import {
@@ -10,7 +11,14 @@ import {
   generateOfflineFinishDocument,
 } from "./index.js";
 
+jest.mock("uuid", () => ({
+  v4: jest.fn(),
+}));
 describe("offline mode", () => {
+  beforeAll(() => {
+    const fakeUUID = "11111111-1111-1111-1111-111111111111";
+    uuidv4.mockImplementation(() => fakeUUID);
+  });
   it("generateOfflineReceiptDocument should return all data for generation receipt", () => {
     expect(
       generateOfflineReceiptDocument({

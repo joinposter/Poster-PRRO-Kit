@@ -1,7 +1,7 @@
 import { pipe } from "ramda";
+import { Buffer } from "buffer";
 import { createHash } from "crypto-browserify";
 import { crc32 } from "crc";
-import { Buffer } from "buffer";
 import { v4 as uuidv4 } from "uuid";
 import { PAYMENT_TYPE_CARD, PAYMENT_TYPE_CASH } from "../const/fiscal.js";
 import { decimalRounding, roundWithPrecision } from "../../../helpers/round.js";
@@ -67,8 +67,3 @@ const fillDateTimeIfEmpty = (request) => {
 };
 
 export const expandDocumentData = pipe(fillUid, fillDateTimeIfEmpty);
-
-if (typeof window !== "undefined") {
-  window.Buffer = Buffer;
-  window.crypto = window.crypto || crypto;
-}

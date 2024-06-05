@@ -6,6 +6,8 @@ import {
   generateOfflineOpenShiftDocument,
   generateOfflineCloseShiftDocument,
   generateOfflineZReportDocument,
+  generateOfflineStartDocument,
+  generateOfflineFinishDocument,
 } from "./index.js";
 
 describe("offline mode", () => {
@@ -74,6 +76,9 @@ describe("offline mode", () => {
         },
         previousDocumentHash:
           "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
+        shiftOpenData: {
+          dateTime: "2024-06-04T10:26:18.293Z",
+        },
       },
       total: 950.04,
       payments: [
@@ -186,6 +191,9 @@ describe("offline mode", () => {
         },
         previousDocumentHash:
           "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
+        shiftOpenData: {
+          dateTime: "2024-06-04T10:26:18.293Z",
+        },
       },
       sum: 1000,
     });
@@ -219,6 +227,9 @@ describe("offline mode", () => {
         },
         previousDocumentHash:
           "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
+        shiftOpenData: {
+          dateTime: "2024-06-04T10:26:18.293Z",
+        },
       },
     });
   });
@@ -251,6 +262,9 @@ describe("offline mode", () => {
         },
         previousDocumentHash:
           "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
+        shiftOpenData: {
+          dateTime: "2024-06-04T10:26:18.293Z",
+        },
       },
     });
   });
@@ -517,9 +531,6 @@ describe("offline mode", () => {
         dateTime: "2024-06-04T12:26:18.293Z",
         cashboxData,
         data,
-        shiftOpenDocument: {
-          request: { dateTime: "2024-06-04T10:26:18.293Z" },
-        },
         lastFiscalDocument: {
           documentNumber: 789,
           fiscalId: "2507944945",
@@ -557,6 +568,12 @@ describe("offline mode", () => {
         },
         previousDocumentHash:
           "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
+        shiftOpenData: {
+          dateTime: "2024-06-04T10:26:18.293Z",
+        },
+      },
+      shiftOpenData: {
+        dateTime: "2024-06-04T10:26:18.293Z",
       },
       realiz: {
         payments: [
@@ -668,8 +685,75 @@ describe("offline mode", () => {
       },
       serviceInput: null,
       serviceOutput: null,
-      shiftOpenData: {
-        dateTime: "2024-06-04T10:26:18.293Z",
+    });
+  });
+  it("generateOfflineStartDocument", () => {
+    expect(
+      generateOfflineStartDocument({
+        type: "offlineStart",
+        dateTime: "2024-06-04T12:26:18.293Z",
+        cashboxData,
+      }),
+    ).toEqual({
+      type: "offlineStart",
+      uid: "11111111-1111-1111-1111-111111111111",
+      dateTime: "2024-06-04T12:26:18.293Z",
+      documentHash:
+        "489dafef259874ac2c4c2f19bdb245adefa407a16d63e83ba11100d8595017cc",
+      cashboxData: {
+        cashbox: "4000438533",
+        cashboxLocalNumber: "123",
+        name: "ТОВ ТЕСТ ПРРО",
+        pointAddress: "Дніпропетровська область, м. Дніпро, вул. Шевченка, 1",
+        pointName: "кафе Ромашка",
+        tin: 44657555,
+        documentNumber: 1,
+        offlineDocumentNumber: 1,
+        isCashboxModeOffline: true,
+        getOfflineSessionData: {
+          id: 23649865,
+          seed: 135969449201653,
+        },
+        previousDocumentHash:
+          "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
+        shiftOpenData: {
+          dateTime: "2024-06-04T10:26:18.293Z",
+        },
+      },
+    });
+  });
+  it("generateOfflineFinishDocument", () => {
+    expect(
+      generateOfflineFinishDocument({
+        type: "offlineFinish",
+        dateTime: "2024-06-04T12:26:18.293Z",
+        cashboxData,
+      }),
+    ).toEqual({
+      type: "offlineFinish",
+      uid: "11111111-1111-1111-1111-111111111111",
+      dateTime: "2024-06-04T12:26:18.293Z",
+      documentHash:
+        "122f088dd995647bad708fae2313d9fcff597c0f93e3a800c5fd281cd5965402",
+      cashboxData: {
+        cashbox: "4000438533",
+        cashboxLocalNumber: "123",
+        name: "ТОВ ТЕСТ ПРРО",
+        pointAddress: "Дніпропетровська область, м. Дніпро, вул. Шевченка, 1",
+        pointName: "кафе Ромашка",
+        tin: 44657555,
+        documentNumber: 1,
+        offlineDocumentNumber: 1,
+        isCashboxModeOffline: true,
+        getOfflineSessionData: {
+          id: 23649865,
+          seed: 135969449201653,
+        },
+        previousDocumentHash:
+          "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
+        shiftOpenData: {
+          dateTime: "2024-06-04T10:26:18.293Z",
+        },
       },
     });
   });

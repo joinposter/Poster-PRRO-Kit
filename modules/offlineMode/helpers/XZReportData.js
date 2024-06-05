@@ -128,8 +128,8 @@ const createTaxesData = (data, taxesConfig) => {
   return result;
 };
 
-const getShiftOpenData = (document) => ({
-  dateTime: document?.request?.dateTime,
+const getShiftOpenData = ({ shiftOpenData }) => ({
+  dateTime: shiftOpenData?.dateTime,
 });
 
 const getLastFiscalDocumentData = (document) => ({
@@ -142,7 +142,6 @@ const createXZReportData = ({
   data,
   type,
   uid,
-  shiftOpenDocument,
   lastFiscalDocument,
   cashboxData,
   dateTime,
@@ -156,7 +155,7 @@ const createXZReportData = ({
   return: getReturnData(data, taxesConfig),
   serviceInput: getServiceEntryData(data),
   serviceOutput: getServiceDeliveryData(data),
-  shiftOpenData: getShiftOpenData(shiftOpenDocument),
+  shiftOpenData: getShiftOpenData(cashboxData),
   lastFiscalDocumentData: getLastFiscalDocumentData(lastFiscalDocument),
 });
 

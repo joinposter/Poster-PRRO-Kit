@@ -1,4 +1,6 @@
 import {
+  DOCUMENT_TYPE_OFFLINE_FINISH,
+  DOCUMENT_TYPE_OFFLINE_START,
   DOCUMENT_TYPE_RECEIPT,
   DOCUMENT_TYPE_RETURN_RECEIPT,
   DOCUMENT_TYPE_SERVICE_DELIVERY,
@@ -102,10 +104,42 @@ const generateOfflineZReportDocument = (data) => {
   };
 };
 
+const generateOfflineStartDocument = (data) => {
+  if (data?.type !== DOCUMENT_TYPE_OFFLINE_START) return "Invalid data type";
+
+  const XML = getDocument(expandDocumentData(data));
+  const documentHash = getDocumentHash(XML);
+  const uid = XML?.CHECK?.CHECKHEAD?.UID;
+  return {
+    type: data?.type,
+    uid,
+    dateTime: expandDocumentData(data).dateTime,
+    cashboxData: data?.cashboxData,
+    documentHash,
+  };
+};
+
+const generateOfflineFinishDocument = (data) => {
+  if (data?.type !== DOCUMENT_TYPE_OFFLINE_FINISH) return "Invalid data type";
+
+  const XML = getDocument(expandDocumentData(data));
+  const documentHash = getDocumentHash(XML);
+  const uid = XML?.CHECK?.CHECKHEAD?.UID;
+  return {
+    type: data?.type,
+    uid,
+    dateTime: expandDocumentData(data).dateTime,
+    cashboxData: data?.cashboxData,
+    documentHash,
+  };
+};
+
 export {
   generateOfflineReceiptDocument,
   generateOfflineTransactionDocument,
   generateOfflineOpenShiftDocument,
   generateOfflineCloseShiftDocument,
   generateOfflineZReportDocument,
+  generateOfflineStartDocument,
+  generateOfflineFinishDocument,
 };

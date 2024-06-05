@@ -3,8 +3,8 @@ import iconv from "iconv-lite";
 import { XML_ENCODING } from "../const/xml.js";
 import { pipe } from "../../../helpers/functional.js";
 import {
-  // DOCUMENT_TYPE_OFFLINE_FINISH,
-  // DOCUMENT_TYPE_OFFLINE_START,
+  DOCUMENT_TYPE_OFFLINE_FINISH,
+  DOCUMENT_TYPE_OFFLINE_START,
   DOCUMENT_TYPE_RECEIPT,
   DOCUMENT_TYPE_RETURN_RECEIPT,
   DOCUMENT_TYPE_SERVICE_DELIVERY,
@@ -16,8 +16,8 @@ import {
 import { fromBase64ToBuffer, sha256 } from "../helpers/xmlGenerator.js";
 import { getReceiptDocument } from "./receiptXMLGenerator.js";
 import { getServiceTransactionDocument } from "./serviceTransactionXMLGenerator.js";
-// import getOfflineStartDocument from "./offlineStartXMLGenerator.js";
-// import getOfflineFinishDocument from "./offlineFinishXMLGenerator.js";
+import getOfflineStartDocument from "./offlineStartXMLGenerator.js";
+import getOfflineFinishDocument from "./offlineFinishXMLGenerator.js";
 import { getZReportDocument } from "./zReportXMLGenerator.js";
 import { getShiftCloseDocument } from "./shiftCloseXMLGenerator.js";
 import { getShiftOpenDocument } from "./shiftOpenXMLGenerator.js";
@@ -50,8 +50,8 @@ const getDocument = (request) => {
     [DOCUMENT_TYPE_RETURN_RECEIPT]: getReceiptDocument,
     [DOCUMENT_TYPE_SERVICE_ENTRY]: getServiceTransactionDocument,
     [DOCUMENT_TYPE_SERVICE_DELIVERY]: getServiceTransactionDocument,
-    // [DOCUMENT_TYPE_OFFLINE_START]: getOfflineStartDocument,
-    // [DOCUMENT_TYPE_OFFLINE_FINISH]: getOfflineFinishDocument,
+    [DOCUMENT_TYPE_OFFLINE_START]: getOfflineStartDocument,
+    [DOCUMENT_TYPE_OFFLINE_FINISH]: getOfflineFinishDocument,
     [DOCUMENT_TYPE_Z_REPORT]: getZReportDocument,
     [DOCUMENT_TYPE_SHIFT_CLOSE]: getShiftCloseDocument,
   };

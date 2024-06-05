@@ -11,7 +11,7 @@ import {
   getVersionFields,
 } from "./commonXMLTagGenerator.js";
 
-const getOfflineFinishHeader = async (operationData) => {
+const getOfflineFinishHeader = (operationData) => {
   const { cashboxData, dateTime } = operationData;
 
   return {
@@ -27,8 +27,8 @@ const getOfflineFinishHeader = async (operationData) => {
   };
 };
 
-const getOfflineFinishDocument = async (data) => {
-  const CHECKHEAD = await getOfflineFinishHeader(data);
+const getOfflineFinishDocument = (data) => {
+  const CHECKHEAD = getOfflineFinishHeader(data);
 
   return {
     CHECK: {

@@ -15,6 +15,9 @@ export const cashboxData = {
   offlineDocumentNumber: 1,
   previousDocumentHash:
     "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
+  shiftOpenData: {
+    dateTime: "2024-06-04T10:26:18.293Z",
+  },
 };
 
 // export const receiptRequestData = {

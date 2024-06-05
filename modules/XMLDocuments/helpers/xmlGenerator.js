@@ -66,3 +66,8 @@ const fillDateTimeIfEmpty = (request) => {
 };
 
 export const expandDocumentData = pipe(fillUid, fillDateTimeIfEmpty);
+
+if (typeof window !== "undefined") {
+  window.Buffer = Buffer;
+  window.crypto = window.crypto || crypto;
+}

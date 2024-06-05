@@ -1,0 +1,10 @@
+export const DOCUMENT_TYPE_RECEIPT = "receipt";
+export const DOCUMENT_TYPE_RETURN_RECEIPT = "returnReceipt";
+export const DOCUMENT_TYPE_SERVICE_ENTRY = "serviceEntry";
+export const DOCUMENT_TYPE_SERVICE_DELIVERY = "serviceDelivery";
+export const DOCUMENT_TYPE_SHIFT_OPEN = "shiftOpen";
+export const DOCUMENT_TYPE_SHIFT_CLOSE = "shiftClose";
+export const DOCUMENT_TYPE_Z_REPORT = "ZReport";
+export const DOCUMENT_TYPE_X_REPORT = "XReport";
+export const DOCUMENT_TYPE_OFFLINE_START = "offlineStart";
+export const DOCUMENT_TYPE_OFFLINE_FINISH = "offlineFinish";

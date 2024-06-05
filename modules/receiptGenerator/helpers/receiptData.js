@@ -11,7 +11,7 @@ import {
   formatToFixedDecimal,
   getDateTime,
 } from "../../../helpers/common.js";
-import receiptConfig from "../../../config/receiptConfig.js";
+import defaultReceiptConfig from "../config/receipt.js";
 
 const getProductUktzed = (name) =>
   name.includes("#") ? `${name.split("#")[0]}#` : null;
@@ -140,7 +140,7 @@ export const prepareDataForPrintReceipt = (data) => ({
       : "ФІСКАЛЬНИЙ ЧЕК",
     software: "Poster POS",
   }),
-  receiptConfig: data.receiptConfig || receiptConfig,
+  receiptConfig: data.receiptConfig || defaultReceiptConfig,
 });
 
 export const getCashboxStatus = ({ cashboxData }) =>

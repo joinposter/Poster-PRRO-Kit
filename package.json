@@ -22,7 +22,10 @@
     "qrcode-generator": "^1.4.4",
     "ramda": "^0.29.1",
     "receipt": "1.4.0",
-    "table": "6.8.2"
+    "table": "6.8.2",
+    "crc": "^4.3.2",
+    "xml2js": "0.6.2",
+    "iconv-lite": "^0.6.3"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.24.4",

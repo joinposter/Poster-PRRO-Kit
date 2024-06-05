@@ -1,4 +1,4 @@
-import receiptConfig from "../../config/receiptConfig.js";
+import defaultReceiptConfig from "./config/receipt.js";
 import {
   fiscalReceiptDataMock,
   getServiceInputBodyMock,
@@ -62,7 +62,7 @@ describe("receiptGenerator", () => {
     expect(
       await generateTextFiscalReceipt({
         ...fiscalReceiptDataMock,
-        receiptConfig,
+        receiptConfig: defaultReceiptConfig,
       }),
     ).toEqual(expectedReceipt);
   });
@@ -188,7 +188,7 @@ describe("receiptGenerator", () => {
     expect(
       await generateXZReport({
         ...xReportDataMock,
-        receiptConfig,
+        receiptConfig: defaultReceiptConfig,
       }),
     ).toEqual(expectedReceipt);
   });

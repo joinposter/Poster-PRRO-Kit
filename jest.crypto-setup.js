@@ -1,5 +1,5 @@
-Object.defineProperty(global, "crypto", {
+Object.defineProperty(global, "uuid", {
   value: {
-    randomUUID: () => "11111111-1111-1111-1111-111111111111",
+    v4: () => "11111111-1111-1111-1111-111111111111",
   },
 });

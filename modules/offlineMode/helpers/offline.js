@@ -1,7 +1,8 @@
 import { pipe } from "ramda";
+import { v4 as uuidv4 } from "uuid";
 
 const fillUid = (request) => {
-  const uid = crypto.randomUUID();
+  const uid = uuidv4();
 
   return { ...request, uid };
 };

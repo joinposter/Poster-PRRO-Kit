@@ -13,7 +13,7 @@ import {
   DOCUMENT_TYPE_SHIFT_OPEN,
   DOCUMENT_TYPE_Z_REPORT,
 } from "../const/request.js";
-import { fromBase64ToBuffer, sha256 } from "../helpers/xmlGenerator.js";
+import { sha256 } from "../helpers/xmlGenerator.js";
 import getReceiptDocument from "./receiptXMLGenerator.js";
 import getServiceTransactionDocument from "./serviceTransactionXMLGenerator.js";
 import getOfflineStartDocument from "./offlineStartXMLGenerator.js";
@@ -36,10 +36,7 @@ const buildDocumentForSigning = pipe(
   encodeXml,
 );
 
-const getDocumentHash = asyncPipe(
-  buildDocumentForSigning,
-  sha256,
-);
+const getDocumentHash = asyncPipe(buildDocumentForSigning, sha256);
 
 const getDocument = (request) => {
   const { type: requestType } = request;

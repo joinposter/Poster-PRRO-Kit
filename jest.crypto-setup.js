@@ -1,5 +1,11 @@
 Object.defineProperty(global, "crypto", {
   value: {
-    randomUUID: () => "11111111-1111-1111-1111-111111111111",
+    subtle: {
+      digest: () =>
+        new Promise((resolve) => {
+          // eslint-disable-next-line no-magic-numbers
+          resolve(new Uint8Array(32).fill(0x11).buffer);
+        }),
+    },
   },
 });

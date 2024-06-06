@@ -19,9 +19,9 @@ describe("offline mode", () => {
     const fakeUUID = "11111111-1111-1111-1111-111111111111";
     uuidv4.mockImplementation(() => fakeUUID);
   });
-  it("generateOfflineReceiptDocument should return all data for generation receipt", () => {
+  it("generateOfflineReceiptDocument should return all data for generation receipt", async () => {
     expect(
-      generateOfflineReceiptDocument({
+      await generateOfflineReceiptDocument({
         type: "receipt",
         dateTime: "2024-06-04T12:26:18.293Z",
         cashboxData,
@@ -67,7 +67,7 @@ describe("offline mode", () => {
       uid: "11111111-1111-1111-1111-111111111111",
       dateTime: "2024-06-04T12:26:18.293Z",
       documentHash:
-        "413b477e666aabcf3017f53144a92bffa8e3590d6c13d4490498fe66cf40d92a",
+        "1111111111111111111111111111111111111111111111111111111111111111",
       cashboxData: {
         cashbox: "4000438533",
         cashboxLocalNumber: "123",
@@ -168,9 +168,9 @@ describe("offline mode", () => {
       ],
     });
   });
-  it("generateOfflineTransactionDocument should return all data for generation receipt", () => {
+  it("generateOfflineTransactionDocument should return all data for generation receipt", async () => {
     expect(
-      generateOfflineTransactionDocument({
+      await generateOfflineTransactionDocument({
         type: "serviceEntry",
         dateTime: "2024-06-04T12:26:18.293Z",
         cashboxData,
@@ -182,7 +182,7 @@ describe("offline mode", () => {
       uid: "11111111-1111-1111-1111-111111111111",
       dateTime: "2024-06-04T12:26:18.293Z",
       documentHash:
-        "e41c5500348526fa3da0623615e1948719f02810f64ffa75080bdc13eb1ae501",
+        "1111111111111111111111111111111111111111111111111111111111111111",
       cashboxData: {
         cashbox: "4000438533",
         cashboxLocalNumber: "123",
@@ -206,9 +206,9 @@ describe("offline mode", () => {
       sum: 1000,
     });
   });
-  it("generateOfflineOpenShiftDocument should return all data for generation receipt", () => {
+  it("generateOfflineOpenShiftDocument should return all data for generation receipt", async () => {
     expect(
-      generateOfflineOpenShiftDocument({
+      await generateOfflineOpenShiftDocument({
         type: "shiftOpen",
         dateTime: "2024-06-04T12:26:18.293Z",
         cashboxData,
@@ -218,7 +218,7 @@ describe("offline mode", () => {
       uid: "11111111-1111-1111-1111-111111111111",
       dateTime: "2024-06-04T12:26:18.293Z",
       documentHash:
-        "fcd904eba8c1d0baf0b639374618eb833e84e862a10a13973d9c42e53c34aa3e",
+        "1111111111111111111111111111111111111111111111111111111111111111",
       cashboxData: {
         cashbox: "4000438533",
         cashboxLocalNumber: "123",
@@ -241,9 +241,9 @@ describe("offline mode", () => {
       },
     });
   });
-  it("generateOfflineCloseShiftDocument should return all data for generation receipt", () => {
+  it("generateOfflineCloseShiftDocument should return all data for generation receipt", async () => {
     expect(
-      generateOfflineCloseShiftDocument({
+      await generateOfflineCloseShiftDocument({
         type: "shiftClose",
         dateTime: "2024-06-04T12:26:18.293Z",
         cashboxData,
@@ -253,7 +253,7 @@ describe("offline mode", () => {
       uid: "11111111-1111-1111-1111-111111111111",
       dateTime: "2024-06-04T12:26:18.293Z",
       documentHash:
-        "7d4ce6a380cb8a91b40a26c294e0cfd1846dc26269599ffebde338f96261ec7e",
+        "1111111111111111111111111111111111111111111111111111111111111111",
       cashboxData: {
         cashbox: "4000438533",
         cashboxLocalNumber: "123",
@@ -276,7 +276,7 @@ describe("offline mode", () => {
       },
     });
   });
-  it("generateOfflineZReportDocument should return all data for generation receipt", () => {
+  it("generateOfflineZReportDocument should return all data for generation receipt", async () => {
     const data = [
       {
         cashbox: 4000847239,
@@ -534,7 +534,7 @@ describe("offline mode", () => {
       },
     ];
     expect(
-      generateOfflineZReportDocument({
+      await generateOfflineZReportDocument({
         type: "ZReport",
         dateTime: "2024-06-04T12:26:18.293Z",
         cashboxData,
@@ -553,7 +553,7 @@ describe("offline mode", () => {
       uid: "11111111-1111-1111-1111-111111111111",
       dateTime: "2024-06-04T12:26:18.293Z",
       documentHash:
-        "06accf0d0bf40e8181538deebf978506794d1d00b3310706f245c9e039327ad1",
+        "1111111111111111111111111111111111111111111111111111111111111111",
       fiscalId: "23649865.1.9535",
       lastFiscalDocumentData: {
         dateTime: "2024-06-04T12:30:18.293Z",
@@ -695,9 +695,9 @@ describe("offline mode", () => {
       serviceOutput: null,
     });
   });
-  it("generateOfflineStartDocument", () => {
+  it("generateOfflineStartDocument", async () => {
     expect(
-      generateOfflineStartDocument({
+      await generateOfflineStartDocument({
         type: "offlineStart",
         dateTime: "2024-06-04T12:26:18.293Z",
         cashboxData,
@@ -707,7 +707,7 @@ describe("offline mode", () => {
       uid: "11111111-1111-1111-1111-111111111111",
       dateTime: "2024-06-04T12:26:18.293Z",
       documentHash:
-        "489dafef259874ac2c4c2f19bdb245adefa407a16d63e83ba11100d8595017cc",
+        "1111111111111111111111111111111111111111111111111111111111111111",
       cashboxData: {
         cashbox: "4000438533",
         cashboxLocalNumber: "123",
@@ -730,9 +730,9 @@ describe("offline mode", () => {
       },
     });
   });
-  it("generateOfflineFinishDocument", () => {
+  it("generateOfflineFinishDocument", async () => {
     expect(
-      generateOfflineFinishDocument({
+      await generateOfflineFinishDocument({
         type: "offlineFinish",
         dateTime: "2024-06-04T12:26:18.293Z",
         cashboxData,
@@ -742,7 +742,7 @@ describe("offline mode", () => {
       uid: "11111111-1111-1111-1111-111111111111",
       dateTime: "2024-06-04T12:26:18.293Z",
       documentHash:
-        "122f088dd995647bad708fae2313d9fcff597c0f93e3a800c5fd281cd5965402",
+        "1111111111111111111111111111111111111111111111111111111111111111",
       cashboxData: {
         cashbox: "4000438533",
         cashboxLocalNumber: "123",

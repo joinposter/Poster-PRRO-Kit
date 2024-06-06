@@ -1,6 +1,3 @@
-import { Buffer } from "buffer";
-import crypto from "crypto-browserify";
-
 import {
   generateTextFiscalReceipt,
   generateTextServiceTransactionReceipt,
@@ -32,6 +29,3 @@ export {
   generateOfflineStartDocument,
   generateOfflineFinishDocument,
 };
-
-window.Buffer = Buffer;
-window.crypto = window.crypto || crypto;

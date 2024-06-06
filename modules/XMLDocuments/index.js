@@ -1,7 +1,7 @@
 import xml2js from "xml2js";
 import iconv from "iconv-lite";
 import { XML_ENCODING } from "./const/xml.js";
-import { pipe } from "../../helpers/functional.js";
+import { asyncPipe, pipe } from "../../helpers/functional.js";
 import {
   DOCUMENT_TYPE_OFFLINE_FINISH,
   DOCUMENT_TYPE_OFFLINE_START,
@@ -13,7 +13,7 @@ import {
   DOCUMENT_TYPE_SHIFT_OPEN,
   DOCUMENT_TYPE_Z_REPORT,
 } from "./const/request.js";
-import { sha256 } from "./helpers/xmlGenerator.js";
+import { fromBase64ToBuffer, sha256 } from "./helpers/xmlGenerator.js";
 import getReceiptDocument from "./generators/receiptXMLGenerator.js";
 import getServiceTransactionDocument from "./generators/serviceTransactionXMLGenerator.js";
 import getOfflineStartDocument from "./generators/offlineStartXMLGenerator.js";
@@ -36,7 +36,11 @@ const buildDocumentForSigning = pipe(
   encodeXml,
 );
 
-const getDocumentHash = pipe(buildDocumentForSigning, sha256);
+const getDocumentHash = asyncPipe(
+  buildDocumentForSigning,
+  fromBase64ToBuffer,
+  sha256,
+);
 
 const getDocument = (request) => {
   const { type: requestType } = request;

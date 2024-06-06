@@ -1,7 +1,5 @@
 import { pipe } from "ramda";
 import { Buffer } from "buffer";
-// import { createHash } from "crypto";
-import sha from "js-sha256";
 import { crc32 } from "crc";
 import { v4 as uuidv4 } from "uuid";
 import { PAYMENT_TYPE_CARD, PAYMENT_TYPE_CASH } from "../const/fiscal.js";
@@ -21,7 +19,14 @@ export const getFiscalNumberControlCode = (string) => {
   return lastFourDigits || DEFAULT_CONTROL_CODE;
 };
 
-export const sha256 = (buffer) => sha.create().update(buffer).hex();
+async function digestMessage(message) {
+  const msgUint8 = new TextEncoder().encode(message);                           // encode as (utf-8) Uint8Array
+  const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8);           // hash the message
+  const hashArray = Array.from(new Uint8Array(hashBuffer));                     // convert buffer to byte array
+  const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join(''); // convert bytes to hex string
+  return hashHex;
+}
+export const sha256 = (text) => digestMessage(text);
 
 export const fromBase64ToBuffer = (data) => Buffer.from(data, "base64");
 

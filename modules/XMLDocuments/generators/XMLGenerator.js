@@ -1,7 +1,7 @@
 import xml2js from "xml2js";
 import iconv from "iconv-lite";
 import { XML_ENCODING } from "../const/xml.js";
-import { pipe } from "../../../helpers/functional.js";
+import { asyncPipe, pipe } from "../../../helpers/functional.js";
 import {
   DOCUMENT_TYPE_OFFLINE_FINISH,
   DOCUMENT_TYPE_OFFLINE_START,
@@ -36,9 +36,8 @@ const buildDocumentForSigning = pipe(
   encodeXml,
 );
 
-const getDocumentHash = pipe(
+const getDocumentHash = asyncPipe(
   buildDocumentForSigning,
-  fromBase64ToBuffer,
   sha256,
 );
 

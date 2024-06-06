@@ -19,9 +19,8 @@ export const getFiscalNumberControlCode = (string) => {
   return lastFourDigits || DEFAULT_CONTROL_CODE;
 };
 
-const digestMessage = async (message) => {
-  const msgUint8 = new TextEncoder().encode(message);
-  const hashBuffer = await crypto.subtle.digest("SHA-256", msgUint8);
+export const sha256 = async (buffer) => {
+  const hashBuffer = await crypto.subtle.digest("SHA-256", buffer);
   const hashArray = Array.from(new Uint8Array(hashBuffer));
   const hashHex = hashArray
     // eslint-disable-next-line no-magic-numbers
@@ -29,8 +28,6 @@ const digestMessage = async (message) => {
     .join("");
   return hashHex;
 };
-
-export const sha256 = (text) => digestMessage(text);
 
 export const fromBase64ToBuffer = (data) => Buffer.from(data, "base64");
 

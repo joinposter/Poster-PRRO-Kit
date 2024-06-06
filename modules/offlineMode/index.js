@@ -14,7 +14,7 @@ import { getDocument, getDocumentHash } from "../XMLDocuments/index.js";
 import { expandDocumentData } from "./helpers/offline.js";
 import { createXZReportData } from "./helpers/XZReportData.js";
 
-const generateOfflineReceiptDocument = (data) => {
+const generateOfflineReceiptDocument = async (data) => {
   if (
     data?.type !== DOCUMENT_TYPE_RECEIPT &&
     data?.type !== DOCUMENT_TYPE_RETURN_RECEIPT
@@ -23,7 +23,7 @@ const generateOfflineReceiptDocument = (data) => {
 
   const taxes = getTaxesData(data?.taxesConfig)(data?.products);
   const XML = getDocument({ ...expandDocumentData(data), taxes });
-  const documentHash = getDocumentHash(XML);
+  const documentHash = await getDocumentHash(XML);
   const fiscalId = XML?.CHECK?.CHECKHEAD?.ORDERTAXNUM;
   const uid = XML?.CHECK?.CHECKHEAD?.UID;
   return {
@@ -39,7 +39,7 @@ const generateOfflineReceiptDocument = (data) => {
     documentHash,
   };
 };
-const generateOfflineTransactionDocument = (data) => {
+const generateOfflineTransactionDocument = async (data) => {
   if (
     data?.type !== DOCUMENT_TYPE_SERVICE_ENTRY &&
     data?.type !== DOCUMENT_TYPE_SERVICE_DELIVERY
@@ -47,7 +47,7 @@ const generateOfflineTransactionDocument = (data) => {
     return "Invalid data type";
 
   const XML = getDocument(expandDocumentData(data));
-  const documentHash = getDocumentHash(XML);
+  const documentHash = await getDocumentHash(XML);
   const fiscalId = XML?.CHECK?.CHECKHEAD?.ORDERTAXNUM;
   const uid = XML?.CHECK?.CHECKHEAD?.UID;
   return {
@@ -61,11 +61,11 @@ const generateOfflineTransactionDocument = (data) => {
   };
 };
 
-const generateOfflineOpenShiftDocument = (data) => {
+const generateOfflineOpenShiftDocument = async (data) => {
   if (data?.type !== DOCUMENT_TYPE_SHIFT_OPEN) return "Invalid data type";
 
   const XML = getDocument(expandDocumentData(data));
-  const documentHash = getDocumentHash(XML);
+  const documentHash = await getDocumentHash(XML);
   const uid = XML?.CHECK?.CHECKHEAD?.UID;
   return {
     type: data?.type,
@@ -76,11 +76,11 @@ const generateOfflineOpenShiftDocument = (data) => {
   };
 };
 
-const generateOfflineCloseShiftDocument = (data) => {
+const generateOfflineCloseShiftDocument = async (data) => {
   if (data?.type !== DOCUMENT_TYPE_SHIFT_CLOSE) return "Invalid data type";
 
   const XML = getDocument(expandDocumentData(data));
-  const documentHash = getDocumentHash(XML);
+  const documentHash = await getDocumentHash(XML);
   const uid = XML?.CHECK?.CHECKHEAD?.UID;
   return {
     type: data?.type,
@@ -91,11 +91,11 @@ const generateOfflineCloseShiftDocument = (data) => {
   };
 };
 
-const generateOfflineZReportDocument = (data) => {
+const generateOfflineZReportDocument = async (data) => {
   if (data?.type !== DOCUMENT_TYPE_Z_REPORT) return "Invalid data type";
 
   const XML = getDocument({ ...createXZReportData(expandDocumentData(data)) });
-  const documentHash = getDocumentHash(XML);
+  const documentHash = await getDocumentHash(XML);
   const fiscalId = XML?.ZREP?.ZREPHEAD?.ORDERTAXNUM;
   return {
     ...createXZReportData(expandDocumentData(data)),
@@ -104,11 +104,11 @@ const generateOfflineZReportDocument = (data) => {
   };
 };
 
-const generateOfflineStartDocument = (data) => {
+const generateOfflineStartDocument = async (data) => {
   if (data?.type !== DOCUMENT_TYPE_OFFLINE_START) return "Invalid data type";
 
   const XML = getDocument(expandDocumentData(data));
-  const documentHash = getDocumentHash(XML);
+  const documentHash = await getDocumentHash(XML);
   const uid = XML?.CHECK?.CHECKHEAD?.UID;
   return {
     type: data?.type,
@@ -119,11 +119,11 @@ const generateOfflineStartDocument = (data) => {
   };
 };
 
-const generateOfflineFinishDocument = (data) => {
+const generateOfflineFinishDocument = async (data) => {
   if (data?.type !== DOCUMENT_TYPE_OFFLINE_FINISH) return "Invalid data type";
 
   const XML = getDocument(expandDocumentData(data));
-  const documentHash = getDocumentHash(XML);
+  const documentHash = await getDocumentHash(XML);
   const uid = XML?.CHECK?.CHECKHEAD?.UID;
   return {
     type: data?.type,

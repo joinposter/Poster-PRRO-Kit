@@ -15,6 +15,12 @@ import {
   generateOfflineFinishDocument,
 } from "./modules/offlineMode/index.js";
 
+import {
+  XMLToObject,
+  getDocument,
+  getDocumentHash,
+} from "./modules/XMLDocuments/index.js";
+
 export {
   generateTextFiscalReceipt,
   generateTextServiceTransactionReceipt,
@@ -28,4 +34,7 @@ export {
   generateOfflineZReportDocument,
   generateOfflineStartDocument,
   generateOfflineFinishDocument,
+  XMLToObject,
+  getDocument,
+  getDocumentHash,
 };

@@ -1,5 +1,4 @@
 import { v4 as uuidv4 } from "uuid";
-import { cashboxData } from "./mock/data.js";
 import { mockCustomTaxes } from "../taxes/mock/taxes.js";
 import {
   generateOfflineReceiptDocument,
@@ -24,7 +23,23 @@ describe("offline mode", () => {
       await generateOfflineReceiptDocument({
         type: "receipt",
         dateTime: "2024-06-04T12:26:18.293Z",
-        cashboxData,
+        cashboxData: {
+          cashbox: "4000438533",
+          tin: 44657555,
+          name: "ТОВ ТЕСТ ПРРО",
+          pointName: "кафе Ромашка",
+          pointAddress: "Дніпропетровська область, м. Дніпро, вул. Шевченка, 1",
+          cashboxLocalNumber: "123",
+        },
+        cashier: "Шевченко Т.Г.",
+        offlineSessionData: {
+          id: 23649865,
+          seed: 135969449201653,
+        },
+        documentNumber: 1,
+        offlineDocumentNumber: 1,
+        previousDocumentHash:
+          "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
         total: 950.04,
         payments: [
           { sum: 100, type: "cash" },
@@ -59,6 +74,9 @@ describe("offline mode", () => {
             taxPrograms: "В",
           },
         ],
+        shiftOpenData: {
+          dateTime: "2024-06-04T10:26:18.293Z",
+        },
         taxesConfig: mockCustomTaxes,
       }),
     ).toEqual({
@@ -70,23 +88,24 @@ describe("offline mode", () => {
         "1111111111111111111111111111111111111111111111111111111111111111",
       cashboxData: {
         cashbox: "4000438533",
-        cashboxLocalNumber: "123",
-        name: "ТОВ ТЕСТ ПРРО",
-        pointAddress: "Дніпропетровська область, м. Дніпро, вул. Шевченка, 1",
-        pointName: "кафе Ромашка",
         tin: 44657555,
-        documentNumber: 1,
-        offlineDocumentNumber: 1,
-        isCashboxModeOffline: true,
-        getOfflineSessionData: {
-          id: 23649865,
-          seed: 135969449201653,
-        },
-        previousDocumentHash:
-          "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
-        shiftOpenData: {
-          dateTime: "2024-06-04T10:26:18.293Z",
-        },
+        name: "ТОВ ТЕСТ ПРРО",
+        pointName: "кафе Ромашка",
+        pointAddress: "Дніпропетровська область, м. Дніпро, вул. Шевченка, 1",
+        cashboxLocalNumber: "123",
+      },
+      cashier: "Шевченко Т.Г.",
+      documentNumber: 1,
+      offlineDocumentNumber: 1,
+      isCashboxModeOffline: true,
+      offlineSessionData: {
+        id: 23649865,
+        seed: 135969449201653,
+      },
+      previousDocumentHash:
+        "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
+      shiftOpenData: {
+        dateTime: "2024-06-04T10:26:18.293Z",
       },
       total: 950.04,
       payments: [
@@ -173,7 +192,26 @@ describe("offline mode", () => {
       await generateOfflineTransactionDocument({
         type: "serviceEntry",
         dateTime: "2024-06-04T12:26:18.293Z",
-        cashboxData,
+        cashboxData: {
+          cashbox: "4000438533",
+          tin: 44657555,
+          name: "ТОВ ТЕСТ ПРРО",
+          pointName: "кафе Ромашка",
+          pointAddress: "Дніпропетровська область, м. Дніпро, вул. Шевченка, 1",
+          cashboxLocalNumber: "123",
+        },
+        cashier: "Шевченко Т.Г.",
+        documentNumber: 1,
+        offlineDocumentNumber: 1,
+        offlineSessionData: {
+          id: 23649865,
+          seed: 135969449201653,
+        },
+        previousDocumentHash:
+          "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
+        shiftOpenData: {
+          dateTime: "2024-06-04T10:26:18.293Z",
+        },
         sum: 1000,
       }),
     ).toEqual({
@@ -185,23 +223,24 @@ describe("offline mode", () => {
         "1111111111111111111111111111111111111111111111111111111111111111",
       cashboxData: {
         cashbox: "4000438533",
-        cashboxLocalNumber: "123",
-        name: "ТОВ ТЕСТ ПРРО",
-        pointAddress: "Дніпропетровська область, м. Дніпро, вул. Шевченка, 1",
-        pointName: "кафе Ромашка",
         tin: 44657555,
-        documentNumber: 1,
-        offlineDocumentNumber: 1,
-        isCashboxModeOffline: true,
-        getOfflineSessionData: {
-          id: 23649865,
-          seed: 135969449201653,
-        },
-        previousDocumentHash:
-          "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
-        shiftOpenData: {
-          dateTime: "2024-06-04T10:26:18.293Z",
-        },
+        name: "ТОВ ТЕСТ ПРРО",
+        pointName: "кафе Ромашка",
+        pointAddress: "Дніпропетровська область, м. Дніпро, вул. Шевченка, 1",
+        cashboxLocalNumber: "123",
+      },
+      cashier: "Шевченко Т.Г.",
+      documentNumber: 1,
+      offlineDocumentNumber: 1,
+      isCashboxModeOffline: true,
+      offlineSessionData: {
+        id: 23649865,
+        seed: 135969449201653,
+      },
+      previousDocumentHash:
+        "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
+      shiftOpenData: {
+        dateTime: "2024-06-04T10:26:18.293Z",
       },
       sum: 1000,
     });
@@ -211,7 +250,26 @@ describe("offline mode", () => {
       await generateOfflineOpenShiftDocument({
         type: "shiftOpen",
         dateTime: "2024-06-04T12:26:18.293Z",
-        cashboxData,
+        cashboxData: {
+          cashbox: "4000438533",
+          tin: 44657555,
+          name: "ТОВ ТЕСТ ПРРО",
+          pointName: "кафе Ромашка",
+          pointAddress: "Дніпропетровська область, м. Дніпро, вул. Шевченка, 1",
+          cashboxLocalNumber: "123",
+        },
+        cashier: "Шевченко Т.Г.",
+        documentNumber: 1,
+        offlineDocumentNumber: 1,
+        offlineSessionData: {
+          id: 23649865,
+          seed: 135969449201653,
+        },
+        previousDocumentHash:
+          "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
+        shiftOpenData: {
+          dateTime: "2024-06-04T10:26:18.293Z",
+        },
       }),
     ).toEqual({
       type: "shiftOpen",
@@ -221,23 +279,24 @@ describe("offline mode", () => {
         "1111111111111111111111111111111111111111111111111111111111111111",
       cashboxData: {
         cashbox: "4000438533",
-        cashboxLocalNumber: "123",
-        name: "ТОВ ТЕСТ ПРРО",
-        pointAddress: "Дніпропетровська область, м. Дніпро, вул. Шевченка, 1",
-        pointName: "кафе Ромашка",
         tin: 44657555,
-        documentNumber: 1,
-        offlineDocumentNumber: 1,
-        isCashboxModeOffline: true,
-        getOfflineSessionData: {
-          id: 23649865,
-          seed: 135969449201653,
-        },
-        previousDocumentHash:
-          "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
-        shiftOpenData: {
-          dateTime: "2024-06-04T10:26:18.293Z",
-        },
+        name: "ТОВ ТЕСТ ПРРО",
+        pointName: "кафе Ромашка",
+        pointAddress: "Дніпропетровська область, м. Дніпро, вул. Шевченка, 1",
+        cashboxLocalNumber: "123",
+      },
+      cashier: "Шевченко Т.Г.",
+      documentNumber: 1,
+      offlineDocumentNumber: 1,
+      isCashboxModeOffline: true,
+      offlineSessionData: {
+        id: 23649865,
+        seed: 135969449201653,
+      },
+      previousDocumentHash:
+        "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
+      shiftOpenData: {
+        dateTime: "2024-06-04T10:26:18.293Z",
       },
     });
   });
@@ -246,7 +305,26 @@ describe("offline mode", () => {
       await generateOfflineCloseShiftDocument({
         type: "shiftClose",
         dateTime: "2024-06-04T12:26:18.293Z",
-        cashboxData,
+        cashboxData: {
+          cashbox: "4000438533",
+          tin: 44657555,
+          name: "ТОВ ТЕСТ ПРРО",
+          pointName: "кафе Ромашка",
+          pointAddress: "Дніпропетровська область, м. Дніпро, вул. Шевченка, 1",
+          cashboxLocalNumber: "123",
+        },
+        cashier: "Шевченко Т.Г.",
+        documentNumber: 1,
+        offlineDocumentNumber: 1,
+        offlineSessionData: {
+          id: 23649865,
+          seed: 135969449201653,
+        },
+        previousDocumentHash:
+          "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
+        shiftOpenData: {
+          dateTime: "2024-06-04T10:26:18.293Z",
+        },
       }),
     ).toEqual({
       type: "shiftClose",
@@ -256,23 +334,24 @@ describe("offline mode", () => {
         "1111111111111111111111111111111111111111111111111111111111111111",
       cashboxData: {
         cashbox: "4000438533",
-        cashboxLocalNumber: "123",
-        name: "ТОВ ТЕСТ ПРРО",
-        pointAddress: "Дніпропетровська область, м. Дніпро, вул. Шевченка, 1",
-        pointName: "кафе Ромашка",
         tin: 44657555,
-        documentNumber: 1,
-        offlineDocumentNumber: 1,
-        isCashboxModeOffline: true,
-        getOfflineSessionData: {
-          id: 23649865,
-          seed: 135969449201653,
-        },
-        previousDocumentHash:
-          "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
-        shiftOpenData: {
-          dateTime: "2024-06-04T10:26:18.293Z",
-        },
+        name: "ТОВ ТЕСТ ПРРО",
+        pointName: "кафе Ромашка",
+        pointAddress: "Дніпропетровська область, м. Дніпро, вул. Шевченка, 1",
+        cashboxLocalNumber: "123",
+      },
+      cashier: "Шевченко Т.Г.",
+      documentNumber: 1,
+      offlineDocumentNumber: 1,
+      isCashboxModeOffline: true,
+      offlineSessionData: {
+        id: 23649865,
+        seed: 135969449201653,
+      },
+      previousDocumentHash:
+        "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
+      shiftOpenData: {
+        dateTime: "2024-06-04T10:26:18.293Z",
       },
     });
   });
@@ -537,7 +616,26 @@ describe("offline mode", () => {
       await generateOfflineZReportDocument({
         type: "ZReport",
         dateTime: "2024-06-04T12:26:18.293Z",
-        cashboxData,
+        cashboxData: {
+          cashbox: "4000438533",
+          tin: 44657555,
+          name: "ТОВ ТЕСТ ПРРО",
+          pointName: "кафе Ромашка",
+          pointAddress: "Дніпропетровська область, м. Дніпро, вул. Шевченка, 1",
+          cashboxLocalNumber: "123",
+        },
+        cashier: "Шевченко Т.Г.",
+        documentNumber: 1,
+        offlineDocumentNumber: 1,
+        offlineSessionData: {
+          id: 23649865,
+          seed: 135969449201653,
+        },
+        previousDocumentHash:
+          "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
+        shiftOpenData: {
+          dateTime: "2024-06-04T10:26:18.293Z",
+        },
         data,
         lastFiscalDocument: {
           documentNumber: 789,
@@ -562,24 +660,22 @@ describe("offline mode", () => {
       },
       cashboxData: {
         cashbox: "4000438533",
-        cashboxLocalNumber: "123",
-        name: "ТОВ ТЕСТ ПРРО",
-        pointAddress: "Дніпропетровська область, м. Дніпро, вул. Шевченка, 1",
-        pointName: "кафе Ромашка",
         tin: 44657555,
-        documentNumber: 1,
-        offlineDocumentNumber: 1,
-        isCashboxModeOffline: true,
-        getOfflineSessionData: {
-          id: 23649865,
-          seed: 135969449201653,
-        },
-        previousDocumentHash:
-          "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
-        shiftOpenData: {
-          dateTime: "2024-06-04T10:26:18.293Z",
-        },
+        name: "ТОВ ТЕСТ ПРРО",
+        pointName: "кафе Ромашка",
+        pointAddress: "Дніпропетровська область, м. Дніпро, вул. Шевченка, 1",
+        cashboxLocalNumber: "123",
       },
+      cashier: "Шевченко Т.Г.",
+      documentNumber: 1,
+      offlineDocumentNumber: 1,
+      isCashboxModeOffline: true,
+      offlineSessionData: {
+        id: 23649865,
+        seed: 135969449201653,
+      },
+      previousDocumentHash:
+        "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
       shiftOpenData: {
         dateTime: "2024-06-04T10:26:18.293Z",
       },
@@ -700,7 +796,27 @@ describe("offline mode", () => {
       await generateOfflineStartDocument({
         type: "offlineStart",
         dateTime: "2024-06-04T12:26:18.293Z",
-        cashboxData,
+        cashboxData: {
+          cashbox: "4000438533",
+          tin: 44657555,
+          name: "ТОВ ТЕСТ ПРРО",
+          pointName: "кафе Ромашка",
+          pointAddress: "Дніпропетровська область, м. Дніпро, вул. Шевченка, 1",
+          cashboxLocalNumber: "123",
+        },
+        cashier: "Шевченко Т.Г.",
+        documentNumber: 1,
+        offlineDocumentNumber: 1,
+        isCashboxModeOffline: true,
+        offlineSessionData: {
+          id: 23649865,
+          seed: 135969449201653,
+        },
+        previousDocumentHash:
+          "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
+        shiftOpenData: {
+          dateTime: "2024-06-04T10:26:18.293Z",
+        },
       }),
     ).toEqual({
       type: "offlineStart",
@@ -710,23 +826,24 @@ describe("offline mode", () => {
         "1111111111111111111111111111111111111111111111111111111111111111",
       cashboxData: {
         cashbox: "4000438533",
-        cashboxLocalNumber: "123",
-        name: "ТОВ ТЕСТ ПРРО",
-        pointAddress: "Дніпропетровська область, м. Дніпро, вул. Шевченка, 1",
-        pointName: "кафе Ромашка",
         tin: 44657555,
-        documentNumber: 1,
-        offlineDocumentNumber: 1,
-        isCashboxModeOffline: true,
-        getOfflineSessionData: {
-          id: 23649865,
-          seed: 135969449201653,
-        },
-        previousDocumentHash:
-          "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
-        shiftOpenData: {
-          dateTime: "2024-06-04T10:26:18.293Z",
-        },
+        name: "ТОВ ТЕСТ ПРРО",
+        pointName: "кафе Ромашка",
+        pointAddress: "Дніпропетровська область, м. Дніпро, вул. Шевченка, 1",
+        cashboxLocalNumber: "123",
+      },
+      cashier: "Шевченко Т.Г.",
+      documentNumber: 1,
+      offlineDocumentNumber: 1,
+      isCashboxModeOffline: true,
+      offlineSessionData: {
+        id: 23649865,
+        seed: 135969449201653,
+      },
+      previousDocumentHash:
+        "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
+      shiftOpenData: {
+        dateTime: "2024-06-04T10:26:18.293Z",
       },
     });
   });
@@ -735,7 +852,27 @@ describe("offline mode", () => {
       await generateOfflineFinishDocument({
         type: "offlineFinish",
         dateTime: "2024-06-04T12:26:18.293Z",
-        cashboxData,
+        cashboxData: {
+          cashbox: "4000438533",
+          tin: 44657555,
+          name: "ТОВ ТЕСТ ПРРО",
+          pointName: "кафе Ромашка",
+          pointAddress: "Дніпропетровська область, м. Дніпро, вул. Шевченка, 1",
+          cashboxLocalNumber: "123",
+        },
+        cashier: "Шевченко Т.Г.",
+        documentNumber: 1,
+        offlineDocumentNumber: 1,
+        isCashboxModeOffline: true,
+        offlineSessionData: {
+          id: 23649865,
+          seed: 135969449201653,
+        },
+        previousDocumentHash:
+          "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
+        shiftOpenData: {
+          dateTime: "2024-06-04T10:26:18.293Z",
+        },
       }),
     ).toEqual({
       type: "offlineFinish",
@@ -750,18 +887,19 @@ describe("offline mode", () => {
         pointAddress: "Дніпропетровська область, м. Дніпро, вул. Шевченка, 1",
         pointName: "кафе Ромашка",
         tin: 44657555,
-        documentNumber: 1,
-        offlineDocumentNumber: 1,
-        isCashboxModeOffline: true,
-        getOfflineSessionData: {
-          id: 23649865,
-          seed: 135969449201653,
-        },
-        previousDocumentHash:
-          "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
-        shiftOpenData: {
-          dateTime: "2024-06-04T10:26:18.293Z",
-        },
+      },
+      cashier: "Шевченко Т.Г.",
+      documentNumber: 1,
+      offlineDocumentNumber: 1,
+      isCashboxModeOffline: true,
+      offlineSessionData: {
+        id: 23649865,
+        seed: 135969449201653,
+      },
+      previousDocumentHash:
+        "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
+      shiftOpenData: {
+        dateTime: "2024-06-04T10:26:18.293Z",
       },
     });
   });

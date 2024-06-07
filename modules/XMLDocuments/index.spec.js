@@ -5,7 +5,7 @@ import getReceiptDocument from "./generators/receiptXMLGenerator.js";
 import getShiftOpenDocument from "./generators/shiftOpenXMLGenerator.js";
 import getZReportDocument from "./generators/zReportXMLGenerator.js";
 import { getTaxesData, getTaxPrograms } from "../taxes/index.js";
-import { cashboxData, receiptRequestData, zReportData } from "./mock/data.js";
+import { receiptRequestData, zReportData } from "./mock/data.js";
 import { mockCustomTaxes } from "../taxes/mock/taxes.js";
 
 describe("XMLDocuments", () => {
@@ -35,9 +35,6 @@ describe("XMLDocuments", () => {
         const taxes = getTaxesData(taxesConfig)(receiptRequestData.products);
         const data = getReceiptDocument({
           ...receiptRequestData,
-          dateTime: "2024-04-18T15:16:17",
-          uid: "11111111-1111-1111-1111-111111111111",
-          cashboxData,
           taxes,
         });
         expect(builder.buildObject(data)).toBe(
@@ -174,18 +171,18 @@ describe("XMLDocuments", () => {
           pointName: "кафе Ромашка",
           pointAddress: "Дніпропетровська область, м. Дніпро, вул. Шевченка, 1",
           cashbox: "4000438533",
-          cashier: "Шевченко Т.Г.",
           cashboxLocalNumber: "123",
-          isCashboxModeOffline: true,
-          getOfflineSessionData: {
-            id: 23649865,
-            seed: 135969449201653,
-          },
-          documentNumber: 1,
-          offlineDocumentNumber: 1,
-          previousDocumentHash:
-            "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
         },
+        cashier: "Шевченко Т.Г.",
+        isCashboxModeOffline: true,
+        offlineSessionData: {
+          id: 23649865,
+          seed: 135969449201653,
+        },
+        documentNumber: 1,
+        offlineDocumentNumber: 1,
+        previousDocumentHash:
+          "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
       };
       it("getShiftOpenDocument should generate shiftOpen valid XML, with a correct tag's order", async () => {
         const shiftOpenData = await getShiftOpenDocument(data);
@@ -223,12 +220,7 @@ describe("XMLDocuments", () => {
       });
 
       it("should generate valid z-report XML, with a correct tag's order", async () => {
-        const data = await getZReportDocument({
-          ...zReportData,
-          dateTime: "2024-04-18T15:16:17",
-          uid: "11111111-1111-1111-1111-111111111111",
-          cashboxData,
-        });
+        const data = await getZReportDocument(zReportData);
         expect(builder.buildObject(data)).toBe(
           '<?xml version="1.0" encoding="windows-1251"?>\n' +
             "<ZREP>\n" +

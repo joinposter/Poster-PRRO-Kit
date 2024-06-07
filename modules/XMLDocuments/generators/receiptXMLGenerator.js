@@ -152,7 +152,7 @@ const getReceiptHeader = (operationData) => {
     ...getDocumentNumberFields(operationData),
     ...getCashboxFields(cashboxData),
     ...getReturnReceiptFields(operationData),
-    ...getCashierFields(cashboxData),
+    ...getCashierFields(operationData),
     ...getVersionFields(),
     ...getOfflineFields({ operationData, operationSum }),
     ...getTestingModeFields(),

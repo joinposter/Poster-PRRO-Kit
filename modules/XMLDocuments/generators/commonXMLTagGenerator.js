@@ -24,7 +24,6 @@ const getDateTimeFields = (date) => {
 
 const getHeader = (operationData, getTypeFields = () => {}) => {
   const { cashboxData, dateTime } = operationData;
-  // const cashboxData = await getCashboxData(cashbox);
 
   return {
     ...getTypeFields(),
@@ -33,7 +32,7 @@ const getHeader = (operationData, getTypeFields = () => {}) => {
     ...getDateTimeFields(dateTime),
     ...getDocumentNumberFields(operationData),
     ...getCashboxFields(cashboxData),
-    ...getCashierFields(cashboxData),
+    ...getCashierFields(operationData),
     ...getVersionFields(),
     ...getOfflineFields({ operationData }),
     ...getTestingModeFields(),
@@ -80,9 +79,7 @@ export const getOrganizationFields = (cashboxData) => {
 };
 
 export const getDocumentNumberFields = (operationData) => {
-  const {
-    cashboxData: { documentNumber: ORDERNUM },
-  } = operationData;
+  const { documentNumber: ORDERNUM } = operationData;
   return { ORDERNUM };
 };
 
@@ -110,9 +107,8 @@ export const getTestingModeFields = () => ({
 });
 
 const getOfflineFields = ({ operationData, operationSum }) => {
-  const {
-    cashboxData: { isCashboxModeOffline: isOffline, previousDocumentHash },
-  } = operationData;
+  const { isCashboxModeOffline: isOffline, previousDocumentHash } =
+    operationData;
 
   return isOffline
     ? {
@@ -127,17 +123,17 @@ const getOfflineFields = ({ operationData, operationSum }) => {
 };
 
 const getOfflineFiscalNumber = ({ operationData, operationSum }) => {
-  const { cashboxData, dateTime } = operationData;
-  const { ORDERDATE, ORDERTIME } = getDateTimeFields(dateTime);
-
   const {
-    cashboxLocalNumber,
-    cashbox,
-    getOfflineSessionData: { id, seed },
+    cashboxData,
+    dateTime,
+    offlineSessionData: { id, seed },
     documentNumber,
     offlineDocumentNumber,
     previousDocumentHash,
-  } = cashboxData;
+  } = operationData;
+  const { ORDERDATE, ORDERTIME } = getDateTimeFields(dateTime);
+
+  const { cashboxLocalNumber, cashbox } = cashboxData;
 
   const secretParts = [
     seed,

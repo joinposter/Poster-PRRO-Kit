@@ -34,6 +34,47 @@ export const receiptRequestData = {
       taxPrograms: "В",
     },
   ],
+  cashboxData: {
+    cashbox: "4000438533",
+    tin: 44657555,
+    name: "ТОВ ТЕСТ ПРРО",
+    pointName: "кафе Ромашка",
+    pointAddress: "Дніпропетровська область, м. Дніпро, вул. Шевченка, 1",
+    cashboxLocalNumber: "123",
+  },
+  cashier: "Шевченко Т.Г.",
+  offlineSessionData: {
+    id: 23649865,
+    seed: 135969449201653,
+  },
+  documentNumber: 1,
+  offlineDocumentNumber: 1,
+  previousDocumentHash:
+    "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
+  isCashboxModeOffline: true,
+  dateTime: "2024-04-18T15:16:17",
+  uid: "11111111-1111-1111-1111-111111111111",
+};
+
+export const operationData = {
+  cashboxData: {
+    cashbox: "4000438533",
+    tin: 44657555,
+    name: "ТОВ ТЕСТ ПРРО",
+    pointName: "кафе Ромашка",
+    pointAddress: "Дніпропетровська область, м. Дніпро, вул. Шевченка, 1",
+    cashboxLocalNumber: "123",
+  },
+  cashier: "Шевченко Т.Г.",
+  offlineSessionData: {
+    id: 23649865,
+    seed: 135969449201653,
+  },
+  documentNumber: 1,
+  offlineDocumentNumber: 1,
+  previousDocumentHash:
+    "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
+  isCashboxModeOffline: true,
 };
 
 export const cashboxData = {
@@ -101,4 +142,24 @@ export const zReportData = {
   return: null,
   serviceInput: 0,
   serviceOutput: 0,
+  dateTime: "2024-04-18T15:16:17",
+  uid: "11111111-1111-1111-1111-111111111111",
+  cashboxData: {
+    cashbox: "4000438533",
+    tin: 44657555,
+    name: "ТОВ ТЕСТ ПРРО",
+    pointName: "кафе Ромашка",
+    pointAddress: "Дніпропетровська область, м. Дніпро, вул. Шевченка, 1",
+    cashboxLocalNumber: "123",
+  },
+  cashier: "Шевченко Т.Г.",
+  offlineSessionData: {
+    id: 23649865,
+    seed: 135969449201653,
+  },
+  documentNumber: 1,
+  offlineDocumentNumber: 1,
+  previousDocumentHash:
+    "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
+  isCashboxModeOffline: true,
 };

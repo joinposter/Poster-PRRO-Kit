@@ -31,7 +31,7 @@ const getServiceTransactionHeader = (operationData) => {
     ...getDateTimeFields(dateTime),
     ...getDocumentNumberFields(operationData),
     ...getCashboxFields(cashboxData),
-    ...getCashierFields(cashboxData),
+    ...getCashierFields(operationData),
     ...getVersionFields(),
     ...getOfflineFields({ operationData, operationSum }),
     ...getTestingModeFields(),

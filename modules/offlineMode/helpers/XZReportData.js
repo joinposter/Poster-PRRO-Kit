@@ -139,23 +139,17 @@ const getLastFiscalDocumentData = (document) => ({
 });
 
 const createXZReportData = ({
-  data,
-  type,
-  uid,
-  lastFiscalDocument,
-  cashboxData,
-  dateTime,
   taxesConfig,
+  data,
+  lastFiscalDocument,
+  ...rest
 }) => ({
-  type,
-  dateTime,
-  uid,
-  cashboxData,
+  ...rest,
   realiz: getRealizData(data, taxesConfig),
   return: getReturnData(data, taxesConfig),
   serviceInput: getServiceEntryData(data),
   serviceOutput: getServiceDeliveryData(data),
-  shiftOpenData: getShiftOpenData(cashboxData),
+  shiftOpenData: getShiftOpenData(rest),
   lastFiscalDocumentData: getLastFiscalDocumentData(lastFiscalDocument),
 });
 

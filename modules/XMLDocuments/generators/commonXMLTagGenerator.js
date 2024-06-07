@@ -33,7 +33,7 @@ const getHeader = (operationData, getTypeFields = () => {}) => {
     ...getDateTimeFields(dateTime),
     ...getDocumentNumberFields(operationData),
     ...getCashboxFields(cashboxData),
-    ...getCashierFields(),
+    ...getCashierFields(cashboxData),
     ...getVersionFields(),
     ...getOfflineFields({ operationData }),
     ...getTestingModeFields(),
@@ -65,10 +65,14 @@ export const getOrganizationFields = (cashboxData) => {
     name: ORGNM,
     pointName: POINTNM,
     pointAddress: POINTADDR,
+    ipn,
   } = cashboxData;
+
+  const IPN = ipn ? { IPN: ipn } : {};
 
   return {
     TIN,
+    ...IPN,
     ORGNM,
     POINTNM,
     POINTADDR,
@@ -92,9 +96,10 @@ export const getCashboxFields = (cashboxData) => {
   };
 };
 
-export const getCashierFields = () => ({
-  CASHIER: "Шевченко Т.Г.",
-});
+export const getCashierFields = ({ cashier }) => {
+  const CASHIER = cashier ? { CASHIER: cashier } : {};
+  return CASHIER;
+};
 
 export const getVersionFields = () => ({
   VER: 1,

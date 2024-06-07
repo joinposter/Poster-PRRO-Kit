@@ -21,7 +21,7 @@ const getOfflineStartHeader = (operationData) => {
     ...getDateTimeFields(dateTime),
     ...getDocumentNumberFields(operationData),
     ...getCashboxFields(cashboxData),
-    ...getCashierFields(),
+    ...getCashierFields(cashboxData),
     ...getVersionFields(),
     ...getOfflineFields({ operationData }),
   };

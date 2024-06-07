@@ -1,20 +1,29 @@
 import defaultReceiptConfig from "./modules/receiptGenerator/config/receipt.js";
 
 export const cashboxData = {
-  isOffline: false,
-  dateTime: "2024-05-24T13:20:02.357Z",
+  cashbox: "4000244601",
+  tin: "12345678",
   name: "ТОВ ТЕСТ ПРРО",
   pointName: 'Кафе "Мʼята"',
   pointAddress:
     "Дніпропетровська область, м. Дніпро, Амур-Нижньодніпровський район, вул. Шолом-Алейхема, 4, кв. (Офіс) 31",
-  tin: "12345678",
-  cashbox: "4000244601",
+  cashboxLocalNumber: "123",
 };
 export const getServiceInputBodyMock = {
   sum: 2850,
   dateTime: "2024-05-16T16:28:35.679Z",
   receiptConfig: defaultReceiptConfig,
   cashboxData,
+  cashier: "Шевченко Т.Г.",
+  offlineSessionData: {
+    id: 23649865,
+    seed: 135969449201653,
+  },
+  documentNumber: 1,
+  offlineDocumentNumber: 1,
+  previousDocumentHash:
+    "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
+  isCashboxModeOffline: false,
 };
 
 export const getServiceOutputBodyMock = {
@@ -22,6 +31,16 @@ export const getServiceOutputBodyMock = {
   dateTime: "2024-05-16T16:28:35.679Z",
   receiptConfig: defaultReceiptConfig,
   cashboxData,
+  cashier: "Шевченко Т.Г.",
+  offlineSessionData: {
+    id: 23649865,
+    seed: 135969449201653,
+  },
+  documentNumber: 1,
+  offlineDocumentNumber: 1,
+  previousDocumentHash:
+    "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
+  isCashboxModeOffline: true,
 };
 
 export const productsData = [
@@ -87,10 +106,22 @@ export const sstData = {
 };
 
 export const fiscalReceiptDataMock = {
-  cashboxData,
-  fiscalId: "2462757750",
   type: "receipt",
+  fiscalId: "2462757750",
+  dateTime: "2024-05-16T16:29:35.710Z",
+  uid: "587989ce-f05d-4d66-b2a8-4138f13bfe88",
   cashbox: cashboxData.cashbox,
+  cashboxData,
+  cashier: "Шевченко Т.Г.",
+  offlineSessionData: {
+    id: 23649865,
+    seed: 135969449201653,
+  },
+  documentNumber: 1,
+  offlineDocumentNumber: 1,
+  previousDocumentHash:
+    "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
+  isCashboxModeOffline: false,
   total: 384.26,
   payments: [
     {
@@ -103,8 +134,6 @@ export const fiscalReceiptDataMock = {
     },
   ],
   products: productsData,
-  uid: "587989ce-f05d-4d66-b2a8-4138f13bfe88",
-  dateTime: "2024-05-16T16:29:35.710Z",
   taxes: [
     {
       type: 5,
@@ -223,4 +252,14 @@ export const xReportDataMock = {
     fiscalId: "2469255615",
   },
   dateTime: "2024-05-27T17:22:06.973Z",
+  cashier: "Шевченко Т.Г.",
+  offlineSessionData: {
+    id: 23649865,
+    seed: 135969449201653,
+  },
+  isCashboxModeOffline: true,
+  documentNumber: 1,
+  offlineDocumentNumber: 1,
+  previousDocumentHash:
+    "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
 };

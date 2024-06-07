@@ -88,14 +88,14 @@ const getFooterData = ({
   fiscalId,
   dateTime,
   cashbox,
-  status,
+  isCashboxModeOffline,
   docType,
   software,
 }) => ({
   fiscalId,
   dateTime: getDateTime({ date: dateTime }),
   cashbox,
-  status,
+  isCashboxModeOffline,
   docType,
   software,
 });
@@ -120,6 +120,7 @@ export const prepareDataForPrintReceipt = (data) => ({
   fiscalId: data.fiscalId,
   dateTime: getDateTime({ date: data.dateTime }),
   cashboxData: data.cashboxData,
+  cashier: data.cashier,
   type: data.type,
   productsData: data.products.map((product) => ({
     uktzed: getProductUktzed(product.name),
@@ -143,11 +144,11 @@ export const prepareDataForPrintReceipt = (data) => ({
   receiptConfig: data.receiptConfig || defaultReceiptConfig,
 });
 
-export const getCashboxStatus = ({ cashboxData }) =>
-  cashboxData?.isOffline ? "ОФФЛАЙН" : "ОНЛАЙН";
+export const getCashboxStatus = ({ footerData: { isCashboxModeOffline } }) =>
+  isCashboxModeOffline ? "ОФФЛАЙН" : "ОНЛАЙН";
 
-export const getControlSum = ({ cashboxData, fiscalId }) => {
-  if (cashboxData?.isOffline && fiscalId) {
+export const getControlSum = ({ isCashboxModeOffline, fiscalId }) => {
+  if (isCashboxModeOffline && fiscalId) {
     return fiscalId?.toString()?.split(".")?.pop();
   }
   return null;

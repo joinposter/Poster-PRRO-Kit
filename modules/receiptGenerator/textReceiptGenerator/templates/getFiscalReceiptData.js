@@ -6,7 +6,8 @@ import getSstData from "./blocks/sstBlock.js";
 import getSmartFooterBlock from "./blocks/smartFooterBlock/smartFooterBlock.js";
 import getFiscalReceiptType from "./blocks/fiscalReceiptTypeBlock.js";
 
-const fiscalCompanyData = (data) => getFiscalCompanyData(data.cashboxData);
+const fiscalCompanyData = ({ cashboxData, cashier }) =>
+  getFiscalCompanyData({ ...cashboxData, cashier });
 
 const operationType = (data) => getFiscalReceiptType(data.type);
 

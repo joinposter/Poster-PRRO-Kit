@@ -19,6 +19,7 @@ import {
   XMLToObject,
   getDocument,
   getDocumentHash,
+  buildXMLDocument,
 } from "./modules/XMLDocuments/index.js";
 
 export {
@@ -37,4 +38,5 @@ export {
   XMLToObject,
   getDocument,
   getDocumentHash,
+  buildXMLDocument,
 };

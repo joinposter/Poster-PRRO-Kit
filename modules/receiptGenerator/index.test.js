@@ -12,7 +12,7 @@ import {
 } from "./index.js";
 
 describe("receiptGenerator", () => {
-  it("generateFiscalReceipt should has this structure", async () => {
+  it("generateFiscalReceipt should has this structure", () => {
     const expectedReceipt = [
       "              ТОВ ТЕСТ ПРРО             ",
       '              Кафе "Мʼята"              ',
@@ -20,6 +20,7 @@ describe("receiptGenerator", () => {
       "   Амур-Нижньодніпровський район, вул.  ",
       "    Шолом-Алейхема, 4, кв. (Офіс) 31    ",
       "               ІД 12345678              ",
+      "           Касир Шевченко Т.Г.          ",
       "----------------------------------------",
       "2204109600#                           ",
       "12345678                              ",
@@ -60,13 +61,13 @@ describe("receiptGenerator", () => {
       "               Poster POS               ",
     ].join("\n");
     expect(
-      await generateTextFiscalReceipt({
+      generateTextFiscalReceipt({
         ...fiscalReceiptDataMock,
         receiptConfig: defaultReceiptConfig,
       }),
     ).toEqual(expectedReceipt);
   });
-  it("generateTextServiceTransactionReceipt should has this structure for input", async () => {
+  it("generateTextServiceTransactionReceipt should has this structure for input", () => {
     const expectedReceipt = [
       "              ТОВ ТЕСТ ПРРО             ",
       '              Кафе "Мʼята"              ',
@@ -74,6 +75,7 @@ describe("receiptGenerator", () => {
       "   Амур-Нижньодніпровський район, вул.  ",
       "    Шолом-Алейхема, 4, кв. (Офіс) 31    ",
       "               ІД 12345678              ",
+      "           Касир Шевченко Т.Г.          ",
       "----------------------------------------",
       "            СЛУЖБОВЕ ВНЕСЕННЯ           ",
       "----------------------------------------",
@@ -87,7 +89,7 @@ describe("receiptGenerator", () => {
       "               Poster POS               ",
     ].join("\n");
     expect(
-      await generateTextServiceTransactionReceipt(getServiceInputBodyMock),
+      generateTextServiceTransactionReceipt(getServiceInputBodyMock),
     ).toEqual(expectedReceipt);
   });
 
@@ -99,6 +101,7 @@ describe("receiptGenerator", () => {
       "   Амур-Нижньодніпровський район, вул.  ",
       "    Шолом-Алейхема, 4, кв. (Офіс) 31    ",
       "               ІД 12345678              ",
+      "           Касир Шевченко Т.Г.          ",
       "----------------------------------------",
       "           СЛУЖБОВЕ ВИЛУЧЕННЯ           ",
       "----------------------------------------",
@@ -115,7 +118,7 @@ describe("receiptGenerator", () => {
       await generateTextServiceTransactionReceipt(getServiceOutputBodyMock),
     ).toEqual(expectedReceipt);
   });
-  it("generateXZReport should has this structure", async () => {
+  it("generateXZReport should has this structure", () => {
     const expectedReceipt = [
       "              ТОВ ТЕСТ ПРРО             ",
       '              Кафе "Мʼята"              ',
@@ -123,6 +126,7 @@ describe("receiptGenerator", () => {
       "   Амур-Нижньодніпровський район, вул.  ",
       "    Шолом-Алейхема, 4, кв. (Офіс) 31    ",
       "               ІД 12345678              ",
+      "           Касир Шевченко Т.Г.          ",
       "                 X-звіт                 ",
       "----------------------------------------",
       "Зміна відкрита       24.05.2024 16:20:05",
@@ -186,7 +190,7 @@ describe("receiptGenerator", () => {
       "               Poster POS               ",
     ].join("\n");
     expect(
-      await generateXZReport({
+      generateXZReport({
         ...xReportDataMock,
         receiptConfig: defaultReceiptConfig,
       }),

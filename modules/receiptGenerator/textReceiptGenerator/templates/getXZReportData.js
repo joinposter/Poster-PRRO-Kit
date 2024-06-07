@@ -35,7 +35,8 @@ const getTitle = ({ type }) => {
   return null;
 };
 
-const fiscalCompanyData = (data) => getFiscalCompanyData(data.cashboxData);
+const fiscalCompanyData = ({ cashboxData, cashier }) =>
+  getFiscalCompanyData({ ...cashboxData, cashier });
 
 const getPayment = (payment) =>
   payment ? { row: [payment.payFormName, priceFormat(payment.sum)] } : null;

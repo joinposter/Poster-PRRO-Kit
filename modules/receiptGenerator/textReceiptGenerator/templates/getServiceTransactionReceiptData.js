@@ -18,7 +18,8 @@ const getServiceTransactionBody = ({ sum, receiptConfig }) => {
   ];
 };
 
-const fiscalCompanyData = (data) => getFiscalCompanyData(data.cashboxData);
+const fiscalCompanyData = ({ cashboxData, cashier }) =>
+  getFiscalCompanyData({ ...cashboxData, cashier });
 const serviceInputBody = (data) => getServiceTransactionBody(data);
 
 const getServiceTransactionReceiptData = (data) => [

@@ -31,16 +31,9 @@ const encodeXml = (xml) => {
 
 const XMLToObject = xml2js.parseStringPromise;
 
-const buildDocumentForSigning = pipe(
-  (data) => builder.buildObject(data),
-  encodeXml,
-);
+const buildXMLDocument = pipe((data) => builder.buildObject(data), encodeXml);
 
-const getDocumentHash = asyncPipe(
-  buildDocumentForSigning,
-  fromBase64ToBuffer,
-  sha256,
-);
+const getDocumentHash = asyncPipe(buildXMLDocument, fromBase64ToBuffer, sha256);
 
 const getDocument = (request) => {
   const { type: requestType } = request;
@@ -61,4 +54,4 @@ const getDocument = (request) => {
     : {};
 };
 
-export { XMLToObject, getDocument, getDocumentHash };
+export { XMLToObject, getDocument, getDocumentHash, buildXMLDocument };

@@ -174,6 +174,7 @@ describe("XMLDocuments", () => {
           pointName: "кафе Ромашка",
           pointAddress: "Дніпропетровська область, м. Дніпро, вул. Шевченка, 1",
           cashbox: "4000438533",
+          cashier: "Шевченко Т.Г.",
           cashboxLocalNumber: "123",
           isCashboxModeOffline: true,
           getOfflineSessionData: {

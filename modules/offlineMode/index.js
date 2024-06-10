@@ -12,14 +12,20 @@ import {
 import { getTaxesData } from "../taxes/index.js";
 import { getDocument, getDocumentHash } from "../XMLDocuments/index.js";
 import { expandDocumentData } from "./helpers/offline.js";
-import { createXZReportData } from "./helpers/XZReportData.js";
+import {
+  createXZReportData,
+  inpitOutputServiceFieldAcc,
+  realizReturnFieldAcc,
+} from "./helpers/XZReportData.js";
 
 const generateOfflineReceiptDocument = async (data) => {
   if (
     data?.type !== DOCUMENT_TYPE_RECEIPT &&
     data?.type !== DOCUMENT_TYPE_RETURN_RECEIPT
-  )
+  ) {
     return "Invalid data type";
+  }
+
   const { taxesConfig, ...rest } = data;
   const taxes = getTaxesData(taxesConfig)(rest?.products);
   const XML = getDocument({
@@ -151,6 +157,53 @@ const generateOfflineFinishDocument = async (data) => {
   };
 };
 
+const mergeOperationsAndXReport = async ({
+  taxesConfig,
+  operations,
+  xReport,
+}) => {
+  const data = operations.filter(
+    (operation) =>
+      operation.type === DOCUMENT_TYPE_RECEIPT ||
+      operation.type === DOCUMENT_TYPE_RETURN_RECEIPT ||
+      operation.type === DOCUMENT_TYPE_SERVICE_ENTRY ||
+      operation.type === DOCUMENT_TYPE_SERVICE_DELIVERY,
+  );
+  const operationsXReport = createXZReportData({
+    taxesConfig,
+    data,
+    lastFiscalDocumentData: {
+      dateTime: data[data.length - 1].dateTime,
+      documentNumber: data[data.length - 1].documentNumber,
+      fiscalId: data[data.length - 1].fiscalId,
+    },
+    cashboxData: data[data.length - 1].cashboxData,
+    cashier: data[data.length - 1].cashier,
+    documentNumber: data[data.length - 1].documentNumber,
+    offlineDocumentNumber: data[data.length - 1].offlineDocumentNumber,
+    offlineSessionData: data[data.length - 1].offlineSessionData,
+    previousDocumentHash: await getDocumentHash(
+      operations[operations.length - 1],
+    ),
+    shiftOpenData: data[data.length - 1].shiftOpenData,
+    isCashboxModeOffline: true,
+  });
+
+  return {
+    ...operationsXReport,
+    realiz: realizReturnFieldAcc(xReport.realiz, operationsXReport.realiz),
+    return: realizReturnFieldAcc(xReport.return, operationsXReport.return),
+    serviceInput: inpitOutputServiceFieldAcc(
+      xReport.serviceInput,
+      operationsXReport.serviceInput,
+    ),
+    serviceOutput: inpitOutputServiceFieldAcc(
+      xReport.serviceOutput,
+      operationsXReport.serviceOutput,
+    ),
+  };
+};
+
 export {
   generateOfflineReceiptDocument,
   generateOfflineTransactionDocument,
@@ -159,4 +212,5 @@ export {
   generateOfflineZReportDocument,
   generateOfflineStartDocument,
   generateOfflineFinishDocument,
+  mergeOperationsAndXReport,
 };

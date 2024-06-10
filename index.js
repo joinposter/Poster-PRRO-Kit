@@ -13,6 +13,7 @@ import {
   generateOfflineZReportDocument,
   generateOfflineStartDocument,
   generateOfflineFinishDocument,
+  mergeOperationsAndXReport,
 } from "./modules/offlineMode/index.js";
 
 import {
@@ -35,6 +36,7 @@ export {
   generateOfflineZReportDocument,
   generateOfflineStartDocument,
   generateOfflineFinishDocument,
+  mergeOperationsAndXReport,
   XMLToObject,
   getDocument,
   getDocumentHash,

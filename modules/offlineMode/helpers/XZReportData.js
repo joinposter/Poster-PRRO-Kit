@@ -15,6 +15,8 @@ import {
 import { getTaxesData } from "../../taxes/index.js";
 import { getRoundedDiff } from "../../XMLDocuments/helpers/xmlGenerator.js";
 
+export { createXZReportData, realizReturnFieldAcc, inpitOutputServiceFieldAcc };
+
 const isReceipt = (item) => item.type === DOCUMENT_TYPE_RECEIPT;
 const isServiceEntry = (item) => item.type === DOCUMENT_TYPE_SERVICE_ENTRY;
 const isServiceDelivery = (item) =>
@@ -142,6 +144,7 @@ const createXZReportData = ({
   taxesConfig,
   data,
   lastFiscalDocument,
+  lastFiscalDocumentData,
   ...rest
 }) => ({
   ...rest,
@@ -150,8 +153,54 @@ const createXZReportData = ({
   serviceInput: getServiceEntryData(data),
   serviceOutput: getServiceDeliveryData(data),
   shiftOpenData: getShiftOpenData(rest),
-  lastFiscalDocumentData: getLastFiscalDocumentData(lastFiscalDocument),
+  lastFiscalDocumentData:
+    lastFiscalDocumentData || getLastFiscalDocumentData(lastFiscalDocument),
 });
 
-// eslint-disable-next-line import/prefer-default-export
-export { createXZReportData };
+const aggregatePayments = (arr) =>
+  arr.reduce((acc, payment) => {
+    if (acc[payment.payFormName]) {
+      acc[payment.payFormName].sum += payment.sum;
+    } else {
+      acc[payment.payFormName] = payment;
+    }
+    return acc;
+  }, {});
+
+const aggregateTaxes = (arr) =>
+  arr.reduce((acc, tax) => {
+    if (acc[tax.program]) {
+      acc[tax.program].sourceSum += tax.sourceSum || 0;
+      acc[tax.program].sum += tax.sum || 0;
+      acc[tax.program].turnover += tax.turnover || 0;
+    } else {
+      acc[tax.program] = tax;
+    }
+    return acc;
+  }, {});
+
+const inpitOutputServiceFieldAcc = (operationData, xReportData) =>
+  xReportData ? xReportData + operationData : operationData;
+const realizReturnFieldAcc = (operationData, xReportData) => {
+  if (!operationData) return xReportData;
+  if (!xReportData) return operationData;
+
+  const totalReceiptCount =
+    (xReportData.receiptCount || 0) + (operationData.receiptCount || 0);
+
+  const paymentsMap = aggregatePayments([
+    ...operationData.payments,
+    ...xReportData.payments,
+  ]);
+  const taxesMap = aggregateTaxes([
+    ...operationData.taxes,
+    ...xReportData.taxes,
+  ]);
+
+  return {
+    payments: Object.values(paymentsMap),
+    receiptCount: totalReceiptCount,
+    sum: (operationData.sum || 0) + (xReportData.sum || 0),
+    taxes: Object.values(taxesMap),
+  };
+};

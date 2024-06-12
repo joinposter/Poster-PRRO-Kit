@@ -1,13 +1,13 @@
 import { v4 as uuidv4 } from "uuid";
 import { mockCustomTaxes } from "../taxes/mock/taxes.js";
 import {
-  generateOfflineReceiptDocument,
-  generateOfflineTransactionDocument,
-  generateOfflineOpenShiftDocument,
-  generateOfflineCloseShiftDocument,
-  generateOfflineZReportDocument,
-  generateOfflineStartDocument,
-  generateOfflineFinishDocument,
+  getReceiptOfflineModeRequestData,
+  getTransactionOfflineModeRequestData,
+  getZReportOfflineModeRequestData,
+  getOpenShiftOfflineModeRequestData,
+  getCloseShiftOfflineModeRequestData,
+  getStartOfflineModeRequestData,
+  getFinishOfflineModeRequestData,
   mergeOperationsAndXReport,
 } from "./index.js";
 
@@ -19,9 +19,9 @@ describe("offline mode", () => {
     const fakeUUID = "11111111-1111-1111-1111-111111111111";
     uuidv4.mockImplementation(() => fakeUUID);
   });
-  it("generateOfflineReceiptDocument should return all data for generation receipt", async () => {
+  it("getReceiptOfflineModeRequestData", async () => {
     expect(
-      await generateOfflineReceiptDocument({
+      await getReceiptOfflineModeRequestData({
         type: "receipt",
         dateTime: "2024-06-04T12:26:18.293Z",
         cashboxData: {
@@ -193,9 +193,9 @@ describe("offline mode", () => {
       ],
     });
   });
-  it("generateOfflineTransactionDocument should return all data for generation receipt", async () => {
+  it("getTransactionOfflineModeRequestData", async () => {
     expect(
-      await generateOfflineTransactionDocument({
+      await getTransactionOfflineModeRequestData({
         type: "serviceEntry",
         dateTime: "2024-06-04T12:26:18.293Z",
         cashboxData: {
@@ -253,9 +253,9 @@ describe("offline mode", () => {
       sum: 1000,
     });
   });
-  it("generateOfflineOpenShiftDocument should return all data for generation receipt", async () => {
+  it("getOpenShiftOfflineModeRequestData", async () => {
     expect(
-      await generateOfflineOpenShiftDocument({
+      await getOpenShiftOfflineModeRequestData({
         type: "shiftOpen",
         dateTime: "2024-06-04T12:26:18.293Z",
         cashboxData: {
@@ -310,9 +310,9 @@ describe("offline mode", () => {
       },
     });
   });
-  it("generateOfflineCloseShiftDocument should return all data for generation receipt", async () => {
+  it("getCloseShiftOfflineModeRequestData", async () => {
     expect(
-      await generateOfflineCloseShiftDocument({
+      await getCloseShiftOfflineModeRequestData({
         type: "shiftClose",
         dateTime: "2024-06-04T12:26:18.293Z",
         cashboxData: {
@@ -367,7 +367,7 @@ describe("offline mode", () => {
       },
     });
   });
-  it("generateOfflineZReportDocument should return all data for generation receipt", async () => {
+  it("getZReportOfflineModeRequestData", async () => {
     const data = [
       {
         cashbox: 4000847239,
@@ -625,7 +625,7 @@ describe("offline mode", () => {
       },
     ];
     expect(
-      await generateOfflineZReportDocument({
+      await getZReportOfflineModeRequestData({
         type: "ZReport",
         dateTime: "2024-06-04T12:26:18.293Z",
         cashboxData: {
@@ -805,9 +805,9 @@ describe("offline mode", () => {
       serviceOutput: null,
     });
   });
-  it("generateOfflineStartDocument", async () => {
+  it("getStartOfflineModeRequestData", async () => {
     expect(
-      await generateOfflineStartDocument({
+      await getStartOfflineModeRequestData({
         type: "offlineStart",
         dateTime: "2024-06-04T12:26:18.293Z",
         cashboxData: {
@@ -863,9 +863,9 @@ describe("offline mode", () => {
       },
     });
   });
-  it("generateOfflineFinishDocument", async () => {
+  it("getFinishOfflineModeRequestData", async () => {
     expect(
-      await generateOfflineFinishDocument({
+      await getFinishOfflineModeRequestData({
         type: "offlineFinish",
         dateTime: "2024-06-04T12:26:18.293Z",
         cashboxData: {

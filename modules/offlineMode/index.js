@@ -18,7 +18,7 @@ import {
   realizReturnFieldAcc,
 } from "./helpers/XZReportData.js";
 
-const generateOfflineReceiptDocument = async (data) => {
+const getReceiptOfflineModeRequestData = async (data) => {
   if (
     data?.type !== DOCUMENT_TYPE_RECEIPT &&
     data?.type !== DOCUMENT_TYPE_RETURN_RECEIPT
@@ -55,7 +55,7 @@ const generateOfflineReceiptDocument = async (data) => {
     ...rest,
   };
 };
-const generateOfflineTransactionDocument = async (data) => {
+const getTransactionOfflineModeRequestData = async (data) => {
   if (
     data?.type !== DOCUMENT_TYPE_SERVICE_ENTRY &&
     data?.type !== DOCUMENT_TYPE_SERVICE_DELIVERY
@@ -81,7 +81,7 @@ const generateOfflineTransactionDocument = async (data) => {
   };
 };
 
-const generateOfflineOpenShiftDocument = async (data) => {
+const getOpenShiftOfflineModeRequestData = async (data) => {
   if (data?.type !== DOCUMENT_TYPE_SHIFT_OPEN) return "Invalid data type";
 
   const XML = getDocument(
@@ -101,7 +101,7 @@ const generateOfflineOpenShiftDocument = async (data) => {
   };
 };
 
-const generateOfflineCloseShiftDocument = async (data) => {
+const getCloseShiftOfflineModeRequestData = async (data) => {
   if (data?.type !== DOCUMENT_TYPE_SHIFT_CLOSE) return "Invalid data type";
 
   const XML = getDocument(
@@ -121,12 +121,12 @@ const generateOfflineCloseShiftDocument = async (data) => {
   };
 };
 
-const generateOfflineZReportDocument = async (data) => {
+const getZReportOfflineModeRequestData = async (data) => {
   if (data?.type !== DOCUMENT_TYPE_Z_REPORT) return "Invalid data type";
 
   const XZReportData = createXZReportData(
     expandDocumentData({
-      ...expandDocumentData(data),
+      ...data,
       cashboxData: { ...data.cashboxData, isOffline: true },
     }),
   );
@@ -141,7 +141,7 @@ const generateOfflineZReportDocument = async (data) => {
   };
 };
 
-const generateOfflineStartDocument = async (data) => {
+const getStartOfflineModeRequestData = async (data) => {
   if (data?.type !== DOCUMENT_TYPE_OFFLINE_START) return "Invalid data type";
 
   const XML = getDocument(
@@ -161,7 +161,7 @@ const generateOfflineStartDocument = async (data) => {
   };
 };
 
-const generateOfflineFinishDocument = async (data) => {
+const getFinishOfflineModeRequestData = async (data) => {
   if (data?.type !== DOCUMENT_TYPE_OFFLINE_FINISH) return "Invalid data type";
 
   const XML = getDocument(
@@ -222,12 +222,12 @@ const mergeOperationsAndXReport = async ({
 };
 
 export {
-  generateOfflineReceiptDocument,
-  generateOfflineTransactionDocument,
-  generateOfflineOpenShiftDocument,
-  generateOfflineCloseShiftDocument,
-  generateOfflineZReportDocument,
-  generateOfflineStartDocument,
-  generateOfflineFinishDocument,
+  getReceiptOfflineModeRequestData,
+  getTransactionOfflineModeRequestData,
+  getZReportOfflineModeRequestData,
+  getOpenShiftOfflineModeRequestData,
+  getCloseShiftOfflineModeRequestData,
+  getStartOfflineModeRequestData,
+  getFinishOfflineModeRequestData,
   mergeOperationsAndXReport,
 };

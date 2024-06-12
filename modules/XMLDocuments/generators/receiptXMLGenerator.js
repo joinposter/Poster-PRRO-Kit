@@ -149,13 +149,13 @@ const getReceiptHeader = (operationData) => {
     ...getUIDFields(operationData),
     ...getOrganizationFields(cashboxData),
     ...getDateTimeFields(dateTime),
-    ...getDocumentNumberFields(operationData),
+    ...getDocumentNumberFields(cashboxData),
     ...getCashboxFields(cashboxData),
     ...getReturnReceiptFields(operationData),
     ...getCashierFields(operationData),
     ...getVersionFields(),
     ...getOfflineFields({ operationData, operationSum }),
-    ...getTestingModeFields(),
+    ...getTestingModeFields(cashboxData),
   };
 };
 

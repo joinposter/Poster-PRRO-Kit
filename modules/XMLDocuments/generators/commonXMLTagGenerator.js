@@ -30,12 +30,12 @@ const getHeader = (operationData, getTypeFields = () => {}) => {
     ...getUIDFields(operationData),
     ...getOrganizationFields(cashboxData),
     ...getDateTimeFields(dateTime),
-    ...getDocumentNumberFields(operationData),
+    ...getDocumentNumberFields(cashboxData),
     ...getCashboxFields(cashboxData),
     ...getCashierFields(operationData),
     ...getVersionFields(),
     ...getOfflineFields({ operationData }),
-    ...getTestingModeFields(),
+    ...getTestingModeFields(cashboxData),
   };
 };
 
@@ -78,8 +78,8 @@ export const getOrganizationFields = (cashboxData) => {
   };
 };
 
-export const getDocumentNumberFields = (operationData) => {
-  const { documentNumber: ORDERNUM } = operationData;
+export const getDocumentNumberFields = (cashboxData) => {
+  const { nextDocumentNumber: ORDERNUM } = cashboxData;
   return { ORDERNUM };
 };
 
@@ -102,13 +102,18 @@ export const getVersionFields = () => ({
   VER: 1,
 });
 
-export const getTestingModeFields = () => ({
-  TESTING: true,
-});
+export const getTestingModeFields = ({ isTestingMode }) => {
+  const TESTING = isTestingMode ? { TESTING: true } : {};
+  return TESTING;
+};
 
 const getOfflineFields = ({ operationData, operationSum }) => {
-  const { isCashboxModeOffline: isOffline, previousDocumentHash } =
-    operationData;
+  const {
+    cashboxData: {
+      isOffline,
+      offlineSessionData: { lastDocumentHash },
+    },
+  } = operationData;
 
   return isOffline
     ? {
@@ -117,43 +122,46 @@ const getOfflineFields = ({ operationData, operationSum }) => {
           operationSum,
         }),
         OFFLINE: true,
-        PREVDOCHASH: previousDocumentHash,
+        PREVDOCHASH: lastDocumentHash,
       }
     : {};
 };
 
 const getOfflineFiscalNumber = ({ operationData, operationSum }) => {
-  const {
-    cashboxData,
-    dateTime,
-    offlineSessionData: { id, seed },
-    documentNumber,
-    offlineDocumentNumber,
-    previousDocumentHash,
-  } = operationData;
+  const { cashboxData, dateTime } = operationData;
   const { ORDERDATE, ORDERTIME } = getDateTimeFields(dateTime);
 
-  const { cashboxLocalNumber, cashbox } = cashboxData;
+  const {
+    cashboxLocalNumber,
+    cashbox,
+    nextDocumentNumber,
+    offlineSessionData: {
+      id,
+      seed,
+      nextOfflineDocumentNumber,
+      lastDocumentHash,
+    },
+  } = cashboxData;
 
   const secretParts = [
     seed,
     ORDERDATE,
     ORDERTIME,
-    documentNumber,
+    nextDocumentNumber,
     cashbox,
     cashboxLocalNumber,
   ];
   if (operationSum) {
     secretParts.push(operationSum);
   }
-  if (previousDocumentHash) {
-    secretParts.push(previousDocumentHash);
+  if (lastDocumentHash) {
+    secretParts.push(lastDocumentHash);
   }
 
   const secretPartsString = secretParts.join(",");
   const controlCode = getFiscalNumberControlCode(secretPartsString);
 
-  return `${id}.${offlineDocumentNumber}.${controlCode}`;
+  return `${id}.${nextOfflineDocumentNumber}.${controlCode}`;
 };
 
 export {

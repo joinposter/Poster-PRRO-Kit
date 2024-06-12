@@ -37,21 +37,23 @@ export const receiptRequestData = {
   cashboxData: {
     cashbox: "4000438533",
     tin: 44657555,
+    ipn: null,
     name: "ТОВ ТЕСТ ПРРО",
     pointName: "кафе Ромашка",
     pointAddress: "Дніпропетровська область, м. Дніпро, вул. Шевченка, 1",
     cashboxLocalNumber: "123",
+    isOffline: true,
+    isTestingMode: true,
+    nextDocumentNumber: 2834,
+    offlineSessionData: {
+      id: "23649865",
+      seed: "135969449201653",
+      nextOfflineDocumentNumber: 4,
+      lastDocumentHash:
+        "47a08c017274237765f9081d994e76e08742dcef85056d655a8458ec43dff6e4",
+    },
   },
   cashier: "Шевченко Т.Г.",
-  offlineSessionData: {
-    id: 23649865,
-    seed: 135969449201653,
-  },
-  documentNumber: 1,
-  offlineDocumentNumber: 1,
-  previousDocumentHash:
-    "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
-  isCashboxModeOffline: true,
   dateTime: "2024-04-18T15:16:17",
   uid: "11111111-1111-1111-1111-111111111111",
 };
@@ -64,17 +66,18 @@ export const operationData = {
     pointName: "кафе Ромашка",
     pointAddress: "Дніпропетровська область, м. Дніпро, вул. Шевченка, 1",
     cashboxLocalNumber: "123",
+    isOffline: true,
+    isTestingMode: true,
+    offlineSessionData: {
+      id: 23649865,
+      seed: 135969449201653,
+      nextOfflineDocumentNumber: 1,
+      lastDocumentHash:
+        "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
+    },
+    nextDocumentNumber: 1,
   },
   cashier: "Шевченко Т.Г.",
-  offlineSessionData: {
-    id: 23649865,
-    seed: 135969449201653,
-  },
-  documentNumber: 1,
-  offlineDocumentNumber: 1,
-  previousDocumentHash:
-    "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
-  isCashboxModeOffline: true,
 };
 
 export const cashboxData = {
@@ -85,15 +88,15 @@ export const cashboxData = {
   cashbox: "4000438533",
   cashier: "Шевченко Т.Г.",
   cashboxLocalNumber: "123",
-  isCashboxModeOffline: true,
-  getOfflineSessionData: {
+  isOffline: true,
+  isTestingMode: true,
+  offlineSessionData: {
     id: 23649865,
     seed: 135969449201653,
+    nextOfflineDocumentNumber: 1,
+    lastDocumentHash:
+      "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
   },
-  documentNumber: 1,
-  offlineDocumentNumber: 1,
-  previousDocumentHash:
-    "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
 };
 
 export const zReportData = {
@@ -151,15 +154,16 @@ export const zReportData = {
     pointName: "кафе Ромашка",
     pointAddress: "Дніпропетровська область, м. Дніпро, вул. Шевченка, 1",
     cashboxLocalNumber: "123",
+    nextDocumentNumber: 1,
+    isOffline: true,
+    isTestingMode: true,
+    offlineSessionData: {
+      id: 23649865,
+      seed: 135969449201653,
+      nextOfflineDocumentNumber: 1,
+      lastDocumentHash:
+        "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
+    },
   },
   cashier: "Шевченко Т.Г.",
-  offlineSessionData: {
-    id: 23649865,
-    seed: 135969449201653,
-  },
-  documentNumber: 1,
-  offlineDocumentNumber: 1,
-  previousDocumentHash:
-    "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
-  isCashboxModeOffline: true,
 };

@@ -23,6 +23,8 @@ import {
   buildXMLDocument,
 } from "./modules/XMLDocuments/index.js";
 
+import { getTaxesData, getTaxPrograms } from "./modules/taxes/index.js";
+
 export {
   generateTextFiscalReceipt,
   generateTextServiceTransactionReceipt,
@@ -41,4 +43,6 @@ export {
   getDocument,
   getDocumentHash,
   buildXMLDocument,
+  getTaxesData,
+  getTaxPrograms,
 };

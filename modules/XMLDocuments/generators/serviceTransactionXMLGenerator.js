@@ -29,12 +29,12 @@ const getServiceTransactionHeader = (operationData) => {
     ...getUIDFields(operationData),
     ...getOrganizationFields(cashboxData),
     ...getDateTimeFields(dateTime),
-    ...getDocumentNumberFields(operationData),
+    ...getDocumentNumberFields(cashboxData),
     ...getCashboxFields(cashboxData),
     ...getCashierFields(operationData),
     ...getVersionFields(),
     ...getOfflineFields({ operationData, operationSum }),
-    ...getTestingModeFields(),
+    ...getTestingModeFields(cashboxData),
   };
 };
 

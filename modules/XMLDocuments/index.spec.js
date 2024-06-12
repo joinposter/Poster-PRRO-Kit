@@ -50,14 +50,14 @@ describe("XMLDocuments", () => {
             "    <POINTADDR>Дніпропетровська область, м. Дніпро, вул. Шевченка, 1</POINTADDR>\n" +
             "    <ORDERDATE>18042024</ORDERDATE>\n" +
             "    <ORDERTIME>151617</ORDERTIME>\n" +
-            "    <ORDERNUM>1</ORDERNUM>\n" +
+            "    <ORDERNUM>2834</ORDERNUM>\n" +
             "    <CASHDESKNUM>123</CASHDESKNUM>\n" +
             "    <CASHREGISTERNUM>4000438533</CASHREGISTERNUM>\n" +
             "    <CASHIER>Шевченко Т.Г.</CASHIER>\n" +
             "    <VER>1</VER>\n" +
-            "    <ORDERTAXNUM>23649865.1.1954</ORDERTAXNUM>\n" +
+            "    <ORDERTAXNUM>23649865.4.1077</ORDERTAXNUM>\n" +
             "    <OFFLINE>true</OFFLINE>\n" +
-            "    <PREVDOCHASH>685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40</PREVDOCHASH>\n" +
+            "    <PREVDOCHASH>47a08c017274237765f9081d994e76e08742dcef85056d655a8458ec43dff6e4</PREVDOCHASH>\n" +
             "    <TESTING>true</TESTING>\n" +
             "  </CHECKHEAD>\n" +
             "  <CHECKTOTAL>\n" +
@@ -172,17 +172,18 @@ describe("XMLDocuments", () => {
           pointAddress: "Дніпропетровська область, м. Дніпро, вул. Шевченка, 1",
           cashbox: "4000438533",
           cashboxLocalNumber: "123",
+          isOffline: true,
+          isTestingMode: true,
+          nextDocumentNumber: 1,
+          offlineSessionData: {
+            id: 23649865,
+            seed: 135969449201653,
+            nextOfflineDocumentNumber: 1,
+            lastDocumentHash:
+              "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
+          },
         },
         cashier: "Шевченко Т.Г.",
-        isCashboxModeOffline: true,
-        offlineSessionData: {
-          id: 23649865,
-          seed: 135969449201653,
-        },
-        documentNumber: 1,
-        offlineDocumentNumber: 1,
-        previousDocumentHash:
-          "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
       };
       it("getShiftOpenDocument should generate shiftOpen valid XML, with a correct tag's order", async () => {
         const shiftOpenData = await getShiftOpenDocument(data);

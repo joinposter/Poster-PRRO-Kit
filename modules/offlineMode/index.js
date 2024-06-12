@@ -26,10 +26,16 @@ const generateOfflineReceiptDocument = async (data) => {
     return "Invalid data type";
   }
 
-  const { taxesConfig, ...rest } = data;
+  const { taxesConfig, cashboxData, ...rest } = data;
   const taxes = getTaxesData(taxesConfig)(rest?.products);
   const XML = getDocument({
-    ...expandDocumentData({ ...rest, isCashboxModeOffline: true }),
+    ...expandDocumentData({
+      ...rest,
+      cashboxData: {
+        ...cashboxData,
+        isOffline: true,
+      },
+    }),
     taxes,
   });
   const documentHash = await getDocumentHash(XML);
@@ -42,7 +48,10 @@ const generateOfflineReceiptDocument = async (data) => {
     dateTime: expandDocumentData(data).dateTime,
     taxes,
     documentHash,
-    isCashboxModeOffline: true,
+    cashboxData: {
+      ...cashboxData,
+      isOffline: true,
+    },
     ...rest,
   };
 };
@@ -54,18 +63,21 @@ const generateOfflineTransactionDocument = async (data) => {
     return "Invalid data type";
 
   const XML = getDocument(
-    expandDocumentData({ ...data, isCashboxModeOffline: true }),
+    expandDocumentData({
+      ...data,
+      cashboxData: { ...data.cashboxData, isOffline: true },
+    }),
   );
   const documentHash = await getDocumentHash(XML);
   const fiscalId = XML?.CHECK?.CHECKHEAD?.ORDERTAXNUM;
   const uid = XML?.CHECK?.CHECKHEAD?.UID;
   return {
     ...data,
+    cashboxData: { ...data.cashboxData, isOffline: true },
     fiscalId,
     uid,
     dateTime: expandDocumentData(data).dateTime,
     documentHash,
-    isCashboxModeOffline: true,
   };
 };
 
@@ -73,16 +85,19 @@ const generateOfflineOpenShiftDocument = async (data) => {
   if (data?.type !== DOCUMENT_TYPE_SHIFT_OPEN) return "Invalid data type";
 
   const XML = getDocument(
-    expandDocumentData({ ...data, isCashboxModeOffline: true }),
+    expandDocumentData({
+      ...data,
+      cashboxData: { ...data.cashboxData, isOffline: true },
+    }),
   );
   const documentHash = await getDocumentHash(XML);
   const uid = XML?.CHECK?.CHECKHEAD?.UID;
   return {
     ...data,
+    cashboxData: { ...data.cashboxData, isOffline: true },
     uid,
     dateTime: expandDocumentData(data).dateTime,
     documentHash,
-    isCashboxModeOffline: true,
   };
 };
 
@@ -90,35 +105,39 @@ const generateOfflineCloseShiftDocument = async (data) => {
   if (data?.type !== DOCUMENT_TYPE_SHIFT_CLOSE) return "Invalid data type";
 
   const XML = getDocument(
-    expandDocumentData({ ...data, isCashboxModeOffline: true }),
+    expandDocumentData({
+      ...data,
+      cashboxData: { ...data.cashboxData, isOffline: true },
+    }),
   );
   const documentHash = await getDocumentHash(XML);
   const uid = XML?.CHECK?.CHECKHEAD?.UID;
   return {
     ...data,
+    cashboxData: { ...data.cashboxData, isOffline: true },
     uid,
     dateTime: expandDocumentData(data).dateTime,
-    cashboxData: data?.cashboxData,
     documentHash,
-    isCashboxModeOffline: true,
   };
 };
 
 const generateOfflineZReportDocument = async (data) => {
   if (data?.type !== DOCUMENT_TYPE_Z_REPORT) return "Invalid data type";
 
-  const XML = getDocument({
-    ...createXZReportData(
-      expandDocumentData({ ...data, isCashboxModeOffline: true }),
-    ),
-  });
+  const XZReportData = createXZReportData(
+    expandDocumentData({
+      ...expandDocumentData(data),
+      cashboxData: { ...data.cashboxData, isOffline: true },
+    }),
+  );
+
+  const XML = getDocument(XZReportData);
   const documentHash = await getDocumentHash(XML);
   const fiscalId = XML?.ZREP?.ZREPHEAD?.ORDERTAXNUM;
   return {
-    ...createXZReportData(expandDocumentData(data)),
+    ...XZReportData,
     fiscalId,
     documentHash,
-    isCashboxModeOffline: true,
   };
 };
 
@@ -126,7 +145,10 @@ const generateOfflineStartDocument = async (data) => {
   if (data?.type !== DOCUMENT_TYPE_OFFLINE_START) return "Invalid data type";
 
   const XML = getDocument(
-    expandDocumentData({ ...data, isCashboxModeOffline: true }),
+    expandDocumentData({
+      ...data,
+      cashboxData: { ...data.cashboxData, isOffline: true },
+    }),
   );
   const documentHash = await getDocumentHash(XML);
   const uid = XML?.CHECK?.CHECKHEAD?.UID;
@@ -135,7 +157,7 @@ const generateOfflineStartDocument = async (data) => {
     uid,
     dateTime: expandDocumentData(data).dateTime,
     documentHash,
-    isCashboxModeOffline: true,
+    cashboxData: { ...data.cashboxData, isOffline: true },
   };
 };
 
@@ -143,7 +165,10 @@ const generateOfflineFinishDocument = async (data) => {
   if (data?.type !== DOCUMENT_TYPE_OFFLINE_FINISH) return "Invalid data type";
 
   const XML = getDocument(
-    expandDocumentData({ ...data, isCashboxModeOffline: true }),
+    expandDocumentData({
+      ...data,
+      cashboxData: { ...data.cashboxData, isOffline: true },
+    }),
   );
   const documentHash = await getDocumentHash(XML);
   const uid = XML?.CHECK?.CHECKHEAD?.UID;
@@ -151,9 +176,8 @@ const generateOfflineFinishDocument = async (data) => {
     ...data,
     uid,
     dateTime: expandDocumentData(data).dateTime,
-    cashboxData: data?.cashboxData,
+    cashboxData: { ...data.cashboxData, isOffline: true },
     documentHash,
-    isCashboxModeOffline: true,
   };
 };
 
@@ -174,19 +198,12 @@ const mergeOperationsAndXReport = async ({
     data,
     lastFiscalDocumentData: {
       dateTime: data[data.length - 1].dateTime,
-      documentNumber: data[data.length - 1].documentNumber,
+      documentNumber: data[data.length - 1].cashboxData.nextDocumentNumber,
       fiscalId: data[data.length - 1].fiscalId,
     },
     cashboxData: data[data.length - 1].cashboxData,
     cashier: data[data.length - 1].cashier,
-    documentNumber: data[data.length - 1].documentNumber,
-    offlineDocumentNumber: data[data.length - 1].offlineDocumentNumber,
-    offlineSessionData: data[data.length - 1].offlineSessionData,
-    previousDocumentHash: await getDocumentHash(
-      operations[operations.length - 1],
-    ),
     shiftOpenData: data[data.length - 1].shiftOpenData,
-    isCashboxModeOffline: true,
   });
 
   return {

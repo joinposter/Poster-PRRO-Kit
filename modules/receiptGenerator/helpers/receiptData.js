@@ -12,6 +12,7 @@ import {
   getDateTime,
 } from "../../../helpers/common.js";
 import defaultReceiptConfig from "../config/receipt.js";
+import { getDFSReceiptLink } from "./receipt.js";
 
 const getProductUktzed = (name) =>
   name.includes("#") ? `${name.split("#")[0]}#` : null;
@@ -87,10 +88,10 @@ const getReceiptType = (type) => {
 const getFooterData = ({
   fiscalId,
   dateTime,
-  cashbox,
-  cashboxData: { isOffline },
+  cashboxData: { isOffline, cashbox },
   docType,
   software,
+  total,
 }) => ({
   fiscalId,
   dateTime: getDateTime({ date: dateTime }),
@@ -140,6 +141,13 @@ export const prepareDataForPrintReceipt = (data) => ({
       ? "ВИДАТКОВИЙ ЧЕК"
       : "ФІСКАЛЬНИЙ ЧЕК",
     software: "Poster POS",
+    dFSReceiptLink: getDFSReceiptLink({
+      fiscalId: data.fiscalId,
+      cashbox: data.cashboxData.cashbox,
+      total: data.total,
+      date: getDateTime({ date: data.dateTime, format: "dateQr" }),
+      time: getDateTime({ date: data.dateTime, format: "timeQr" }),
+    }),
   }),
   receiptConfig: data.receiptConfig || defaultReceiptConfig,
 });

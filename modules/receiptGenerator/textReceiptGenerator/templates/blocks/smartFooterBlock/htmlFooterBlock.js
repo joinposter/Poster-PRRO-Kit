@@ -4,23 +4,14 @@ import {
   getCashboxStatus,
   getControlSum,
 } from "../../../../helpers/receiptData.js";
-import { getDFSReceiptLink } from "../../../../helpers/receipt.js";
-import { getDateTime } from "../../../../../../helpers/common.js";
 import {
   DEFAULT_QR_MARGIN,
   DEFAULT_QR_SIZE,
 } from "../../../../const/receipt.js";
 
 const generateSvgQrCode = (data) => {
-  const qrCodeString = getDFSReceiptLink({
-    fiscalId: data.fiscalId,
-    cashbox: data.cashboxData.cashbox,
-    total: data.total,
-    date: getDateTime({ date: data.dateTime, format: "dateQr" }),
-    time: getDateTime({ date: data.dateTime, format: "timeQr" }),
-  });
   const qrCode = qrcode(0, "L");
-  qrCode.addData(qrCodeString);
+  qrCode.addData(data.footerData.dFSReceiptLink);
   qrCode.make();
   const qrCodeSvgTag = qrCode.createSvgTag(
     data?.qrOptions?.size || DEFAULT_QR_SIZE,

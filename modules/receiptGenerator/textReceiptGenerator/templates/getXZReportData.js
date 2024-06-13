@@ -127,6 +127,7 @@ const getXZReportData = (data) => [
     footerData: {
       docType: "СЛУЖБОВИЙ ДОКУМЕНТ",
       software: "Poster POS",
+      isOffline: data?.cashboxData?.isOffline,
     },
   }),
 ];

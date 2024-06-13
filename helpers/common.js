@@ -19,8 +19,14 @@ export const getDateTime = ({ date, format }) => {
   if (format === "date") {
     return `${day}.${month}.${year}`;
   }
+  if (format === "dateQr") {
+    return `${year}${month}${day}`;
+  }
   if (format === "time") {
     return `${hours}:${minutes}:${seconds}`;
+  }
+  if (format === "timeQr") {
+    return `${hours}${minutes}${seconds}`;
   }
 
   return `${day}.${month}.${year} ${hours}:${minutes}:${seconds}`;

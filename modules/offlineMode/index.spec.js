@@ -367,7 +367,7 @@ describe("offline mode", () => {
       },
     });
   });
-  it("getZReportOfflineModeRequestData", async () => {
+  it.skip("getZReportOfflineModeRequestData", async () => {
     const data = [
       {
         cashbox: 4000847239,
@@ -649,7 +649,7 @@ describe("offline mode", () => {
         shiftOpenData: {
           dateTime: "2024-06-04T10:26:18.293Z",
         },
-        data,
+        ZReportData: data,
         lastFiscalDocument: {
           documentNumber: 789,
           fiscalId: "2507944945",

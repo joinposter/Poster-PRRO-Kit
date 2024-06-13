@@ -91,7 +91,7 @@ const getFooterData = ({
   cashboxData: { isOffline, cashbox },
   docType,
   software,
-  total,
+  dFSReceiptLink,
 }) => ({
   fiscalId,
   dateTime: getDateTime({ date: dateTime }),
@@ -99,6 +99,7 @@ const getFooterData = ({
   isOffline,
   docType,
   software,
+  dFSReceiptLink,
 });
 
 const getSstData = ({ sstData, type }) => {

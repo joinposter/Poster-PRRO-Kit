@@ -16,8 +16,8 @@ const generateSvgQrCode = (data) => {
     fiscalId: data.fiscalId,
     cashbox: data.cashboxData.cashbox,
     total: data.total,
-    date: getDateTime({ data: data.dateTime, format: "date" }),
-    time: getDateTime({ data: data.dateTime, format: "time" }),
+    date: getDateTime({ date: data.dateTime, format: "dateQr" }),
+    time: getDateTime({ date: data.dateTime, format: "timeQr" }),
   });
   const qrCode = qrcode(0, "L");
   qrCode.addData(qrCodeString);

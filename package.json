@@ -1,6 +1,6 @@
 {
   "name": "poster-prro-kit",
-  "version": "0.0.74",
+  "version": "0.0.75",
   "main": "index.js",
   "type": "module",
   "scripts": {

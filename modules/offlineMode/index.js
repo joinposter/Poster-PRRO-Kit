@@ -185,26 +185,40 @@ const mergeOperationsAndXReport = async ({
   operations,
   xReport,
 }) => {
-  const data = operations.filter(
-    (operation) =>
-      operation.type === DOCUMENT_TYPE_RECEIPT ||
-      operation.type === DOCUMENT_TYPE_RETURN_RECEIPT ||
-      operation.type === DOCUMENT_TYPE_SERVICE_ENTRY ||
-      operation.type === DOCUMENT_TYPE_SERVICE_DELIVERY,
-  );
-  const operationsXReport = createXZReportData({
-    taxesConfig,
-    data,
-    lastFiscalDocumentData: {
-      dateTime: data[data.length - 1].dateTime,
-      documentNumber: data[data.length - 1].cashboxData.nextDocumentNumber,
-      fiscalId: data[data.length - 1].fiscalId,
-    },
-    cashboxData: data[data.length - 1].cashboxData,
-    cashier: data[data.length - 1].cashier,
-    shiftOpenData: data[data.length - 1].shiftOpenData,
-  });
+  let operationsXReport;
+  if (
+    operations === null ||
+    (Array.isArray(operations) && operations.length === 0)
+  ) {
+    operationsXReport = {
+      ...xReport,
+      realiz: null,
+      return: null,
+      serviceInput: null,
+      serviceOutput: null,
+    };
+  } else {
+    const data = operations.filter(
+      (operation) =>
+        operation.type === DOCUMENT_TYPE_RECEIPT ||
+        operation.type === DOCUMENT_TYPE_RETURN_RECEIPT ||
+        operation.type === DOCUMENT_TYPE_SERVICE_ENTRY ||
+        operation.type === DOCUMENT_TYPE_SERVICE_DELIVERY,
+    );
 
+    operationsXReport = createXZReportData({
+      taxesConfig,
+      data,
+      lastFiscalDocumentData: {
+        dateTime: data[data.length - 1].dateTime,
+        documentNumber: data[data.length - 1].cashboxData.nextDocumentNumber,
+        fiscalId: data[data.length - 1].fiscalId,
+      },
+      cashboxData: data[data.length - 1].cashboxData,
+      cashier: data[data.length - 1].cashier,
+      shiftOpenData: data[data.length - 1].shiftOpenData,
+    });
+  }
   return {
     ...operationsXReport,
     realiz: realizReturnFieldAcc(xReport.realiz, operationsXReport.realiz),
@@ -217,6 +231,7 @@ const mergeOperationsAndXReport = async ({
       xReport.serviceOutput,
       operationsXReport.serviceOutput,
     ),
+    shiftOpenData: xReport.shiftOpenData,
   };
 };
 

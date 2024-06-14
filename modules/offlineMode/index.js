@@ -124,17 +124,17 @@ const getCloseShiftOfflineModeRequestData = async (data) => {
 const getZReportOfflineModeRequestData = async (data) => {
   if (data?.type !== DOCUMENT_TYPE_Z_REPORT) return "Invalid data type";
 
-  const ZReportData = expandDocumentData({
-    ...data.ZReportData,
+  const reportData = expandDocumentData({
+    ...data.reportData,
     type: data.type,
     cashboxData: { ...data.cashboxData, isOffline: true },
   });
 
-  const XML = getDocument(ZReportData);
+  const XML = getDocument(reportData);
   const documentHash = await getDocumentHash(XML);
   const fiscalId = XML?.ZREP?.ZREPHEAD?.ORDERTAXNUM;
   return {
-    ...ZReportData,
+    ...reportData,
     fiscalId,
     documentHash,
   };

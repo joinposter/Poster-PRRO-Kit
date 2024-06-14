@@ -147,7 +147,6 @@ const createXZReportData = ({
   lastFiscalDocumentData,
   ...rest
 }) => ({
-  ...rest,
   realiz: getRealizData(data, taxesConfig),
   return: getReturnData(data, taxesConfig),
   serviceInput: getServiceEntryData(data),

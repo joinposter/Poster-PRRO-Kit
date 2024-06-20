@@ -1,7 +1,7 @@
-import { DECIMAL_PLACES } from "../const/receipt.js";
+import { DECIMAL_PLACES } from "../modules/receiptGenerator/const/receipt.js";
 
 export const formatToFixedDecimal = (sum) =>
-  Math.abs(Number(sum)).toFixed(DECIMAL_PLACES);
+  Number(sum).toFixed(DECIMAL_PLACES);
 
 export const formatNumber = (num, format) =>
   num.toString().padStart(format.length, "0");
@@ -19,8 +19,14 @@ export const getDateTime = ({ date, format }) => {
   if (format === "date") {
     return `${day}.${month}.${year}`;
   }
+  if (format === "dateQr") {
+    return `${year}${month}${day}`;
+  }
   if (format === "time") {
     return `${hours}:${minutes}:${seconds}`;
+  }
+  if (format === "timeQr") {
+    return `${hours}${minutes}${seconds}`;
   }
 
   return `${day}.${month}.${year} ${hours}:${minutes}:${seconds}`;

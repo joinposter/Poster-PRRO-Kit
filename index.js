@@ -1,11 +1,48 @@
-import generateTextFiscalReceipt from "./lib/generateTextFiscalReceipt/index.js";
-import generateTextServiceTransactionReceipt from "./lib/generateTextServiceTransactionReceipt/index.js";
-import generateXReport from "./lib/generateXReport/index.js";
-import generateQRCodeReceiptData from "./lib/generateQRCodeReceiptData.js";
+import {
+  generateTextFiscalReceipt,
+  generateTextServiceTransactionReceipt,
+  generateXZReport,
+  generateQRCodeReceiptData,
+  generateHtmlFiscalReceipt,
+} from "./modules/receiptGenerator/index.js";
+import {
+  getReceiptOfflineModeRequestData,
+  getTransactionOfflineModeRequestData,
+  getZReportOfflineModeRequestData,
+  getOpenShiftOfflineModeRequestData,
+  getCloseShiftOfflineModeRequestData,
+  getStartOfflineModeRequestData,
+  getFinishOfflineModeRequestData,
+  mergeOperationsAndXReport,
+} from "./modules/offlineMode/index.js";
+
+import {
+  XMLToObject,
+  getDocument,
+  getDocumentHash,
+  buildXMLDocument,
+} from "./modules/XMLDocuments/index.js";
+
+import { getTaxesData, getTaxPrograms } from "./modules/taxes/index.js";
 
 export {
   generateTextFiscalReceipt,
   generateTextServiceTransactionReceipt,
-  generateXReport,
+  generateXZReport,
   generateQRCodeReceiptData,
+  generateHtmlFiscalReceipt,
+  getReceiptOfflineModeRequestData,
+  getTransactionOfflineModeRequestData,
+  getZReportOfflineModeRequestData,
+  getOpenShiftOfflineModeRequestData,
+  getCloseShiftOfflineModeRequestData,
+  getStartOfflineModeRequestData,
+  getFinishOfflineModeRequestData,
+  mergeOperationsAndXReport,
+  XMLToObject,
+  getDocument,
+  getDocumentHash,
+  buildXMLDocument,
+  getTaxesData,
+  getTaxPrograms,
 };

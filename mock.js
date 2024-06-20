@@ -1,27 +1,47 @@
-import receiptConfig from "./config/receiptConfig.js";
+import defaultReceiptConfig from "./modules/receiptGenerator/config/receipt.js";
 
 export const cashboxData = {
-  isOffline: false,
-  dateTime: "2024-05-24T13:20:02.357Z",
+  cashbox: 4000244601,
+  tin: "12345678",
+  ipn: "",
   name: "ТОВ ТЕСТ ПРРО",
   pointName: 'Кафе "Мʼята"',
   pointAddress:
     "Дніпропетровська область, м. Дніпро, Амур-Нижньодніпровський район, вул. Шолом-Алейхема, 4, кв. (Офіс) 31",
-  tin: "12345678",
-  cashbox: "4000244601",
+  cashboxLocalNumber: "123",
+  isOffline: false,
+  isTestingMode: false,
 };
 export const getServiceInputBodyMock = {
   sum: 2850,
   dateTime: "2024-05-16T16:28:35.679Z",
-  receiptConfig,
+  receiptConfig: defaultReceiptConfig,
   cashboxData,
+  cashier: "Шевченко Т.Г.",
+  offlineSessionData: {
+    id: 23649865,
+    seed: 135969449201653,
+    nextDocumentNumber: 2834,
+    nextOfflineDocumentNumber: 4,
+    lastDocumentHash:
+      "47a08c017274237765f9081d994e76e08742dcef85056d655a8458ec43dff6e4",
+  },
 };
 
 export const getServiceOutputBodyMock = {
   sum: -750,
   dateTime: "2024-05-16T16:28:35.679Z",
-  receiptConfig,
+  receiptConfig: defaultReceiptConfig,
   cashboxData,
+  cashier: "Шевченко Т.Г.",
+  offlineSessionData: {
+    id: 23649865,
+    seed: 135969449201653,
+    nextDocumentNumber: 2834,
+    nextOfflineDocumentNumber: 4,
+    lastDocumentHash:
+      "47a08c017274237765f9081d994e76e08742dcef85056d655a8458ec43dff6e4",
+  },
 };
 
 export const productsData = [
@@ -87,10 +107,20 @@ export const sstData = {
 };
 
 export const fiscalReceiptDataMock = {
-  cashboxData,
-  fiscalId: "2462757750",
   type: "receipt",
+  fiscalId: "2462757750",
+  dateTime: "2024-05-16T16:29:35.710Z",
   cashbox: cashboxData.cashbox,
+  cashboxData,
+  cashier: "Шевченко Т.Г.",
+  offlineSessionData: {
+    id: 23649865,
+    seed: 135969449201653,
+    nextDocumentNumber: 2834,
+    nextOfflineDocumentNumber: 4,
+    lastDocumentHash:
+      "47a08c017274237765f9081d994e76e08742dcef85056d655a8458ec43dff6e4",
+  },
   total: 384.26,
   payments: [
     {
@@ -103,8 +133,6 @@ export const fiscalReceiptDataMock = {
     },
   ],
   products: productsData,
-  uid: "587989ce-f05d-4d66-b2a8-4138f13bfe88",
-  dateTime: "2024-05-16T16:29:35.710Z",
   taxes: [
     {
       type: 5,
@@ -223,73 +251,18 @@ export const xReportDataMock = {
     fiscalId: "2469255615",
   },
   dateTime: "2024-05-27T17:22:06.973Z",
+  cashier: "Шевченко Т.Г.",
+  offlineSessionData: {
+    id: 23649865,
+    seed: 135969449201653,
+    nextDocumentNumber: 2834,
+    nextOfflineDocumentNumber: 4,
+    lastDocumentHash:
+      "47a08c017274237765f9081d994e76e08742dcef85056d655a8458ec43dff6e4",
+  },
+  isCashboxModeOffline: true,
+  documentNumber: 1,
+  offlineDocumentNumber: 1,
+  previousDocumentHash:
+    "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
 };
-
-// eslint-disable-next-line no-unused-vars
-const expectedReceiptWithASCIIQR = [
-  "              ТОВ ТЕСТ ПРРО             ",
-  '              Кафе "Мʼята"              ',
-  "  Дніпропетровська область, м. Дніпро,  ",
-  "   Амур-Нижньодніпровський район, вул.  ",
-  "    Шолом-Алейхема, 4, кв. (Офіс) 31    ",
-  "               ІД 12345678              ",
-  "----------------------------------------",
-  "2204109600#                             ",
-  "12345678                                ",
-  "ADCC123123                              ",
-  "Вино игристое 2 x 130,02   260,04   ДГ",
-  "вкусное                               ",
-  "",
-  "2204888600#                             ",
-  "Сир           4 x 260,00  1040,00    Д",
-  "",
-  "Готівкою                       200,00грн",
-  "Карткою                       1100,00грн",
-  "----------------------------------------",
-  "Сума                          1300,04грн",
-  "ПДВ Г 20%                         214,60",
-  "Акцизний податок Д 5%              12,38",
-  "----------------------------------------",
-  "До сплати                     1300,00грн",
-  "Заокруглення                     0,04грн",
-  "",
-  "----------------------------------------",
-  "ПриватБанк                              ",
-  "S1260S6Y                                ",
-  "Оплата                                  ",
-  "ЕПЗ                     4422********6333",
-  "ПЛАТІЖНА СИСТЕМА                    VISA",
-  "КОД АВТ.                          159345",
-  "RRN                         083998389823",
-  "КАСИР                      .............",
-  "ДЕРЖАТЕЛЬ ЕПЗ              .............",
-  "",
-  "----------------------------------------",
-  "                13eG45ty                ",
-  "           16.05.2024 19:29:35          ",
-  "               4000244601               ",
-  "                 ОНЛАЙН                 ",
-  "             ФІСКАЛЬНИЙ ЧЕК             ",
-  "               Poster POS               ",
-  " ▄▄▄▄▄ █▄▀ ▄ ▄██   █▀ █▄ ▄▀ ▄ █▀██ ▄▄▄▄▄",
-  " █   █ ████▄▄  █▀█▀█▀▄▀▄▀▄▄█▀█▄▄▀█ █   █",
-  " █▄▄▄█ ██ █ ▀▀▀█ ▄▄█▀ ▄ ▄▀▀▄█▀ ▄██ █▄▄▄█ ",
-  "▄▄▄▄▄▄▄█ █ █▄█ ▀▄█ █ █▄▀ █ ▀▄█ █ █▄▄▄▄▄▄▄",
-  "  ▀  ▀▄▀█▄▀  ▄▀▄▀▄█▄▀█ ▀▀▄▀▄▄▄  ██▄▀▀▀▀▀▄",
-  "█▀ █ █▄▀  ▀▄▀ █ █▀▄ ▀██▄▄▄  ▄▀▀█  █▀ ▀▄▀▄",
-  "█▄▄▄█▀▄▄ ▀ █  █▄▄▄  █▄ ▄█  ▀█ ▄▄█ █ ▀█▀  ",
-  "▄▀  █ ▄ █▄ █ █▄▀▀ ▀▀ ▀▀ ▀█▄ ▀▄▀ █▄▄  ▄▄█ ",
-  "█▄ ██▄▄ ▀▀█  ▄▄  ▀███▄█▄███ ▀▀▀▀▀██▄▀▄▄▀█",
-  " █▄▄▄█▄▀▄▄▀▀▄█▄  █▄▄▄█ ▀ ▀▄▄███▄▄█ █▀▄ ▄▀",
-  "██▀█▄ ▄█ ███▀▄▄ ██  ██ ███▄  █▀█ █▄▀▀▀ ▀▄",
-  "▄ ▄█▀█▄█▄▀▄█▀▄█  ▀█  ▀ ▄▄▄▀  ▀█    █ ▀██▀",
-  "▀▀ ▀▄ ▄▀█▄█ ▀ █ ▀█▀ ▄██ █ ▀  █▀▄ █  ▀   ▀",
-  "█▄▀█ █▄   ▄▀▄██▀ ▄▄ ▄█▄  █▀▄█▄▀▄█▀  ██ ▄▄",
-  "  ▄▄█▄▄▀▄ ▄▄▄█  █ █▀ ██ █▄█▄▀▄█▀▀▀▀▀▄▄███",
-  "   ▄▀ ▄ ▀█▀▀ ▀▀ █▀ ▄▄██▀▄▀█ ███▀██▀█▀██▀ ",
-  "▄▄█▄█▄▄█▀▄ ▀██▄▄▀▄▀ █▄█▀ ▄▀ █▄█  ▄▄▄ ██ ▀",
-  " ▄▄▄▄▄ ██ ▄█ ▄  █▀▄ ▄███▀▄▀ ██▄  █▄█ ████",
-  " █   █ █ ▀█ █   ▄▄ ▄▄█ ▄▀ ▀▀▄▄█▄  ▄▄▄▄▀▀▄",
-  " █▄▄▄█ █▀██▀▀█▄ ▀▄█ ▀██ ▄█▄ ▀▄▀█▀▄▀▀▄▀ ▄ ",
-  "       ▀  ▀ ▀     ▀▀    ▀   ▀▀   ▀ ▀▀▀ ▀▀",
-].join("\n");

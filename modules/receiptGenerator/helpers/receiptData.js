@@ -3,6 +3,7 @@ import {
   DOCUMENT_TYPE_RETURN_RECEIPT,
   PAYMENT_TYPE_CARD,
   PAYMENT_TYPE_CASH,
+  PAYMENT_TYPE_TITLE_CASH,
   RECEIPT_RETURN_TYPE,
   RECEIPT_TYPE,
 } from "../const/receipt.js";
@@ -162,3 +163,6 @@ export const getControlSum = ({ isOffline, fiscalId }) => {
   }
   return null;
 };
+
+export const findCashPaymentData = (p) =>
+  p.payFormName === PAYMENT_TYPE_TITLE_CASH;

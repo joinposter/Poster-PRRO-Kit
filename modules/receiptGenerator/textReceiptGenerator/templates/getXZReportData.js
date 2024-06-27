@@ -6,6 +6,7 @@ import getFiscalCompanyData from "./blocks/fiscalCompanyBlock.js";
 import textFooterBlock from "./blocks/smartFooterBlock/textFooterBlock.js";
 import { getDateTime } from "../../../../helpers/common.js";
 import { priceFormat } from "../../helpers/receipt.js";
+import { findCashPaymentData } from "../../helpers/receiptData.js";
 
 const getTaxData = (taxes) => {
   if (!taxes) return [];
@@ -102,6 +103,18 @@ const xzReportReturnData = (data) => [
   ...getTaxData(data?.return?.taxes),
 ];
 
+const calcBalance = (data) => {
+  const realizData = data.realiz;
+  const returnData = data.return;
+  const cashPaymentData = realizData?.payments.find(findCashPaymentData);
+  const cashRefundData = returnData?.payments.find(findCashPaymentData);
+  const cashPaymentsSum = cashPaymentData?.sum || 0;
+  const cashRefundsSum = cashRefundData?.sum || 0;
+  return (
+    cashPaymentsSum + data.serviceInput + data.serviceOutput - cashRefundsSum
+  );
+};
+
 const cashFlowData = (data) => [
   { type: "text", value: "Готівкові кошти в касі", align: "center" },
   {
@@ -110,7 +123,7 @@ const cashFlowData = (data) => [
       { row: ["Початковий залишок", priceFormat(null)] },
       { row: ["Службове внесення", priceFormat(data.serviceInput)] },
       { row: ["Службове вилучення", priceFormat(data.serviceOutput)] },
-      { row: ["Кінцевий залишок", priceFormat(null)] },
+      { row: ["Кінцевий залишок", priceFormat(calcBalance(data))] },
     ],
   },
 ];

@@ -11,6 +11,7 @@ export const cashboxData = {
   cashboxLocalNumber: "123",
   isOffline: false,
   isTestingMode: false,
+  shiftNumber: 1,
 };
 export const getServiceInputBodyMock = {
   sum: 2850,
@@ -269,7 +270,6 @@ export const xReportDataMock = {
 
 export const zReportDataMock = {
   type: "ZReport",
-  shiftNumber: 1,
   realiz: {
     sum: 2681.7999999999997,
     receiptCount: 31,

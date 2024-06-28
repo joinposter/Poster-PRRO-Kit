@@ -30,9 +30,10 @@ const getTaxData = (taxes) => {
     }, []);
 };
 
-const getTitle = ({ type, shiftNumber }) => {
+const getTitle = ({ type, cashboxData }) => {
   if (type === DOCUMENT_TYPE_X_REPORT) return "X-звіт";
-  if (type === DOCUMENT_TYPE_Z_REPORT) return `Z-звіт №${shiftNumber}`;
+  if (type === DOCUMENT_TYPE_Z_REPORT)
+    return `Z-звіт №${cashboxData.shiftNumber}`;
   return null;
 };
 

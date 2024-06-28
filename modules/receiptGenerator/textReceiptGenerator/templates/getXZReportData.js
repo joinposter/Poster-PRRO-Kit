@@ -30,9 +30,10 @@ const getTaxData = (taxes) => {
     }, []);
 };
 
-const getTitle = ({ type }) => {
+const getTitle = ({ type, cashboxData }) => {
   if (type === DOCUMENT_TYPE_X_REPORT) return "X-звіт";
-  if (type === DOCUMENT_TYPE_Z_REPORT) return "Z-звіт";
+  if (type === DOCUMENT_TYPE_Z_REPORT)
+    return `Z-звіт №${cashboxData.shiftNumber}`;
   return null;
 };
 
@@ -138,7 +139,10 @@ const getXZReportData = (data) => [
     ...data,
     dateTime: getDateTime({ date: data.dateTime }),
     footerData: {
-      docType: "СЛУЖБОВИЙ ДОКУМЕНТ",
+      docType:
+        data.type === DOCUMENT_TYPE_Z_REPORT
+          ? "ФІСКАЛЬНИЙ ДОКУМЕНТ"
+          : "СЛУЖБОВИЙ ДОКУМЕНТ",
       software: "Poster POS",
       isOffline: data?.cashboxData?.isOffline,
     },

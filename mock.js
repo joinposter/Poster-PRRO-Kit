@@ -269,7 +269,7 @@ export const xReportDataMock = {
 
 export const zReportDataMock = {
   type: "ZReport",
-  reportNumber: 1,
+  shiftNumber: 1,
   realiz: {
     sum: 2681.7999999999997,
     receiptCount: 31,

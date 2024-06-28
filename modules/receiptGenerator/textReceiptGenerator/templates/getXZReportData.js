@@ -29,9 +29,9 @@ const getTaxData = (taxes) => {
     }, []);
 };
 
-const getTitle = ({ type, reportNumber }) => {
+const getTitle = ({ type, shiftNumber }) => {
   if (type === DOCUMENT_TYPE_X_REPORT) return "X-звіт";
-  if (type === DOCUMENT_TYPE_Z_REPORT) return `Z-звіт №${reportNumber}`;
+  if (type === DOCUMENT_TYPE_Z_REPORT) return `Z-звіт №${shiftNumber}`;
   return null;
 };
 

@@ -11,6 +11,7 @@ export const cashboxData = {
   cashboxLocalNumber: "123",
   isOffline: false,
   isTestingMode: false,
+  shiftNumber: 1,
 };
 export const getServiceInputBodyMock = {
   sum: 2850,
@@ -158,6 +159,117 @@ export const fiscalReceiptDataMock = {
 
 export const xReportDataMock = {
   type: "XReport",
+  realiz: {
+    sum: 2681.7999999999997,
+    receiptCount: 31,
+    payments: [
+      {
+        payFormCode: 0,
+        payFormName: "ГОТІВКА",
+        sum: 2020.8,
+      },
+      {
+        payFormCode: 1,
+        payFormName: "КАРТКА",
+        sum: 661,
+      },
+    ],
+    taxes: [
+      {
+        type: 5,
+        name: "Акцизний податок",
+        percent: 5,
+        sum: 127.54,
+        turnover: 2681.6,
+        sourceSum: 0,
+        program: "Д",
+      },
+      {
+        type: 3,
+        name: "ПДВ",
+        percent: 7,
+        sum: 23.31,
+        turnover: 376.04,
+        sourceSum: 0,
+        program: "В",
+      },
+      {
+        type: 4,
+        name: "ПДВ",
+        percent: 20,
+        sum: 175.5,
+        turnover: 1105.56,
+        sourceSum: 0,
+        program: "Г",
+      },
+    ],
+  },
+  return: {
+    sum: 31,
+    receiptCount: 2,
+    payments: [
+      {
+        payFormCode: 0,
+        payFormName: "ГОТІВКА",
+        sum: 30,
+      },
+      {
+        payFormCode: 1,
+        payFormName: "КАРТКА",
+        sum: 1,
+      },
+    ],
+    taxes: [
+      {
+        type: 5,
+        name: "Акцизний податок",
+        percent: 5,
+        sum: 1.47,
+        turnover: 31.04,
+        sourceSum: 0,
+        program: "Д",
+      },
+      {
+        type: 3,
+        name: "ПДВ",
+        percent: 7,
+        sum: 1.92,
+        turnover: 31.04,
+        sourceSum: 0,
+        program: "В",
+      },
+    ],
+  },
+  serviceInput: null,
+  serviceOutput: null,
+  cashboxData,
+  shiftOpenData: {
+    dateTime: "2024-05-24T13:20:05.407Z",
+  },
+  lastFiscalDocumentData: {
+    dateTime: "2024-05-27T17:22:06.973Z",
+    documentNumber: 516,
+    fiscalId: "2469255615",
+  },
+  dateTime: "2024-05-27T17:22:06.973Z",
+  cashier: "Шевченко Т.Г.",
+  offlineSessionData: {
+    id: 23649865,
+    seed: 135969449201653,
+    nextDocumentNumber: 2834,
+    nextOfflineDocumentNumber: 4,
+    lastDocumentHash:
+      "47a08c017274237765f9081d994e76e08742dcef85056d655a8458ec43dff6e4",
+  },
+  isCashboxModeOffline: true,
+  documentNumber: 1,
+  offlineDocumentNumber: 1,
+  previousDocumentHash:
+    "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
+};
+
+export const zReportDataMock = {
+  type: "ZReport",
   realiz: {
     sum: 2681.7999999999997,
     receiptCount: 31,

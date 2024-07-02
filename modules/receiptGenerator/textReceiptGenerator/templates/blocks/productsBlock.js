@@ -17,22 +17,64 @@ const createProductRow = (product) => ({
     product.barcodes || null,
     product.exciseStamp || null,
   ],
+  hasSpaceBefore: true,
 });
+
+const createDiscountRow = (product) =>
+  product.discount > 0
+    ? {
+        row: ["Знижка", "", priceFormat(product.discount), product.taxPrograms],
+        styles: {
+          1: {
+            color: "text-secondary",
+          },
+        },
+        hasSpaceBefore: false,
+      }
+    : null;
+
+const createDiffWithDiscountRow = (product) =>
+  product.discount > 0
+    ? {
+        row: [
+          "Ціна зі знижкою",
+          "",
+          priceFormat(product.count * product.price - product.discount),
+          product.taxPrograms,
+        ],
+        styles: {
+          1: {
+            color: "text-secondary",
+          },
+        },
+        hasSpaceBefore: false,
+      }
+    : null;
+
+const createProductData = (product) => {
+  const productRow = createProductRow(product);
+  const discountRow = createDiscountRow(product);
+  const diffWithDiscountRow = createDiffWithDiscountRow(product);
+
+  return [productRow, discountRow, diffWithDiscountRow].filter(Boolean);
+};
 
 const isVisibleProduct = (product) => !product.hidden;
 
-const addEmptySpaces = (products) => {
-  return products.reduce((acc, product, index) => {
-    if (index === 0) {
-      return [...acc, product];
+const addEmptySpaces = (rows) => {
+  return rows.reduce((acc, rowsData, index) => {
+    if (index === 0 || !rowsData.hasSpaceBefore) {
+      return [...acc, rowsData];
     }
-    const emptyArrows = new Array(product.row.length).fill("");
-    return [...acc, { row: emptyArrows }, product];
+    const emptyArrows = new Array(rowsData.row.length).fill("");
+    return [...acc, { row: emptyArrows }, rowsData];
   }, []);
 };
 
+const getFlatData = (acc, item) => [...acc, ...createProductData(item)];
+
 const getProductsData = (data) => {
-  const visibleProducts = data.filter(isVisibleProduct).map(createProductRow);
+  const visibleProducts = data.filter(isVisibleProduct).reduce(getFlatData, []);
   const itemsWithSpaces = addEmptySpaces(visibleProducts);
 
   return [

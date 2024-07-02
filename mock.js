@@ -53,6 +53,7 @@ export const productsData = [
     count: 2,
     price: 130.02,
     taxPrograms: "ДГ",
+    discount: 10.04,
   },
   {
     barcodes: null,

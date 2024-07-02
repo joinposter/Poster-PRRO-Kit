@@ -133,6 +133,7 @@ export const prepareDataForPrintReceipt = (data) => ({
     count: product.count,
     price: product.price,
     taxPrograms: product.taxPrograms,
+    discount: product.discount,
   })),
   taxesData: getTaxesData(data),
   roundData: getRoundReceiptData(data),

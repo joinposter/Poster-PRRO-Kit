@@ -8,7 +8,7 @@
 Для того, щоб згенерувати текст чека, необхідно завантажити цей пакет і 
 викликати один з методів `generateFiscalReceipt`, `generateHtmlFiscalReceipt`,
 `generateTextFiscalReceipt`, `generateTextServiceTransactionReceipt`,
-`generateXZReport`, `generateQRCodeReceiptData` 
+`generateXZReport`, `getDFSFiscalLink` 
 з даними, які отримали від PRRO, приклад можно 
 знайти в [тут](mock.js).
 

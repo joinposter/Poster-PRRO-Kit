@@ -6,11 +6,11 @@ const getDFSFiscalLink = ({
   sum,
   date,
   time,
-  lastDocumentHash,
+  previousDocumentHash,
 }) => {
   let link = `${FISCAL_RECEIPT_SERVER_ADDRESS}?id=${fiscalId}&date=${date}&time=${time}&fn=${cashbox}&sm=${sum}`;
-  if (lastDocumentHash) {
-    link += `&mac=${lastDocumentHash}`;
+  if (previousDocumentHash) {
+    link += `&mac=${previousDocumentHash}`;
   }
   return link;
 };

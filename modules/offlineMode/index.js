@@ -49,7 +49,7 @@ const getReceiptOfflineModeRequestData = async (data) => {
     sum: data.total,
     date: getDateTime({ date: dateTime, format: "dateDfsLink" }),
     time: getDateTime({ date: dateTime, format: "timeDfsLink" }),
-    lastDocumentHash: cashboxData.offlineSessionData.lastDocumentHash,
+    previousDocumentHash: cashboxData.offlineSessionData.lastDocumentHash,
   });
   const uid = XML?.CHECK?.CHECKHEAD?.UID;
 

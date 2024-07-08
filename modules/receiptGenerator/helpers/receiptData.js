@@ -13,7 +13,6 @@ import {
   getDateTime,
 } from "../../../helpers/common.js";
 import defaultReceiptConfig from "../config/receipt.js";
-import { getDFSReceiptLink } from "./receipt.js";
 
 const getProductUktzed = (name) =>
   name.includes("#") ? `${name.split("#")[0]}#` : null;
@@ -144,13 +143,7 @@ export const prepareDataForPrintReceipt = (data) => ({
       ? "ВИДАТКОВИЙ ЧЕК"
       : "ФІСКАЛЬНИЙ ЧЕК",
     software: "Poster POS",
-    dFSReceiptLink: getDFSReceiptLink({
-      fiscalId: data.fiscalId,
-      cashbox: data.cashboxData.cashbox,
-      total: data.total,
-      date: getDateTime({ date: data.dateTime, format: "dateQr" }),
-      time: getDateTime({ date: data.dateTime, format: "timeQr" }),
-    }),
+    dFSReceiptLink: data.fiscalLink,
   }),
   receiptConfig: data.receiptConfig || defaultReceiptConfig,
 });

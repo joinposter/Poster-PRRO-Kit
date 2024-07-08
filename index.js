@@ -2,7 +2,6 @@ import {
   generateTextFiscalReceipt,
   generateTextServiceTransactionReceipt,
   generateXZReport,
-  generateQRCodeReceiptData,
   generateHtmlFiscalReceipt,
 } from "./modules/receiptGenerator/index.js";
 import {
@@ -15,6 +14,8 @@ import {
   getFinishOfflineModeRequestData,
   mergeOperationsAndXReport,
 } from "./modules/offlineMode/index.js";
+import { getDFSFiscalLink } from "./modules/dfs/index.js";
+import { getDateTime } from "./helpers/common.js";
 
 import {
   XMLToObject,
@@ -29,7 +30,7 @@ export {
   generateTextFiscalReceipt,
   generateTextServiceTransactionReceipt,
   generateXZReport,
-  generateQRCodeReceiptData,
+  getDFSFiscalLink,
   generateHtmlFiscalReceipt,
   getReceiptOfflineModeRequestData,
   getTransactionOfflineModeRequestData,
@@ -45,4 +46,5 @@ export {
   buildXMLDocument,
   getTaxesData,
   getTaxPrograms,
+  getDateTime,
 };

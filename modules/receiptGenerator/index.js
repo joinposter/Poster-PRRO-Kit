@@ -1,10 +1,7 @@
 import receipt from "receipt";
-import qrcode from "qrcode-generator";
 import defaultReceiptConfig from "./config/receipt.js";
 import { prepareDataForPrintReceipt } from "./helpers/receiptData.js";
-import { getDFSReceiptLink, initReceipt } from "./helpers/receipt.js";
-import { getDateTime } from "../../helpers/common.js";
-import { DEFAULT_QR_MARGIN, DEFAULT_QR_SIZE } from "./const/receipt.js";
+import { initReceipt } from "./helpers/receipt.js";
 import getFiscalReceiptData from "./textReceiptGenerator/templates/getFiscalReceiptData.js";
 import renderFiscalReceipt from "./htmlReceiptGenerator/formatters/fiscalReceipt.js";
 import getServiceTransactionReceiptData from "./textReceiptGenerator/templates/getServiceTransactionReceiptData.js";
@@ -35,28 +32,9 @@ const generateXZReport = (data) => {
   return receipt.create(xzReportData);
 };
 
-const generateQRCodeReceiptData = (data) => {
-  const qrCodeString = getDFSReceiptLink({
-    fiscalId: data.fiscalId,
-    cashbox: data.cashboxData.cashbox,
-    total: data.total,
-    date: getDateTime({ date: data.dateTime, format: "dateQr" }),
-    time: getDateTime({ date: data.dateTime, format: "timeQr" }),
-  });
-  const qrCode = qrcode(0, "L");
-  qrCode.addData(qrCodeString);
-  qrCode.make();
-  const qrCodeSvgTag = qrCode.createSvgTag(
-    data?.qrOptions?.size || DEFAULT_QR_SIZE,
-    data?.qrOptions?.margin || DEFAULT_QR_MARGIN,
-  );
-  return { qrCodeSvgTag, qrCodeString };
-};
-
 export {
   generateHtmlFiscalReceipt,
   generateTextFiscalReceipt,
   generateTextServiceTransactionReceipt,
   generateXZReport,
-  generateQRCodeReceiptData,
 };

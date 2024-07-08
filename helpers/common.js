@@ -19,13 +19,13 @@ export const getDateTime = ({ date, format }) => {
   if (format === "date") {
     return `${day}.${month}.${year}`;
   }
-  if (format === "dateQr") {
+  if (format === "dateDfsLink") {
     return `${year}${month}${day}`;
   }
   if (format === "time") {
     return `${hours}:${minutes}:${seconds}`;
   }
-  if (format === "timeQr") {
+  if (format === "timeDfsLink") {
     return `${hours}${minutes}${seconds}`;
   }
 

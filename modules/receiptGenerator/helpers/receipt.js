@@ -2,7 +2,6 @@ import receipt from "receipt";
 import smartTableFormatter from "../textReceiptGenerator/formatters/smartTable/smartTableFormatter.js";
 import summaryFormatter from "../textReceiptGenerator/formatters/summaryFormatter.js";
 import smartPropertiesFormatter from "../textReceiptGenerator/formatters/smartPropertiesFormatter.js";
-import { FISCAL_RECEIPT_SERVER_ADDRESS } from "../const/receipt.js";
 
 export const initReceipt = (receiptConfig) => {
   receipt.config.currency = receiptConfig.currency;
@@ -41,5 +40,3 @@ export const priceFormat = (number) => {
   return changeComa(parsed);
 };
 
-export const getDFSReceiptLink = ({ fiscalId, cashbox, total, date, time }) =>
-  `${FISCAL_RECEIPT_SERVER_ADDRESS}?id=${fiscalId}&date=${date}&time=${time}&fn=${cashbox}&sm=${total}`;

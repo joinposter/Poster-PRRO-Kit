@@ -14,7 +14,7 @@ import {
   getFinishOfflineModeRequestData,
   mergeOperationsAndXReport,
 } from "./modules/offlineMode/index.js";
-import { getDFSFiscalLink } from "./modules/dfs/index.js";
+import getDFSFiscalLink from "./modules/dfs/index.js";
 import { getDateTime } from "./helpers/common.js";
 
 import {

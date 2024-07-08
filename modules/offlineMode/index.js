@@ -17,7 +17,7 @@ import {
   inpitOutputServiceFieldAcc,
   realizReturnFieldAcc,
 } from "./helpers/XZReportData.js";
-import { getDFSFiscalLink } from "../dfs/index.js";
+import getDFSFiscalLink from "../dfs/index.js";
 import { getDateTime } from "../../helpers/common.js";
 
 const getReceiptOfflineModeRequestData = async (data) => {
@@ -57,7 +57,7 @@ const getReceiptOfflineModeRequestData = async (data) => {
     fiscalId,
     fiscalLink,
     uid,
-    dateTime: expandDocumentData(data).dateTime,
+    dateTime,
     taxes,
     documentHash,
     cashboxData: {

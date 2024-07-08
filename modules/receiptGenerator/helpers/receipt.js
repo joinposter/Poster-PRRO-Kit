@@ -39,4 +39,3 @@ export const priceFormat = (number) => {
 
   return changeComa(parsed);
 };
-

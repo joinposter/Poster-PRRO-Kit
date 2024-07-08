@@ -115,15 +115,13 @@ const taxesMapper = (tax, index) => {
     program: LETTER,
     percent,
     turnover,
-    sourceSum,
+    // sourceSum,
   } = tax;
 
   const PRC = formatToFixedDecimal(percent);
   const TURNOVER = formatToFixedDecimal(turnover);
   const SUM = formatToFixedDecimal(sum);
-  const SOURCESUM = sourceSum
-    ? { SOURCESUM: formatToFixedDecimal(sourceSum) }
-    : {};
+  // const SOURCESUM = formatToFixedDecimal(sourceSum);
 
   return {
     $: getRowNum(index),
@@ -132,7 +130,8 @@ const taxesMapper = (tax, index) => {
     LETTER,
     PRC,
     TURNOVER,
-    ...SOURCESUM,
+    // SOURCESUM є не обов'язковим полем і ми вирішили його поки що не додавати
+    // SOURCESUM,
     SUM,
   };
 };

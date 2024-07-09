@@ -81,7 +81,7 @@ const calculateSourceSum = (data) => {
   return {
     ...rest,
     turnover,
-    sourceSum: discount ? turnover - discount : 0,
+    sourceSum: discount ? turnover - discount : turnover,
   };
 };
 
@@ -173,7 +173,9 @@ const groupByTaxes = (
     acc[VAT] = {
       sum: roundWithPrecision(summarizeVAT("sum", VATAmount)),
       turnover: roundWithPrecision(summarizeVAT("turnover", turnover)),
-      sourceSum: roundWithPrecision(summarizeVAT("sourceSum", sourceSum)),
+      sourceSum: roundWithPrecision(
+        summarizeVAT("sourceSum", sourceSum - (exciseAmount || 0)),
+      ),
       program: VAT,
       ...taxesConfig.VATTaxList[VAT],
     };

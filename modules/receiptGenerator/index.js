@@ -1,6 +1,9 @@
 import receipt from "receipt";
 import defaultReceiptConfig from "./config/receipt.js";
-import { prepareDataForPrintReceipt } from "./helpers/receiptData.js";
+import {
+  checkCashPaymentLowerThanTenCent,
+  prepareDataForPrintReceipt,
+} from "./helpers/receiptData.js";
 import { initReceipt } from "./helpers/receipt.js";
 import getFiscalReceiptData from "./textReceiptGenerator/templates/getFiscalReceiptData.js";
 import renderFiscalReceipt from "./htmlReceiptGenerator/formatters/fiscalReceipt.js";
@@ -8,14 +11,16 @@ import getServiceTransactionReceiptData from "./textReceiptGenerator/templates/g
 import getXZReportData from "./textReceiptGenerator/templates/getXZReportData.js";
 
 const generateHtmlFiscalReceipt = (data) => {
-  const receiptData = prepareDataForPrintReceipt(data);
+  const updatedData = checkCashPaymentLowerThanTenCent(data);
+  const receiptData = prepareDataForPrintReceipt(updatedData);
   const fiscalReceiptData = getFiscalReceiptData(receiptData, true);
   return renderFiscalReceipt(fiscalReceiptData);
 };
 
 const generateTextFiscalReceipt = (data) => {
   initReceipt(data.receiptConfig || defaultReceiptConfig);
-  const receiptData = prepareDataForPrintReceipt(data);
+  const updatedData = checkCashPaymentLowerThanTenCent(data);
+  const receiptData = prepareDataForPrintReceipt(updatedData);
   const fiscalReceiptData = getFiscalReceiptData(receiptData);
   return receipt.create(fiscalReceiptData);
 };

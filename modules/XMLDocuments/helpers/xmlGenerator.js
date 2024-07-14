@@ -3,7 +3,10 @@ import { Buffer } from "buffer";
 import { crc32 } from "crc";
 import { v4 as uuidv4 } from "uuid";
 import { PAYMENT_TYPE_CARD, PAYMENT_TYPE_CASH } from "../const/fiscal.js";
-import { decimalRounding, roundWithPrecision } from "../../../helpers/round.js";
+import {
+  cashSumDecimalRounding,
+  roundWithPrecision,
+} from "../../../helpers/round.js";
 
 export const getFiscalNumberControlCode = (string) => {
   const HEX_RADIX = 16;
@@ -38,6 +41,14 @@ const accumulateDiscount = (acc, item) => acc + item.discount;
 export const getDiscountTotal = (products) =>
   products.reduce(accumulateDiscount, 0);
 
+export const getDiscount = (product) => {
+  const { discount, roundSum } = product;
+  // Якщо roundSum дорівнює значенню discount, але відʼємний, це означає, що ціна була нижчою за 10 копійок,
+  // а оплата здійснювалася готівкою, де немає номіналу нижче 10 копійок, і discount повинен бути відʼємним.
+  // В усіх інших випадках потрібно використовувати значення discount.
+  return roundSum < 0 && roundSum + discount === 0 ? roundSum : discount;
+};
+
 export const findCashPayment = (payment) => payment.type === PAYMENT_TYPE_CASH;
 
 export const findCardPayment = (payment) => payment.type === PAYMENT_TYPE_CARD;
@@ -46,7 +57,7 @@ export const getRoundedDiff = (item, type = PAYMENT_TYPE_CASH) => {
   let roundDiff = 0;
   if (type === PAYMENT_TYPE_CASH) {
     const cashSum = item.payments.find(findCashPayment)?.sum;
-    const roundedCashSum = cashSum && decimalRounding(cashSum);
+    const roundedCashSum = cashSum && cashSumDecimalRounding(cashSum);
     if (cashSum !== roundedCashSum) {
       roundDiff = cashSum - roundedCashSum;
     }

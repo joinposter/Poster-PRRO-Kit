@@ -114,29 +114,6 @@ const getSstData = ({ sstData, type }) => {
   };
 };
 
-export const checkCashPaymentLowerThanTenCent = (data) => {
-  const MINIMAL_CASH_SUM = 0.1;
-  if (
-    data.payments.find(findCashPayment)?.sum < MINIMAL_CASH_SUM &&
-    !data.payments.find(findCardPayment)
-  ) {
-    return {
-      ...data,
-      payments: data.payments.map((payment) => {
-        if (payment.type === PAYMENT_TYPE_CASH) {
-          return {
-            ...payment,
-            sum: cashSumDecimalRounding(payment.sum),
-          };
-        }
-        return payment;
-      }),
-      total: cashSumDecimalRounding(data.total),
-    };
-  }
-  return data;
-};
-
 export const prepareDataForPrintReceipt = (data) => ({
   qrOptions: data.qrOptions,
   fiscalId: data.fiscalId,

@@ -12,10 +12,11 @@ import {
   DOCUMENT_TYPE_RETURN_RECEIPT,
 } from "../const/request.js";
 import {
-  decimalRounding,
+  cashSumDecimalRounding,
   formatToFixedDecimal,
 } from "../../../helpers/round.js";
 import {
+  getDiscount,
   getDiscountTotal,
   getProductSum,
   getRoundedDiff,
@@ -54,7 +55,7 @@ const getDiscountBlock = (product) => {
   if (discount) {
     return {
       DISCOUNTTYPE: 0,
-      DISCOUNTSUM: formatToFixedDecimal(discount),
+      DISCOUNTSUM: formatToFixedDecimal(getDiscount(product)),
     };
   }
   return {};
@@ -64,7 +65,7 @@ const paymentMapper = (payment, index) => {
   const { PAYFORMCD, PAYFORMNM } = getPaymentDetails(payment.type);
   const SUM =
     PAYFORMNM === PAYMENT_TYPE_TITLE_CASH
-      ? formatToFixedDecimal(decimalRounding(payment.sum))
+      ? formatToFixedDecimal(cashSumDecimalRounding(payment.sum))
       : formatToFixedDecimal(payment.sum);
 
   return {

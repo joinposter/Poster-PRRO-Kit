@@ -18,3 +18,8 @@ export const decimalRounding = (number) => {
 
   return rounded;
 };
+
+export const cashSumDecimalRounding = (number) => {
+  const MINIMAL_CASH_SUM = 0.1;
+  return Math.max(decimalRounding(number), MINIMAL_CASH_SUM);
+};

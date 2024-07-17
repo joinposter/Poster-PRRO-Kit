@@ -31,10 +31,3 @@ export const getDateTime = ({ date, format }) => {
 
   return `${day}.${month}.${year} ${hours}:${minutes}:${seconds}`;
 };
-
-export const decimalRounding = (number) => {
-  const NUMBER_OF_DECIMALS = 10;
-  const rounded = Math.round(number * NUMBER_OF_DECIMALS) / NUMBER_OF_DECIMALS;
-
-  return rounded;
-};

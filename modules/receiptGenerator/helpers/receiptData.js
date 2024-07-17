@@ -7,11 +7,8 @@ import {
   RECEIPT_RETURN_TYPE,
   RECEIPT_TYPE,
 } from "../const/receipt.js";
-import {
-  decimalRounding,
-  formatToFixedDecimal,
-  getDateTime,
-} from "../../../helpers/common.js";
+import { formatToFixedDecimal, getDateTime } from "../../../helpers/common.js";
+import { cashSumDecimalRounding } from "../../../helpers/round.js";
 import defaultReceiptConfig from "../config/receipt.js";
 
 const getProductUktzed = (name) =>
@@ -28,7 +25,7 @@ const getRoundedDiff = (item, type = PAYMENT_TYPE_CASH) => {
   let roundDiff = 0;
   if (type === PAYMENT_TYPE_CASH) {
     const cashSum = item.payments.find(findCashPayment)?.sum;
-    const roundedCashSum = cashSum && decimalRounding(cashSum);
+    const roundedCashSum = cashSum && cashSumDecimalRounding(cashSum);
     if (cashSum !== roundedCashSum) {
       roundDiff = cashSum - roundedCashSum;
     }
@@ -73,7 +70,7 @@ const getRoundReceiptData = (data) => {
         },
         {
           name: "Заокруглення",
-          value: formatToFixedDecimal(Math.abs(roundDiff)),
+          value: formatToFixedDecimal(roundDiff),
         },
       ]
     : null;

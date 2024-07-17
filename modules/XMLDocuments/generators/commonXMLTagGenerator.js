@@ -98,6 +98,11 @@ export const getCashierFields = ({ cashier }) => {
   return CASHIER;
 };
 
+export const getRevokeFields = ({ revoke }) => {
+  const REVOKELASTONLINEDOC = revoke ? { REVOKELASTONLINEDOC: true } : {};
+  return REVOKELASTONLINEDOC;
+};
+
 export const getVersionFields = () => ({
   VER: 1,
 });

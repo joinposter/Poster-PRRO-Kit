@@ -41,7 +41,7 @@ const getReceiptOfflineModeRequestData = async (data) => {
     taxes,
   });
   const documentHash = await getDocumentHash(XML);
-  const dateTime = expandDocumentData(data).dateTime;
+  const { dateTime } = expandDocumentData(data);
   const fiscalId = XML?.CHECK?.CHECKHEAD?.ORDERTAXNUM;
   const fiscalLink = getDFSFiscalLink({
     fiscalId,

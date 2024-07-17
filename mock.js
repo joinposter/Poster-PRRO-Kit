@@ -108,6 +108,27 @@ export const sstData = {
   txnType: "1",
 };
 
+export const alternativeSstData = {
+  paymentSystemName: "MasterCard",
+  authCode: "400035",
+  merchantId: "S1K70F0U",
+  success: true,
+  error_code: 0,
+  operationType: 1,
+  terminalId: "S1K70F0U",
+  pan: "XXXXXXXXXXXX1935",
+  signVerify: 0,
+  transactionId: 6930,
+  rrn: "085875832176",
+  saveCallback: false,
+  receiptId: 1721218830342,
+  deviceId: "192.168.0.103",
+  deviceClass: "ingenicoUa",
+  fiscal_company_uuid: null,
+  status: 0,
+  fiscal_company_id: null,
+};
+
 export const fiscalReceiptDataMock = {
   type: "receipt",
   fiscalId: "2462757750",

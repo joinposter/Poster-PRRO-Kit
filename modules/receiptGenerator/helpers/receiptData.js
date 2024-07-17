@@ -102,13 +102,13 @@ const getFooterData = ({
 const getSstData = ({ sstData, type }) => {
   if (!sstData) return null;
   return {
-    bank: sstData.bankAcquirer,
-    terminal: sstData.terminalId,
+    bank: sstData?.bankAcquirer,
+    terminal: sstData?.terminalId,
     actionType: getReceiptType(type),
-    paymentSystem: sstData.paymentSystemName,
-    cardNumber: sstData.pan,
-    authCode: sstData.authCode,
-    rrn: sstData.rrn,
+    paymentSystem: sstData?.paymentSystemName,
+    cardNumber: sstData?.pan,
+    authCode: sstData?.authCode,
+    rrn: sstData?.rrn,
     cashier: ".............",
     holder: ".............",
   };

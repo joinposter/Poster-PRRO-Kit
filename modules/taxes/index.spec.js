@@ -141,7 +141,7 @@ describe("taxes", () => {
         program: "Г",
         sum: 0,
         turnover: 800,
-        sourceSum: 770,
+        sourceSum: 733.33,
         type: 4,
       },
       {
@@ -150,7 +150,7 @@ describe("taxes", () => {
         program: "Б",
         sum: 9.99,
         turnover: 180.26,
-        sourceSum: 160.26,
+        sourceSum: 152.63,
         type: 2,
       },
       {

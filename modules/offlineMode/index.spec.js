@@ -86,7 +86,8 @@ describe("offline mode", () => {
     ).toEqual({
       type: "receipt",
       fiscalId: "23649865.1.1236",
-      fiscalLink: "https://cabinet.tax.gov.ua/cashregs/check?id=23649865.1.1236&date=20240604&time=152618&fn=4000438533&sm=950.04&mac=47a08c017274237765f9081d994e76e08742dcef85056d655a8458ec43dff6e4",
+      fiscalLink:
+        "https://cabinet.tax.gov.ua/cashregs/check?id=23649865.1.1236&date=20240604&time=152618&fn=4000438533&sm=950.04&mac=47a08c017274237765f9081d994e76e08742dcef85056d655a8458ec43dff6e4",
       uid: "11111111-1111-1111-1111-111111111111",
       dateTime: "2024-06-04T12:26:18.293Z",
       documentHash:

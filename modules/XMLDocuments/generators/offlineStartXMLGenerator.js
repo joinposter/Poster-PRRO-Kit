@@ -7,6 +7,7 @@ import {
   getDocumentNumberFields,
   getOfflineFields,
   getOrganizationFields,
+  getRevokeFields,
   getUIDFields,
   getVersionFields,
 } from "./commonXMLTagGenerator.js";
@@ -22,6 +23,7 @@ const getOfflineStartHeader = (operationData) => {
     ...getDocumentNumberFields(cashboxData),
     ...getCashboxFields(cashboxData),
     ...getCashierFields(cashboxData),
+    ...getRevokeFields(operationData),
     ...getVersionFields(),
     ...getOfflineFields({ operationData }),
   };

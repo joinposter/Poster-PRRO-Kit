@@ -13,7 +13,11 @@ import {
   DOCUMENT_TYPE_SHIFT_OPEN,
   DOCUMENT_TYPE_Z_REPORT,
 } from "./const/request.js";
-import { fromBase64ToBuffer, sha256 } from "./helpers/xmlGenerator.js";
+import {
+  fromBase64ToBuffer,
+  sha256,
+  getRoundedDiff,
+} from "./helpers/xmlGenerator.js";
 import getReceiptDocument from "./generators/receiptXMLGenerator.js";
 import getServiceTransactionDocument from "./generators/serviceTransactionXMLGenerator.js";
 import getOfflineStartDocument from "./generators/offlineStartXMLGenerator.js";
@@ -54,4 +58,10 @@ const getDocument = (request) => {
     : {};
 };
 
-export { XMLToObject, getDocument, getDocumentHash, buildXMLDocument };
+export {
+  XMLToObject,
+  getDocument,
+  getDocumentHash,
+  buildXMLDocument,
+  getRoundedDiff,
+};

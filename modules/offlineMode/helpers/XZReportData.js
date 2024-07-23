@@ -13,7 +13,8 @@ import {
   PAYMENT_TYPE_TITLE_CASH,
 } from "../../XMLDocuments/const/fiscal.js";
 import { getTaxesData } from "../../taxes/index.js";
-import { getRoundedDiff } from "../../XMLDocuments/helpers/xmlGenerator.js";
+import { getRoundedDiff } from "../../XMLDocuments/index.js";
+import { roundWithPrecision } from "../../../helpers/round.js";
 
 export { createXZReportData, realizReturnFieldAcc, inpitOutputServiceFieldAcc };
 
@@ -42,7 +43,7 @@ const getPaymentSum = (item, type) =>
 
 const accumulateTotalByType = (type) => (acc, item) =>
   (isReceipt(item) || isReturnReceipt(item)) && existPaymentByType(type)(item)
-    ? acc + getPaymentSum(item, type)
+    ? roundWithPrecision(acc + getPaymentSum(item, type))
     : acc;
 
 const getPaymentsTotalByType = (data, type) =>
@@ -68,11 +69,12 @@ const createCardPaymentsData = (data) =>
 
 const getReceiptCount = (data) => data.length;
 
-const accumulateTotal = (acc, item) => acc + item.total - getRoundedDiff(item);
+const accumulateTotal = (acc, item) =>
+  roundWithPrecision(acc + item.total - getRoundedDiff(item));
 
 const getReceiptTotal = (data) => data.reduce(accumulateTotal, 0);
 
-const accumulateSum = (acc, item) => acc + item.sum;
+const accumulateSum = (acc, item) => roundWithPrecision(acc + item.sum);
 
 const getTransactionsSum = (data) => data.reduce(accumulateSum, 0);
 

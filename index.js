@@ -16,12 +16,14 @@ import {
 } from "./modules/offlineMode/index.js";
 import getDFSFiscalLink from "./modules/dfs/index.js";
 import { getDateTime } from "./helpers/common.js";
+import { roundWithPrecision, cashSumDecimalRounding } from "./helpers/round.js";
 
 import {
   XMLToObject,
   getDocument,
   getDocumentHash,
   buildXMLDocument,
+  getRoundedDiff,
 } from "./modules/XMLDocuments/index.js";
 
 import { getTaxesData, getTaxPrograms } from "./modules/taxes/index.js";
@@ -44,7 +46,10 @@ export {
   getDocument,
   getDocumentHash,
   buildXMLDocument,
+  getRoundedDiff,
   getTaxesData,
   getTaxPrograms,
   getDateTime,
+  roundWithPrecision,
+  cashSumDecimalRounding,
 };

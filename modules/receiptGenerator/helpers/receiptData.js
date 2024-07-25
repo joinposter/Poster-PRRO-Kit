@@ -121,6 +121,7 @@ export const prepareDataForPrintReceipt = (data) => ({
   cashboxData: data.cashboxData,
   cashier: data.cashier,
   type: data.type,
+  headerServiceData: data.headerServiceData,
   productsData: data.products.map((product) => ({
     uktzed: getProductUktzed(product.name),
     barcodes: product.barcodes?.join(" ") || null,
@@ -142,6 +143,7 @@ export const prepareDataForPrintReceipt = (data) => ({
     software: "Poster POS",
     dFSReceiptLink: data.fiscalLink,
   }),
+  footerServiceData: data.footerServiceData,
   receiptConfig: data.receiptConfig || defaultReceiptConfig,
 });
 

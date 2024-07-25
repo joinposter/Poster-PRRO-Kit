@@ -63,6 +63,14 @@ export const productsData = [
     price: 260,
     taxPrograms: "Д",
   },
+  {
+    barcodes: null,
+    marking: null,
+    name: "Сирна палочка",
+    count: 1,
+    price: 5,
+    taxPrograms: "Д",
+  },
 ];
 
 export const sstData = {
@@ -176,7 +184,17 @@ export const fiscalReceiptDataMock = {
       program: "Г",
     },
   ],
+  headerServiceData: [
+    { name: "Чек №", value: 485 },
+    { name: "Тип замовлення", value: "У закладі" },
+    { name: "Відкрито", value: "16 липня 2024 19:29:35" },
+    { name: "Надруковано", value: "16 липня 2024 19:30:35" },
+    { name: "Стіл №", value: "6 (Основний зал)" },
+    { name: "К-сть гостей", value: "2" },
+  ],
+  footerServiceData: "На вас чекає приємний сюрприз!",
   sstData,
+  fiscalLink: "https://d.fiscalservice.gov.ua/receipt/12345678",
 };
 
 export const xReportDataMock = {

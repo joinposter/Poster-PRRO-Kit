@@ -9,6 +9,7 @@ const templateMap = {
   ruler: renderRuler,
   smartTable: renderSmartTable,
   summary: renderSummary,
+  smartProperties: renderSummary,
   footer: renderFooter,
 };
 

@@ -199,6 +199,7 @@ describe("receiptGenerator", () => {
       await generateTextServiceTransactionReceipt(getServiceOutputBodyMock),
     ).toEqual(expectedReceipt);
   });
+
   it("generateXReport should has this structure", () => {
     const expectedReceipt = [
       "              ТОВ ТЕСТ ПРРО             ",
@@ -277,6 +278,7 @@ describe("receiptGenerator", () => {
       }),
     ).toEqual(expectedReceipt);
   });
+
   it("generateZReport should have this structure", () => {
     const expectedReceipt = [
       "              ТОВ ТЕСТ ПРРО             ",

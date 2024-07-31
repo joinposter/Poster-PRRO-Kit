@@ -105,6 +105,8 @@ const xzReportReturnData = (data) => [
 ];
 
 const calcBalance = (data) => {
+  const shiftOpenBalance = data.shiftOpenData.balance || 0;
+
   const realizData = data.realiz;
   const returnData = data.return;
   const cashPaymentData = realizData?.payments.find(findCashPaymentData);
@@ -112,7 +114,11 @@ const calcBalance = (data) => {
   const cashPaymentsSum = cashPaymentData?.sum || 0;
   const cashRefundsSum = cashRefundData?.sum || 0;
   return (
-    cashPaymentsSum + data.serviceInput + data.serviceOutput - cashRefundsSum
+    shiftOpenBalance +
+    cashPaymentsSum +
+    data.serviceInput +
+    data.serviceOutput -
+    cashRefundsSum
   );
 };
 
@@ -121,7 +127,7 @@ const cashFlowData = (data) => [
   {
     type: "smartTable",
     items: [
-      { row: ["Початковий залишок", priceFormat(null)] },
+      { row: ["Початковий залишок", priceFormat(data.shiftOpenData.balance || null)] },
       { row: ["Службове внесення", priceFormat(data.serviceInput)] },
       {
         row: ["Службове вилучення", priceFormat(Math.abs(data.serviceOutput))],

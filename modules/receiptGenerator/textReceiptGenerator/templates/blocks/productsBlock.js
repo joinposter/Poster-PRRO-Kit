@@ -12,7 +12,7 @@ const createProductRow = (product) => ({
     },
   },
   additionalData: [
-    product.count > 1
+    Number(product.count) !== 1
       ? `${product.count} x ${priceFormat(product.price)}`
       : null,
     product.uktzed || null,

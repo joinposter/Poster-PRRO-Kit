@@ -12,7 +12,12 @@ const getServiceTransactionBody = ({ sum, receiptConfig }) => {
       type: "smartTable",
       hideBottomBorder: false,
       items: [
-        { row: ["Готівка", `${priceFormat(sum)}${receiptConfig.currency}`] },
+        {
+          row: [
+            "Готівка",
+            `${priceFormat(Math.abs(sum))}${receiptConfig.currency}`,
+          ],
+        },
       ],
     },
   ];

@@ -123,7 +123,9 @@ const cashFlowData = (data) => [
     items: [
       { row: ["Початковий залишок", priceFormat(null)] },
       { row: ["Службове внесення", priceFormat(data.serviceInput)] },
-      { row: ["Службове вилучення", priceFormat(data.serviceOutput)] },
+      {
+        row: ["Службове вилучення", priceFormat(Math.abs(data.serviceOutput))],
+      },
       { row: ["Кінцевий залишок", priceFormat(calcBalance(data))] },
     ],
   },

@@ -17,6 +17,18 @@ import {
 import getDFSFiscalLink from "./modules/dfs/index.js";
 import { getDateTime } from "./helpers/common.js";
 import { roundWithPrecision, cashSumDecimalRounding } from "./helpers/round.js";
+import {
+  DOCUMENT_TYPE_RECEIPT,
+  DOCUMENT_TYPE_RETURN_RECEIPT,
+  DOCUMENT_TYPE_SERVICE_ENTRY,
+  DOCUMENT_TYPE_SERVICE_DELIVERY,
+  DOCUMENT_TYPE_SHIFT_OPEN,
+  DOCUMENT_TYPE_SHIFT_CLOSE,
+  DOCUMENT_TYPE_Z_REPORT,
+  DOCUMENT_TYPE_X_REPORT,
+  DOCUMENT_TYPE_OFFLINE_START,
+  DOCUMENT_TYPE_OFFLINE_FINISH,
+} from "./modules/offlineMode/const/types.js";
 
 import {
   XMLToObject,
@@ -52,4 +64,14 @@ export {
   getDateTime,
   roundWithPrecision,
   cashSumDecimalRounding,
+  DOCUMENT_TYPE_RECEIPT,
+  DOCUMENT_TYPE_RETURN_RECEIPT,
+  DOCUMENT_TYPE_SERVICE_ENTRY,
+  DOCUMENT_TYPE_SERVICE_DELIVERY,
+  DOCUMENT_TYPE_SHIFT_OPEN,
+  DOCUMENT_TYPE_SHIFT_CLOSE,
+  DOCUMENT_TYPE_Z_REPORT,
+  DOCUMENT_TYPE_X_REPORT,
+  DOCUMENT_TYPE_OFFLINE_START,
+  DOCUMENT_TYPE_OFFLINE_FINISH,
 };

@@ -166,6 +166,7 @@ const groupByTaxes = (
       sourceSum: roundWithPrecision(summarizeExcise("sourceSum", sourceSum)),
       program: excise,
       ...taxesConfig.exciseTaxList[excise],
+      type: 1, // В XML ПДВ має type 0, а акциз 1
     };
   }
 
@@ -178,6 +179,7 @@ const groupByTaxes = (
       ),
       program: VAT,
       ...taxesConfig.VATTaxList[VAT],
+      type: 0, // В XML ПДВ має type 0, а акциз 1
     };
   }
 

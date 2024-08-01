@@ -17,6 +17,7 @@ import {
 import getDFSFiscalLink from "./modules/dfs/index.js";
 import { getDateTime } from "./helpers/common.js";
 import { roundWithPrecision, cashSumDecimalRounding } from "./helpers/round.js";
+import { getBalanceDiffByRequest } from "./helpers/balance.js";
 import {
   DOCUMENT_TYPE_RECEIPT,
   DOCUMENT_TYPE_RETURN_RECEIPT,
@@ -28,7 +29,7 @@ import {
   DOCUMENT_TYPE_X_REPORT,
   DOCUMENT_TYPE_OFFLINE_START,
   DOCUMENT_TYPE_OFFLINE_FINISH,
-} from "./modules/offlineMode/const/types.js";
+} from "./const/types.js";
 
 import {
   XMLToObject,
@@ -64,6 +65,7 @@ export {
   getDateTime,
   roundWithPrecision,
   cashSumDecimalRounding,
+  getBalanceDiffByRequest,
   DOCUMENT_TYPE_RECEIPT,
   DOCUMENT_TYPE_RETURN_RECEIPT,
   DOCUMENT_TYPE_SERVICE_ENTRY,

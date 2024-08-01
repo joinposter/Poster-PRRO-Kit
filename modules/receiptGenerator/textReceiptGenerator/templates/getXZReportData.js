@@ -127,7 +127,12 @@ const cashFlowData = (data) => [
   {
     type: "smartTable",
     items: [
-      { row: ["Початковий залишок", priceFormat(data.shiftOpenData.balance || null)] },
+      {
+        row: [
+          "Початковий залишок",
+          priceFormat(data.shiftOpenData.balance || null),
+        ],
+      },
       { row: ["Службове внесення", priceFormat(data.serviceInput)] },
       {
         row: ["Службове вилучення", priceFormat(Math.abs(data.serviceOutput))],

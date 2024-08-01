@@ -8,3 +8,4 @@ export const DOCUMENT_TYPE_Z_REPORT = "ZReport";
 export const DOCUMENT_TYPE_X_REPORT = "XReport";
 export const DOCUMENT_TYPE_OFFLINE_START = "offlineStart";
 export const DOCUMENT_TYPE_OFFLINE_FINISH = "offlineFinish";
+export const PAYMENT_TYPE_CASH = "cash";

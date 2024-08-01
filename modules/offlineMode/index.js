@@ -8,7 +8,7 @@ import {
   DOCUMENT_TYPE_SHIFT_CLOSE,
   DOCUMENT_TYPE_SHIFT_OPEN,
   DOCUMENT_TYPE_Z_REPORT,
-} from "./const/types.js";
+} from "../../const/types.js";
 import { getTaxesData } from "../taxes/index.js";
 import { getDocument, getDocumentHash } from "../XMLDocuments/index.js";
 import { expandDocumentData } from "./helpers/offline.js";

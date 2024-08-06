@@ -20,6 +20,8 @@ import {
   getDiscountTotal,
   getProductSum,
   getRoundedDiff,
+  removeNoTaxVAT,
+  removeNoVATPrograms,
 } from "../helpers/xmlGenerator.js";
 import {
   getCashboxFields,
@@ -86,9 +88,11 @@ const productMapper = (products, index) => {
     uktzed,
     name: NAME,
     unit: UNITNM,
+    noVatProgram,
   } = products;
 
-  const LETTERS = taxPrograms;
+  const letters = removeNoVATPrograms(taxPrograms, noVatProgram);
+  const LETTERS = letters?.length ? { LETTERS: letters } : {};
   const PRICE = formatToFixedDecimal(price);
   const COST = formatToFixedDecimal(getProductSum(PRICE, AMOUNT));
   const UKTZED = uktzed ? { UKTZED: uktzed } : {};
@@ -102,7 +106,7 @@ const productMapper = (products, index) => {
     UNITNM,
     AMOUNT,
     PRICE,
-    LETTERS,
+    ...LETTERS,
     COST,
     ...DISCOUNTBLOCK,
   };
@@ -111,14 +115,15 @@ const productMapper = (products, index) => {
 const taxesMapper = (tax, index) => {
   const {
     sum,
-    type: TYPE,
     name: NAME,
     program: LETTER,
     percent,
     turnover,
+    isExcise,
     // sourceSum,
   } = tax;
 
+  const TYPE = isExcise ? 1 : 0;
   const PRC = formatToFixedDecimal(percent);
   const TURNOVER = formatToFixedDecimal(turnover);
   const SUM = formatToFixedDecimal(sum);
@@ -198,7 +203,7 @@ const getReceiptDocument = (data) => {
   const CHECKHEAD = getReceiptHeader(data);
   const CHECKTOTAL = getReceiptTotal(data);
   const CHECKPAY = rowsToMapper(payments, paymentMapper);
-  const CHECKTAX = rowsToMapper(taxes, taxesMapper);
+  const CHECKTAX = rowsToMapper(removeNoTaxVAT(taxes), taxesMapper);
   const CHECKBODY = rowsToMapper(products, productMapper);
 
   return {

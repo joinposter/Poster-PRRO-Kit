@@ -10,24 +10,27 @@ import { findCashPaymentData } from "../../helpers/receiptData.js";
 
 const getTaxData = (taxes) => {
   if (!taxes) return [];
-  return taxes
-    .sort((a, b) => a.type - b.type)
-    .reduce((acc, tax) => {
-      const name = {
-        type: "text",
-        value: `${tax.name} (${tax.program}) ${tax.percent}%`,
-      };
-      const table = {
-        type: "smartTable",
-        hideTopBorder: true,
-        items: [
-          { row: ["Сума податку", priceFormat(tax.sum)] },
-          { row: ["Обіг без податку", priceFormat(tax.turnover - tax.sum)] },
-          { row: ["Обіг за податком", priceFormat(tax.turnover)] },
-        ],
-      };
-      return acc.concat([name, table]);
-    }, []);
+  return (
+    taxes
+      // eslint-disable-next-line no-magic-numbers,no-nested-ternary
+      .sort((a, b) => (a.isExcise === b.isExcise ? 0 : a.isExcise ? 1 : -1))
+      .reduce((acc, tax) => {
+        const name = {
+          type: "text",
+          value: `${tax.name} (${tax.program}) ${tax.percent}%`,
+        };
+        const table = {
+          type: "smartTable",
+          hideTopBorder: true,
+          items: [
+            { row: ["Сума податку", priceFormat(tax.sum)] },
+            { row: ["Обіг без податку", priceFormat(tax.turnover - tax.sum)] },
+            { row: ["Обіг за податком", priceFormat(tax.turnover)] },
+          ],
+        };
+        return acc.concat([name, table]);
+      }, [])
+  );
 };
 
 const getTitle = ({ type, cashboxData }) => {

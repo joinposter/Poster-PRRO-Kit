@@ -34,7 +34,7 @@ const getRoundedDiff = (item, type = PAYMENT_TYPE_CASH) => {
 };
 
 const expandedTaxesName = (tax) => {
-  return `${tax.name} ${tax.program} ${tax.percent}%`;
+  return `${tax.name} (${tax.program}) ${tax.percent}%`;
 };
 
 const getTaxesData = (data) => {
@@ -47,7 +47,8 @@ const getTaxesData = (data) => {
     card: card ? formatToFixedDecimal(card) : null,
     cash: cash ? formatToFixedDecimal(cash) : null,
     taxes: data.taxes
-      .sort((a, b) => a.type - b.type)
+      // eslint-disable-next-line no-magic-numbers,no-nested-ternary
+      .sort((a, b) => (a.isExcise === b.isExcise ? 0 : a.isExcise ? 1 : -1))
       .map((tax) => ({
         name: expandedTaxesName(tax),
         value: tax.sum,

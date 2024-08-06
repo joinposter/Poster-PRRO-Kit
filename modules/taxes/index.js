@@ -165,6 +165,7 @@ const groupByTaxes = (
       turnover: roundWithPrecision(summarizeExcise("turnover", turnover)),
       sourceSum: roundWithPrecision(summarizeExcise("sourceSum", sourceSum)),
       program: excise,
+      isExcise: true,
       ...taxesConfig.exciseTaxList[excise],
     };
   }

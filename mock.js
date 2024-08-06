@@ -166,17 +166,16 @@ export const fiscalReceiptDataMock = {
   products: productsData,
   taxes: [
     {
-      type: 5,
-      name: "Акциз 5%",
+      name: "Акциз",
       percent: 5,
       sum: 18.29,
       turnover: 384.26,
       sourceSum: 0,
       program: "Д",
+      isExcise: true,
     },
     {
-      type: 4,
-      name: "ПДВ 20%",
+      name: "ПДВ",
       percent: 20,
       sum: 29.25,
       turnover: 184.26,
@@ -216,16 +215,15 @@ export const xReportDataMock = {
     ],
     taxes: [
       {
-        type: 5,
         name: "Акцизний податок",
         percent: 5,
         sum: 127.54,
         turnover: 2681.6,
         sourceSum: 0,
         program: "Д",
+        isExcise: true,
       },
       {
-        type: 3,
         name: "ПДВ",
         percent: 7,
         sum: 23.31,
@@ -234,7 +232,6 @@ export const xReportDataMock = {
         program: "В",
       },
       {
-        type: 4,
         name: "ПДВ",
         percent: 20,
         sum: 175.5,
@@ -261,16 +258,15 @@ export const xReportDataMock = {
     ],
     taxes: [
       {
-        type: 5,
         name: "Акцизний податок",
         percent: 5,
         sum: 1.47,
         turnover: 31.04,
         sourceSum: 0,
         program: "Д",
+        isExcise: true,
       },
       {
-        type: 3,
         name: "ПДВ",
         percent: 7,
         sum: 1.92,
@@ -327,16 +323,15 @@ export const zReportDataMock = {
     ],
     taxes: [
       {
-        type: 5,
         name: "Акцизний податок",
         percent: 5,
         sum: 127.54,
         turnover: 2681.6,
         sourceSum: 0,
         program: "Д",
+        isExcise: true,
       },
       {
-        type: 3,
         name: "ПДВ",
         percent: 7,
         sum: 23.31,
@@ -345,7 +340,6 @@ export const zReportDataMock = {
         program: "В",
       },
       {
-        type: 4,
         name: "ПДВ",
         percent: 20,
         sum: 175.5,
@@ -372,16 +366,15 @@ export const zReportDataMock = {
     ],
     taxes: [
       {
-        type: 5,
         name: "Акцизний податок",
         percent: 5,
         sum: 1.47,
         turnover: 31.04,
         sourceSum: 0,
         program: "Д",
+        isExcise: true,
       },
       {
-        type: 3,
         name: "ПДВ",
         percent: 7,
         sum: 1.92,

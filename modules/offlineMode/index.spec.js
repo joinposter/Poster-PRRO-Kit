@@ -163,7 +163,7 @@ describe("offline mode", () => {
           sourceSum: 930.26,
           sum: 44.3,
           turnover: 980.26,
-          type: 5,
+          isExcise: true,
         },
         {
           name: "ПДВ 0%",
@@ -172,7 +172,6 @@ describe("offline mode", () => {
           sourceSum: 733.33,
           sum: 0,
           turnover: 800,
-          type: 4,
         },
         {
           name: "ПДВ 7%",
@@ -181,7 +180,6 @@ describe("offline mode", () => {
           sourceSum: 152.63,
           sum: 9.99,
           turnover: 180.26,
-          type: 2,
         },
         {
           name: "ПДВ 20%",
@@ -190,7 +188,6 @@ describe("offline mode", () => {
           sourceSum: 19.78,
           sum: 3.3,
           turnover: 20.13,
-          type: 3,
         },
       ],
     });
@@ -1168,7 +1165,7 @@ describe("offline mode", () => {
             sourceSum: 0,
             sum: 1.1,
             turnover: 23,
-            type: 9,
+            isExcise: true,
           },
           {
             name: "Без ПДВ + Акциз 5%",
@@ -1177,7 +1174,6 @@ describe("offline mode", () => {
             sourceSum: 0,
             sum: 0,
             turnover: 23,
-            type: 8,
           },
           {
             name: "ПДВ 0%",
@@ -1186,7 +1182,6 @@ describe("offline mode", () => {
             sourceSum: 0,
             sum: 0,
             turnover: 15,
-            type: 4,
           },
           {
             name: "Акциз",
@@ -1195,7 +1190,7 @@ describe("offline mode", () => {
             sourceSum: 0,
             sum: 0.05,
             turnover: 1.04,
-            type: 5,
+            isExcise: true,
           },
           {
             name: "ПДВ 20%",
@@ -1204,7 +1199,6 @@ describe("offline mode", () => {
             sourceSum: 0,
             sum: 0.17,
             turnover: 1.04,
-            type: 3,
           },
         ],
       },
@@ -1231,7 +1225,6 @@ describe("offline mode", () => {
             sourceSum: 0,
             sum: 0,
             turnover: 15,
-            type: 4,
           },
           {
             name: "Акциз",
@@ -1240,7 +1233,7 @@ describe("offline mode", () => {
             sourceSum: 0,
             sum: 0.05,
             turnover: 1.04,
-            type: 5,
+            isExcise: true,
           },
           {
             name: "ПДВ 20%",
@@ -1249,7 +1242,6 @@ describe("offline mode", () => {
             sourceSum: 0,
             sum: 0.17,
             turnover: 1.04,
-            type: 3,
           },
         ],
       },
@@ -1296,7 +1288,7 @@ describe("offline mode", () => {
             sourceSum: 0,
             sum: 1.1,
             turnover: 23,
-            type: 9,
+            isExcise: true,
           },
           {
             name: "Без ПДВ + Акциз 5%",
@@ -1305,7 +1297,6 @@ describe("offline mode", () => {
             sourceSum: 0,
             sum: 0,
             turnover: 23,
-            type: 8,
           },
           {
             name: "ПДВ 0%",
@@ -1314,7 +1305,6 @@ describe("offline mode", () => {
             sourceSum: 733.33,
             sum: 0,
             turnover: 815,
-            type: 4,
           },
           {
             name: "Акциз",
@@ -1323,7 +1313,7 @@ describe("offline mode", () => {
             sourceSum: 930.26,
             sum: 44.349999999999994,
             turnover: 981.3,
-            type: 5,
+            isExcise: true,
           },
           {
             name: "ПДВ 20%",
@@ -1332,7 +1322,6 @@ describe("offline mode", () => {
             sourceSum: 19.78,
             sum: 3.4699999999999998,
             turnover: 21.169999999999998,
-            type: 3,
           },
           {
             name: "ПДВ 7%",
@@ -1341,7 +1330,6 @@ describe("offline mode", () => {
             sourceSum: 152.63,
             sum: 9.99,
             turnover: 180.26,
-            type: 2,
           },
         ],
       },
@@ -1368,7 +1356,6 @@ describe("offline mode", () => {
             sourceSum: 15,
             sum: 0,
             turnover: 30,
-            type: 4,
           },
           {
             name: "Акциз",
@@ -1377,7 +1364,7 @@ describe("offline mode", () => {
             sourceSum: 1.04,
             sum: 0.1,
             turnover: 2.08,
-            type: 5,
+            isExcise: true,
           },
           {
             name: "ПДВ 20%",
@@ -1386,7 +1373,6 @@ describe("offline mode", () => {
             sourceSum: 0.99,
             sum: 0.34,
             turnover: 2.08,
-            type: 3,
           },
         ],
       },

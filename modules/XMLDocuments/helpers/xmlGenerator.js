@@ -84,3 +84,16 @@ const fillDateTimeIfEmpty = (request) => {
 };
 
 export const expandDocumentData = pipe(fillUid, fillDateTimeIfEmpty);
+
+export const removeNoTaxVAT = (taxes) => taxes.filter((t) => !t.noTaxVat);
+
+export const removeNoVATPrograms = (taxPrograms, noVatProgram) => {
+  if (!noVatProgram?.length) return taxPrograms;
+
+  const setNoVatProgram = new Set(noVatProgram);
+  const diff = [...taxPrograms].filter((char) => !setNoVatProgram.has(char));
+
+  if (diff.length === 0) return undefined;
+
+  return diff.join("");
+};

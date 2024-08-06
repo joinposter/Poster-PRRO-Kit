@@ -80,7 +80,7 @@ describe("XMLDocuments", () => {
             "  </CHECKPAY>\n" +
             "  <CHECKTAX>\n" +
             '    <ROW ROWNUM="1">\n' +
-            "      <TYPE>5</TYPE>\n" +
+            "      <TYPE>1</TYPE>\n" +
             "      <NAME>Акциз</NAME>\n" +
             "      <LETTER>Д</LETTER>\n" +
             "      <PRC>5.00</PRC>\n" +
@@ -88,7 +88,7 @@ describe("XMLDocuments", () => {
             "      <SUM>44.30</SUM>\n" +
             "    </ROW>\n" +
             '    <ROW ROWNUM="2">\n' +
-            "      <TYPE>4</TYPE>\n" +
+            "      <TYPE>0</TYPE>\n" +
             "      <NAME>ПДВ 0%</NAME>\n" +
             "      <LETTER>Г</LETTER>\n" +
             "      <PRC>0.00</PRC>\n" +
@@ -96,7 +96,7 @@ describe("XMLDocuments", () => {
             "      <SUM>0.00</SUM>\n" +
             "    </ROW>\n" +
             '    <ROW ROWNUM="3">\n' +
-            "      <TYPE>2</TYPE>\n" +
+            "      <TYPE>0</TYPE>\n" +
             "      <NAME>ПДВ 7%</NAME>\n" +
             "      <LETTER>Б</LETTER>\n" +
             "      <PRC>7.00</PRC>\n" +
@@ -104,7 +104,7 @@ describe("XMLDocuments", () => {
             "      <SUM>9.99</SUM>\n" +
             "    </ROW>\n" +
             '    <ROW ROWNUM="4">\n' +
-            "      <TYPE>3</TYPE>\n" +
+            "      <TYPE>0</TYPE>\n" +
             "      <NAME>ПДВ 20%</NAME>\n" +
             "      <LETTER>В</LETTER>\n" +
             "      <PRC>20.00</PRC>\n" +
@@ -145,6 +145,14 @@ describe("XMLDocuments", () => {
             "      <COST>20.13</COST>\n" +
             "      <DISCOUNTTYPE>0</DISCOUNTTYPE>\n" +
             "      <DISCOUNTSUM>0.35</DISCOUNTSUM>\n" +
+            "    </ROW>\n" +
+            '    <ROW ROWNUM="4">\n' +
+            "      <CODE>57</CODE>\n" +
+            "      <NAME>Вода</NAME>\n" +
+            "      <UNITNM>шт</UNITNM>\n" +
+            "      <AMOUNT>1</AMOUNT>\n" +
+            "      <PRICE>10.00</PRICE>\n" +
+            "      <COST>10.00</COST>\n" +
             "    </ROW>\n" +
             "  </CHECKBODY>\n" +
             "</CHECK>",
@@ -256,24 +264,24 @@ describe("XMLDocuments", () => {
             "    </PAYFORMS>\n" +
             "    <TAXES>\n" +
             '      <ROW ROWNUM="1">\n' +
-            "        <TYPE>2</TYPE>\n" +
-            "        <NAME>ПДВ 20%</NAME>\n" +
+            "        <TYPE>0</TYPE>\n" +
+            "        <NAME>ПДВ</NAME>\n" +
             "        <LETTER>Б</LETTER>\n" +
             "        <PRC>20.00</PRC>\n" +
             "        <TURNOVER>4506.50</TURNOVER>\n" +
             "        <SUM>901.50</SUM>\n" +
             "      </ROW>\n" +
             '      <ROW ROWNUM="2">\n' +
-            "        <TYPE>5</TYPE>\n" +
-            "        <NAME>Акциз 5%</NAME>\n" +
+            "        <TYPE>1</TYPE>\n" +
+            "        <NAME>Акциз</NAME>\n" +
             "        <LETTER>Д</LETTER>\n" +
             "        <PRC>5.00</PRC>\n" +
             "        <TURNOVER>20900.94</TURNOVER>\n" +
             "        <SUM>1019.05</SUM>\n" +
             "      </ROW>\n" +
             '      <ROW ROWNUM="3">\n' +
-            "        <TYPE>4</TYPE>\n" +
-            "        <NAME>ПДВ 20%</NAME>\n" +
+            "        <TYPE>0</TYPE>\n" +
+            "        <NAME>ПДВ</NAME>\n" +
             "        <LETTER>Г</LETTER>\n" +
             "        <PRC>20.00</PRC>\n" +
             "        <TURNOVER>3777.33</TURNOVER>\n" +

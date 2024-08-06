@@ -1,5 +1,6 @@
 import { getHeader, getRowNum, rowsToMapper } from "./commonXMLTagGenerator.js";
 import { formatToFixedDecimal } from "../../../helpers/round.js";
+import { removeNoTaxVAT } from "../helpers/xmlGenerator.js";
 
 const paymentMapper = (payment, index) => {
   const PAYFORMCD = payment.payFormCode;
@@ -17,17 +18,18 @@ const paymentMapper = (payment, index) => {
 const taxesMapper = (tax, index) => {
   const {
     sum,
-    type: TYPE,
     name: NAME,
     program: LETTER,
     percent,
     turnover,
+    isExcise,
     // sourceSum,
   } = tax;
 
   const PRC = formatToFixedDecimal(percent);
   const TURNOVER = formatToFixedDecimal(turnover);
   const SUM = formatToFixedDecimal(sum);
+  const TYPE = isExcise ? 1 : 0;
   // const SOURCESUM = formatToFixedDecimal(sourceSum);
 
   return {
@@ -49,14 +51,16 @@ const getZReportPaymentsAndTaxes = (data) => {
   }
   const { sum, receiptCount: ORDERSCNT, payments, taxes } = data;
   const PAYFORMS = rowsToMapper(payments, paymentMapper);
-  const TAXES = rowsToMapper(taxes, taxesMapper);
+  const TAXES = removeNoTaxVAT(taxes).length
+    ? { TAXES: rowsToMapper(removeNoTaxVAT(taxes), taxesMapper) }
+    : {};
   const SUM = formatToFixedDecimal(sum);
 
   return {
     SUM,
     ORDERSCNT,
     PAYFORMS,
-    TAXES,
+    ...TAXES,
   };
 };
 

@@ -20,6 +20,7 @@ import {
   getDiscountTotal,
   getProductSum,
   getRoundedDiff,
+  hasNoTaxVATField,
   removeNoTaxVAT,
   removeNoVATPrograms,
 } from "../helpers/xmlGenerator.js";
@@ -89,10 +90,14 @@ const productMapper = (products, index) => {
     name: NAME,
     unit: UNITNM,
     noVatProgram,
+    hasNoTaxVAT,
   } = products;
 
-  const letters = removeNoVATPrograms(taxPrograms, noVatProgram);
-  const LETTERS = letters?.length ? { LETTERS: letters } : {};
+  let LETTERS = { LETTERS: taxPrograms };
+  if (hasNoTaxVAT) {
+    const letters = removeNoVATPrograms(taxPrograms, noVatProgram);
+    LETTERS = letters?.length ? { LETTERS: letters } : {};
+  }
   const PRICE = formatToFixedDecimal(price);
   const COST = formatToFixedDecimal(getProductSum(PRICE, AMOUNT));
   const UKTZED = uktzed ? { UKTZED: uktzed } : {};
@@ -205,7 +210,10 @@ const getReceiptDocument = (data) => {
   const CHECKTOTAL = getReceiptTotal(data);
   const CHECKPAY = rowsToMapper(payments, paymentMapper);
   const CHECKTAX = rowsToMapper(removeNoTaxVAT(taxes), taxesMapper);
-  const CHECKBODY = rowsToMapper(products, productMapper);
+  const CHECKBODY = rowsToMapper(
+    hasNoTaxVATField(products, taxes),
+    productMapper,
+  );
 
   return {
     CHECK: {

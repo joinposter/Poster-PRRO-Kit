@@ -87,6 +87,13 @@ export const expandDocumentData = pipe(fillUid, fillDateTimeIfEmpty);
 
 export const removeNoTaxVAT = (taxes) => taxes.filter((t) => !t.noTaxVat);
 
+export const hasNoTaxVATField = (products, taxes) => {
+  if (taxes.some((t) => !!t.noTaxVat)) {
+    return products.map((p) => ({ ...p, hasNoTaxVAT: true }));
+  }
+  return products;
+};
+
 export const removeNoVATPrograms = (taxPrograms, noVatProgram) => {
   if (!noVatProgram?.length) return taxPrograms;
 

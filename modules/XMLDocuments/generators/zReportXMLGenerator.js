@@ -18,18 +18,19 @@ const paymentMapper = (payment, index) => {
 const taxesMapper = (tax, index) => {
   const {
     sum,
+    type: TYPE,
     name: NAME,
     program: LETTER,
     percent,
     turnover,
-    isExcise,
+    // isExcise,
     // sourceSum,
   } = tax;
 
   const PRC = formatToFixedDecimal(percent);
   const TURNOVER = formatToFixedDecimal(turnover);
   const SUM = formatToFixedDecimal(sum);
-  const TYPE = isExcise ? 1 : 0;
+  // const TYPE = isExcise ? 1 : 0;
   // const SOURCESUM = formatToFixedDecimal(sourceSum);
 
   return {

@@ -127,6 +127,7 @@ export const zReportData = {
     ],
     taxes: [
       {
+        type: 2,
         name: "ПДВ",
         program: "Б",
         percent: 20,
@@ -134,6 +135,7 @@ export const zReportData = {
         sum: 901.5,
       },
       {
+        type: 5,
         name: "Акциз",
         program: "Д",
         percent: 5,
@@ -142,6 +144,7 @@ export const zReportData = {
         isExcise: true,
       },
       {
+        type: 4,
         name: "ПДВ",
         program: "Г",
         percent: 20,

@@ -134,6 +134,7 @@ describe("taxes", () => {
         turnover: 980.26,
         sourceSum: 930.26,
         isExcise: true,
+        type: 7,
       },
       {
         name: "ПДВ 0%",
@@ -142,6 +143,7 @@ describe("taxes", () => {
         sum: 0,
         turnover: 800,
         sourceSum: 733.33,
+        type: 4,
       },
       {
         name: "ПДВ 7%",
@@ -150,6 +152,7 @@ describe("taxes", () => {
         sum: 9.99,
         turnover: 180.26,
         sourceSum: 152.63,
+        type: 2,
       },
       {
         name: "ПДВ 20%",
@@ -158,6 +161,7 @@ describe("taxes", () => {
         sum: 3.3,
         turnover: 20.13,
         sourceSum: 19.78,
+        type: 3,
       },
     ]);
   });

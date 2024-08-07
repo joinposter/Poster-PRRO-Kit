@@ -164,6 +164,7 @@ describe("offline mode", () => {
           sum: 44.3,
           turnover: 980.26,
           isExcise: true,
+          type: 7,
         },
         {
           name: "ПДВ 0%",
@@ -172,6 +173,7 @@ describe("offline mode", () => {
           sourceSum: 733.33,
           sum: 0,
           turnover: 800,
+          type: 4,
         },
         {
           name: "ПДВ 7%",
@@ -180,6 +182,7 @@ describe("offline mode", () => {
           sourceSum: 152.63,
           sum: 9.99,
           turnover: 180.26,
+          type: 2,
         },
         {
           name: "ПДВ 20%",
@@ -188,6 +191,7 @@ describe("offline mode", () => {
           sourceSum: 19.78,
           sum: 3.3,
           turnover: 20.13,
+          type: 3,
         },
       ],
     });
@@ -1330,6 +1334,7 @@ describe("offline mode", () => {
             sourceSum: 152.63,
             sum: 9.99,
             turnover: 180.26,
+            type: 2,
           },
         ],
       },

@@ -20,7 +20,7 @@ import {
   getDiscountTotal,
   getProductSum,
   getRoundedDiff,
-  hasNoTaxVATField,
+  addNoTaxVATField,
   removeNoTaxVAT,
   removeNoVATPrograms,
 } from "../helpers/xmlGenerator.js";
@@ -211,7 +211,7 @@ const getReceiptDocument = (data) => {
   const CHECKPAY = rowsToMapper(payments, paymentMapper);
   const CHECKTAX = rowsToMapper(removeNoTaxVAT(taxes), taxesMapper);
   const CHECKBODY = rowsToMapper(
-    hasNoTaxVATField(products, taxes),
+    addNoTaxVATField(products, taxes),
     productMapper,
   );
 

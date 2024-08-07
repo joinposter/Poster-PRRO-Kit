@@ -1163,6 +1163,7 @@ describe("offline mode", () => {
         sum: 39,
         taxes: [
           {
+            type: 9,
             name: "Акциз",
             percent: 5,
             program: "З",
@@ -1172,6 +1173,7 @@ describe("offline mode", () => {
             isExcise: true,
           },
           {
+            type: 8,
             name: "Без ПДВ + Акциз 5%",
             percent: 0,
             program: "Ж",
@@ -1180,6 +1182,7 @@ describe("offline mode", () => {
             turnover: 23,
           },
           {
+            type: 4,
             name: "ПДВ 0%",
             percent: 0,
             program: "Г",
@@ -1188,6 +1191,7 @@ describe("offline mode", () => {
             turnover: 15,
           },
           {
+            type: 5,
             name: "Акциз",
             percent: 5,
             program: "Д",
@@ -1197,6 +1201,7 @@ describe("offline mode", () => {
             isExcise: true,
           },
           {
+            type: 3,
             name: "ПДВ 20%",
             percent: 20,
             program: "В",
@@ -1223,6 +1228,7 @@ describe("offline mode", () => {
         sum: 16,
         taxes: [
           {
+            type: 4,
             name: "ПДВ 0%",
             percent: 0,
             program: "Г",
@@ -1231,6 +1237,7 @@ describe("offline mode", () => {
             turnover: 15,
           },
           {
+            type: 5,
             name: "Акциз",
             percent: 5,
             program: "Д",
@@ -1240,6 +1247,7 @@ describe("offline mode", () => {
             isExcise: true,
           },
           {
+            type: 3,
             name: "ПДВ 20%",
             percent: 20,
             program: "В",
@@ -1286,6 +1294,7 @@ describe("offline mode", () => {
         sum: 989.04,
         taxes: [
           {
+            type: 9,
             name: "Акциз",
             percent: 5,
             program: "З",
@@ -1295,6 +1304,7 @@ describe("offline mode", () => {
             isExcise: true,
           },
           {
+            type: 8,
             name: "Без ПДВ + Акциз 5%",
             percent: 0,
             program: "Ж",
@@ -1303,6 +1313,7 @@ describe("offline mode", () => {
             turnover: 23,
           },
           {
+            type: 4,
             name: "ПДВ 0%",
             percent: 0,
             program: "Г",
@@ -1311,6 +1322,7 @@ describe("offline mode", () => {
             turnover: 815,
           },
           {
+            type: 5,
             name: "Акциз",
             percent: 5,
             program: "Д",
@@ -1320,6 +1332,7 @@ describe("offline mode", () => {
             isExcise: true,
           },
           {
+            type: 3,
             name: "ПДВ 20%",
             percent: 20,
             program: "В",
@@ -1328,13 +1341,13 @@ describe("offline mode", () => {
             turnover: 21.169999999999998,
           },
           {
+            type: 2,
             name: "ПДВ 7%",
             percent: 7,
             program: "Б",
             sourceSum: 152.63,
             sum: 9.99,
             turnover: 180.26,
-            type: 2,
           },
         ],
       },
@@ -1355,6 +1368,7 @@ describe("offline mode", () => {
         sum: 32,
         taxes: [
           {
+            type: 4,
             name: "ПДВ 0%",
             percent: 0,
             program: "Г",
@@ -1363,6 +1377,7 @@ describe("offline mode", () => {
             turnover: 30,
           },
           {
+            type: 5,
             name: "Акциз",
             percent: 5,
             program: "Д",
@@ -1372,6 +1387,7 @@ describe("offline mode", () => {
             isExcise: true,
           },
           {
+            type: 3,
             name: "ПДВ 20%",
             percent: 20,
             program: "В",

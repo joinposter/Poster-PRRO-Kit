@@ -14,28 +14,33 @@ const getSummaryBlock = ({ taxesData, roundData, currency }) => [
   },
 ];
 
-const taxesBlock = (data, currency) => [
-  {
-    name: "Готівкою",
-    value: `${priceFormat(data.cash)}${currency}`,
-    hidden: !data.cash,
-  },
-  {
-    name: "Карткою",
-    value: `${priceFormat(data.card)}${currency}`,
-    hidden: !data.card,
-  },
-  { type: "ruler" },
-  {
-    name: "Сума",
-    value: `${priceFormat(data.total)}${currency}`,
-    bold: true,
-  },
-  ...data.taxes.map((tax) => ({
-    name: tax.name,
-    value: priceFormat(tax.value),
-  })),
-];
+const taxesBlock = (data, currency) =>
+  [
+    {
+      name: "Готівкою",
+      value: `${priceFormat(data.cash)}${currency}`,
+      hidden: !data.cash,
+    },
+    {
+      name: "Карткою",
+      value: `${priceFormat(data.card)}${currency}`,
+      hidden: !data.card,
+    },
+    { type: "ruler" },
+    {
+      name: "Сума",
+      value: `${priceFormat(data.total)}${currency}`,
+      bold: true,
+    },
+    ...data.taxes.map((tax) => ({
+      name: tax.name,
+      value: priceFormat(tax.value),
+    })),
+    !data.taxes?.length && {
+      name: "Без ПДВ",
+      value: " ",
+    },
+  ].filter(Boolean);
 
 const getRoundData = (data, currency) => [
   { type: "ruler" },

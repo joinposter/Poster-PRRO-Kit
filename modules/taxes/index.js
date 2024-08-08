@@ -167,6 +167,9 @@ const groupByTaxes = (
       program: excise,
       ...taxesConfig.exciseTaxList[excise],
     };
+    if (taxesConfig.exciseTaxList[excise].useNewType) {
+      acc[excise].type = 1;
+    }
   }
 
   if (VAT) {
@@ -179,6 +182,9 @@ const groupByTaxes = (
       program: VAT,
       ...taxesConfig.VATTaxList[VAT],
     };
+    if (taxesConfig.VATTaxList[VAT].useNewType) {
+      acc[VAT].type = 0;
+    }
   }
 
   return acc;

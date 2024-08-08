@@ -15,7 +15,7 @@ const getTaxData = (taxes) => {
     .reduce((acc, tax) => {
       const name = {
         type: "text",
-        value: `${tax.name} (${tax.program}) ${tax.percent}%`,
+        value: `${tax.name} ${tax.program} ${tax.percent}%`,
       };
       const table = {
         type: "smartTable",

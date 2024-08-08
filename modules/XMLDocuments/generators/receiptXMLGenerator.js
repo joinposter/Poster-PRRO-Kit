@@ -88,7 +88,7 @@ const productMapper = (products, index) => {
     unit: UNITNM,
   } = products;
 
-  const LETTERS = taxPrograms;
+  const LETTERS = taxPrograms?.length ? { LETTERS: taxPrograms } : {};
   const PRICE = formatToFixedDecimal(price);
   const COST = formatToFixedDecimal(getProductSum(PRICE, AMOUNT));
   const UKTZED = uktzed ? { UKTZED: uktzed } : {};
@@ -102,7 +102,7 @@ const productMapper = (products, index) => {
     UNITNM,
     AMOUNT,
     PRICE,
-    LETTERS,
+    ...LETTERS,
     COST,
     ...DISCOUNTBLOCK,
   };

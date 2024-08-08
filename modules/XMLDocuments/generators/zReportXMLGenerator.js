@@ -49,14 +49,14 @@ const getZReportPaymentsAndTaxes = (data) => {
   }
   const { sum, receiptCount: ORDERSCNT, payments, taxes } = data;
   const PAYFORMS = rowsToMapper(payments, paymentMapper);
-  const TAXES = rowsToMapper(taxes, taxesMapper);
+  const TAXES = taxes.length ? { TAXES: rowsToMapper(taxes, taxesMapper) } : {};
   const SUM = formatToFixedDecimal(sum);
 
   return {
     SUM,
     ORDERSCNT,
     PAYFORMS,
-    TAXES,
+    ...TAXES,
   };
 };
 

@@ -2,7 +2,6 @@ import { pipe } from "../../helpers/functional.js";
 import { defaultExciseTaxList, defaultVATTaxList } from "./config/taxes.js";
 import {
   ERROR_IN_TAX_PROGRAM,
-  MISSING_TAX_PROGRAM,
   MULTIPLE_APPLICATION_OF_VAT,
   EXCISE as EXCISE_KEY,
   VAT as VAT_KEY,
@@ -26,18 +25,9 @@ const taxProgramValidation = ({ taxPrograms, taxesConfig, ...rest }) => {
   const VATPrograms = Object.keys(VATTaxList).join("");
 
   const reProgramValidator = new RegExp(
-    `^[${excisePrograms}${VATPrograms}]{1,2}$`,
+    `^[${excisePrograms}${VATPrograms}]{0,2}$`,
     "g",
   );
-
-  if (!taxPrograms) {
-    console.error(
-      showError(MISSING_TAX_PROGRAM, taxPrograms, {
-        ...rest,
-        taxPrograms,
-      }),
-    );
-  }
 
   if (!reProgramValidator.test(taxPrograms)) {
     console.error(

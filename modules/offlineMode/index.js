@@ -19,6 +19,7 @@ import {
 } from "./helpers/XZReportData.js";
 import getDFSFiscalLink from "../dfs/index.js";
 import { getDateTime } from "../../helpers/common.js";
+import { getReceiptTotal } from "../../helpers/centsFormat.js";
 
 const getReceiptOfflineModeRequestData = async (data) => {
   if (
@@ -46,7 +47,7 @@ const getReceiptOfflineModeRequestData = async (data) => {
   const fiscalLink = getDFSFiscalLink({
     fiscalId,
     cashbox: cashboxData.cashbox,
-    sum: data.total,
+    sum: getReceiptTotal(data),
     date: getDateTime({ date: dateTime, format: "dateDfsLink" }),
     time: getDateTime({ date: dateTime, format: "timeDfsLink" }),
     previousDocumentHash: cashboxData.offlineSessionData.lastDocumentHash,

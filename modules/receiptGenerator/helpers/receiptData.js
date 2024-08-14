@@ -10,6 +10,11 @@ import {
 import { formatToFixedDecimal, getDateTime } from "../../../helpers/common.js";
 import { cashSumDecimalRounding } from "../../../helpers/round.js";
 import defaultReceiptConfig from "../config/receipt.js";
+import {
+  getData,
+  getReceiptTotal,
+  getTaxSum,
+} from "../../../helpers/centsFormat.js";
 
 const getProductUktzed = (name) =>
   name.includes("#") ? `${name.split("#")[0]}#` : null;
@@ -25,7 +30,9 @@ const getRoundedDiff = (item, type = PAYMENT_TYPE_CASH) => {
   let roundDiff = 0;
   if (type === PAYMENT_TYPE_CASH) {
     const cashSum = item.payments.find(findCashPayment)?.sum;
-    const roundedCashSum = cashSum && cashSumDecimalRounding(cashSum);
+    const isInCents = item.payments.find(findCashPayment)?.isInCents;
+    const roundedCashSum =
+      cashSum && cashSumDecimalRounding(cashSum, isInCents);
     if (cashSum !== roundedCashSum) {
       roundDiff = cashSum - roundedCashSum;
     }
@@ -39,18 +46,20 @@ const expandedTaxesName = (tax) => {
 
 const getTaxesData = (data) => {
   const card = data.payments.find(findCardPayment)?.sum;
-
   const cash = data.payments.find(findCashPayment)?.sum;
+  const isInCents =
+    data.payments.find(findCardPayment)?.isInCents ||
+    data.payments.find(findCashPayment)?.isInCents;
 
   return {
-    total: data.total,
-    card: card ? formatToFixedDecimal(card) : null,
-    cash: cash ? formatToFixedDecimal(cash) : null,
+    total: getReceiptTotal(data),
+    card: card ? formatToFixedDecimal(getData(isInCents, card)) : null,
+    cash: cash ? formatToFixedDecimal(getData(isInCents, cash)) : null,
     taxes: data.taxes
       .sort((a, b) => a.type - b.type)
       .map((tax) => ({
         name: expandedTaxesName(tax),
-        value: tax.sum,
+        value: getTaxSum(tax),
         program: tax.program,
       })),
   };
@@ -62,11 +71,12 @@ export const isFiscalReceiptReturnType = (type) =>
 const getRoundReceiptData = (data) => {
   const isReturnType = isFiscalReceiptReturnType(data.type);
   const roundDiff = getRoundedDiff(data);
+  const total = getReceiptTotal(data);
   return roundDiff
     ? [
         {
           name: isReturnType ? "До повернення" : "До сплати",
-          value: formatToFixedDecimal(data.total - roundDiff),
+          value: formatToFixedDecimal(total - roundDiff),
         },
         {
           name: "Заокруглення",
@@ -131,6 +141,7 @@ export const prepareDataForPrintReceipt = (data) => ({
     price: product.price,
     taxPrograms: product.taxPrograms,
     discount: product.discount,
+    isInCentsAndGrams: product.isInCentsAndGrams,
   })),
   taxesData: getTaxesData(data),
   roundData: getRoundReceiptData(data),

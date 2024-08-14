@@ -35,6 +35,16 @@ import {
   getVersionFields,
   rowsToMapper,
 } from "./commonXMLTagGenerator.js";
+import {
+  getData,
+  getPaymentSum,
+  getProductCount,
+  getProductPrice,
+  getReceiptTotal,
+  getTaxSum,
+  getTaxTurnover,
+  getTotalDiscount,
+} from "../../../helpers/centsFormat.js";
 
 const getPaymentDetails = (type) => {
   const paymentType = {
@@ -65,8 +75,13 @@ const paymentMapper = (payment, index) => {
   const { PAYFORMCD, PAYFORMNM } = getPaymentDetails(payment.type);
   const SUM =
     PAYFORMNM === PAYMENT_TYPE_TITLE_CASH
-      ? formatToFixedDecimal(cashSumDecimalRounding(payment.sum))
-      : formatToFixedDecimal(payment.sum);
+      ? formatToFixedDecimal(
+          getPaymentSum({
+            ...payment,
+            sum: cashSumDecimalRounding(payment.sum, payment.isInCents),
+          }),
+        )
+      : formatToFixedDecimal(getPaymentSum(payment));
 
   return {
     $: getRowNum(index),
@@ -77,22 +92,26 @@ const paymentMapper = (payment, index) => {
   };
 };
 
-const productMapper = (products, index) => {
+const productMapper = (product, index) => {
   const {
     id: CODE,
     taxPrograms,
     price,
-    count: AMOUNT,
+    count,
     uktzed,
     name: NAME,
     unit: UNITNM,
-  } = products;
+    isInCentsAndGrams,
+  } = product;
 
   const LETTERS = taxPrograms?.length ? { LETTERS: taxPrograms } : {};
-  const PRICE = formatToFixedDecimal(price);
-  const COST = formatToFixedDecimal(getProductSum(PRICE, AMOUNT));
+  const PRICE = formatToFixedDecimal(
+    getProductPrice({ isInCentsAndGrams, price }),
+  );
+  const AMOUNT = getProductCount({ isInCentsAndGrams, count });
+  const COST = formatToFixedDecimal(getProductSum(product));
   const UKTZED = uktzed ? { UKTZED: uktzed } : {};
-  const DISCOUNTBLOCK = getDiscountBlock(products);
+  const DISCOUNTBLOCK = getDiscountBlock(product);
 
   return {
     $: getRowNum(index),
@@ -109,20 +128,13 @@ const productMapper = (products, index) => {
 };
 
 const taxesMapper = (tax, index) => {
-  const {
-    sum,
-    type: TYPE,
-    name: NAME,
-    program: LETTER,
-    percent,
-    turnover,
-    // sourceSum,
-  } = tax;
+  const { type: TYPE, name: NAME, program: LETTER, percent } = tax;
 
   const PRC = formatToFixedDecimal(percent);
-  const TURNOVER = formatToFixedDecimal(turnover);
-  const SUM = formatToFixedDecimal(sum);
-  // const SOURCESUM = formatToFixedDecimal(sourceSum);
+  const TURNOVER = formatToFixedDecimal(getTaxTurnover(tax));
+
+  const SUM = formatToFixedDecimal(getTaxSum(tax));
+  // const SOURCESUM = formatToFixedDecimal(getTaxSourceSum(tax));
 
   return {
     $: getRowNum(index),
@@ -142,7 +154,7 @@ const isReturnReceipt = (item) => item.type === DOCUMENT_TYPE_RETURN_RECEIPT;
 
 const getReceiptHeader = (operationData) => {
   const { cashboxData, dateTime } = operationData;
-  const operationSum = getReceiptTotal(operationData).SUM;
+  const operationSum = getTotal(operationData).SUM;
 
   return {
     ...getTypeFields(operationData),
@@ -173,22 +185,27 @@ const getReturnReceiptFields = (orderData) => {
     : {};
 };
 
-const getReceiptTotal = (orderData) => {
-  const roundDiff = getRoundedDiff(orderData);
-  const discountTotal = getDiscountTotal(orderData.products);
+const getTotal = (orderData) => {
+  const isInCents = !!orderData.total?.isInCents;
+  const total = getReceiptTotal(orderData);
+  const roundDiff = getData(isInCents, getRoundedDiff(orderData));
+  const discountTotal = getTotalDiscount(
+    isInCents,
+    getDiscountTotal(orderData.products),
+  );
   const DISCOUNTSUM = discountTotal
     ? { DISCOUNTSUM: formatToFixedDecimal(discountTotal) }
     : {};
   if (roundDiff) {
     return {
-      SUM: formatToFixedDecimal(orderData.total - roundDiff),
+      SUM: formatToFixedDecimal(total),
       RNDSUM: formatToFixedDecimal(roundDiff),
-      NORNDSUM: formatToFixedDecimal(orderData.total),
+      NORNDSUM: formatToFixedDecimal(total),
       ...DISCOUNTSUM,
     };
   }
   return {
-    SUM: formatToFixedDecimal(orderData.total),
+    SUM: formatToFixedDecimal(total),
     ...DISCOUNTSUM,
   };
 };
@@ -196,7 +213,7 @@ const getReceiptTotal = (orderData) => {
 const getReceiptDocument = (data) => {
   const { products, payments, taxes } = data;
   const CHECKHEAD = getReceiptHeader(data);
-  const CHECKTOTAL = getReceiptTotal(data);
+  const CHECKTOTAL = getTotal(data);
   const CHECKPAY = rowsToMapper(payments, paymentMapper);
   const CHECKTAX = rowsToMapper(taxes, taxesMapper);
   const CHECKBODY = rowsToMapper(products, productMapper);

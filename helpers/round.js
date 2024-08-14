@@ -19,7 +19,10 @@ export const decimalRounding = (number) => {
   return rounded;
 };
 
-export const cashSumDecimalRounding = (number) => {
-  const MINIMAL_CASH_SUM = 0.1;
-  return Math.max(decimalRounding(number), MINIMAL_CASH_SUM);
+export const cashSumDecimalRounding = (cashSum, isInCents) => {
+  const TEN_CENTS = 10;
+  const ONE_TENTH_UAH = 0.1;
+  const MINIMAL_CASH_SUM = isInCents ? TEN_CENTS : ONE_TENTH_UAH;
+  const sum = isInCents ? cashSum : decimalRounding(cashSum);
+  return Math.max(sum, MINIMAL_CASH_SUM);
 };

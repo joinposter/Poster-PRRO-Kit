@@ -195,6 +195,195 @@ describe("offline mode", () => {
       ],
     });
   });
+  it("getReceiptOfflineModeRequestData in cents and grams format", async () => {
+    expect(
+      await getReceiptOfflineModeRequestData({
+        type: "receipt",
+        dateTime: "2024-06-04T12:26:18.293Z",
+        cashboxData: {
+          cashbox: "4000438533",
+          tin: 44657555,
+          ipn: "",
+          name: "ТОВ ТЕСТ ПРРО",
+          pointName: "кафе Ромашка",
+          pointAddress: "Дніпропетровська область, м. Дніпро, вул. Шевченка, 1",
+          cashboxLocalNumber: "123",
+          isTestingMode: true,
+          isOffline: true,
+          nextDocumentNumber: 2828,
+          offlineSessionData: {
+            id: "23649865",
+            seed: "135969449201653",
+            nextOfflineDocumentNumber: 1,
+            lastDocumentHash:
+              "47a08c017274237765f9081d994e76e08742dcef85056d655a8458ec43dff6e4",
+          },
+        },
+        cashier: "Шевченко Т.Г.",
+        total: { sum: 95004, isInCents: true },
+        payments: [
+          { sum: 10000, type: "cash", isInCents: true },
+          { sum: 85004, type: "card", isInCents: true },
+        ],
+        products: [
+          {
+            id: 54,
+            name: "Сирна паличка",
+            count: 4000,
+            unit: "шт",
+            price: 20000,
+            discount: 3000,
+            taxPrograms: "ГД",
+            isInCentsAndGrams: true,
+          },
+          {
+            id: 55,
+            name: "Морозиво",
+            count: 2000,
+            unit: "шт",
+            price: 9013,
+            discount: 2000,
+            taxPrograms: "БД",
+            isInCentsAndGrams: true,
+          },
+          {
+            id: 56,
+            name: "Кава",
+            count: 1000,
+            unit: "шт",
+            price: 2013,
+            discount: 35,
+            taxPrograms: "В",
+            isInCentsAndGrams: true,
+          },
+        ],
+        shiftOpenData: {
+          dateTime: "2024-06-04T10:26:18.293Z",
+        },
+        taxesConfig: mockCustomTaxes,
+      }),
+    ).toEqual({
+      type: "receipt",
+      fiscalId: "23649865.1.1236",
+      fiscalLink:
+        "https://cabinet.tax.gov.ua/cashregs/check?id=23649865.1.1236&date=20240604&time=152618&fn=4000438533&sm=950.04&mac=47a08c017274237765f9081d994e76e08742dcef85056d655a8458ec43dff6e4",
+      uid: "11111111-1111-1111-1111-111111111111",
+      dateTime: "2024-06-04T12:26:18.293Z",
+      documentHash:
+        "1111111111111111111111111111111111111111111111111111111111111111",
+      cashboxData: {
+        cashbox: "4000438533",
+        tin: 44657555,
+        name: "ТОВ ТЕСТ ПРРО",
+        pointName: "кафе Ромашка",
+        pointAddress: "Дніпропетровська область, м. Дніпро, вул. Шевченка, 1",
+        cashboxLocalNumber: "123",
+        ipn: "",
+        isOffline: true,
+        isTestingMode: true,
+        nextDocumentNumber: 2828,
+        offlineSessionData: {
+          id: "23649865",
+          seed: "135969449201653",
+          nextOfflineDocumentNumber: 1,
+          lastDocumentHash:
+            "47a08c017274237765f9081d994e76e08742dcef85056d655a8458ec43dff6e4",
+        },
+      },
+      cashier: "Шевченко Т.Г.",
+      shiftOpenData: {
+        dateTime: "2024-06-04T10:26:18.293Z",
+      },
+      total: { isInCents: true, sum: 95004 },
+      payments: [
+        {
+          sum: 10000,
+          type: "cash",
+          isInCents: true,
+        },
+        {
+          sum: 85004,
+          type: "card",
+          isInCents: true,
+        },
+      ],
+      products: [
+        {
+          count: 4000,
+          discount: 3000,
+          id: 54,
+          name: "Сирна паличка",
+          price: 20000,
+          taxPrograms: "ГД",
+          unit: "шт",
+          isInCentsAndGrams: true,
+        },
+        {
+          count: 2000,
+          discount: 2000,
+          id: 55,
+          name: "Морозиво",
+          price: 9013,
+          taxPrograms: "БД",
+          unit: "шт",
+          isInCentsAndGrams: true,
+        },
+        {
+          count: 1000,
+          discount: 35,
+          id: 56,
+          name: "Кава",
+          price: 2013,
+          taxPrograms: "В",
+          unit: "шт",
+          isInCentsAndGrams: true,
+        },
+      ],
+      taxes: [
+        {
+          name: "Акциз",
+          percent: 5,
+          program: "Д",
+          sourceSum: 93026,
+          sum: 4430,
+          turnover: 98026,
+          type: 5,
+          isInCentsAndGrams: true,
+        },
+        {
+          name: "ПДВ 0%",
+          percent: 0,
+          program: "Г",
+          sourceSum: 73333,
+          sum: 0,
+          turnover: 80000,
+          type: 4,
+          isInCentsAndGrams: true,
+        },
+        {
+          name: "ПДВ 7%",
+          percent: 7,
+          program: "Б",
+          sourceSum: 15263,
+          sum: 999,
+          turnover: 18026,
+          type: 2,
+          isInCentsAndGrams: true,
+        },
+        {
+          name: "ПДВ 20%",
+          percent: 20,
+          program: "В",
+          sourceSum: 1978,
+          sum: 330,
+          turnover: 2013,
+          type: 3,
+          isInCentsAndGrams: true,
+        },
+      ],
+    });
+  });
+
   it("getTransactionOfflineModeRequestData", async () => {
     expect(
       await getTransactionOfflineModeRequestData({

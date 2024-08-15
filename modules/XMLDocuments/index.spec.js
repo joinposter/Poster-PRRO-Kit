@@ -5,7 +5,11 @@ import getReceiptDocument from "./generators/receiptXMLGenerator.js";
 import getShiftOpenDocument from "./generators/shiftOpenXMLGenerator.js";
 import getZReportDocument from "./generators/zReportXMLGenerator.js";
 import { getTaxesData, getTaxPrograms } from "../taxes/index.js";
-import { receiptRequestData, zReportData } from "./mock/data.js";
+import {
+  receiptRequestData,
+  receiptRequestDatInCentsAndGrams,
+  zReportData,
+} from "./mock/data.js";
 import { mockCustomTaxes } from "../taxes/mock/taxes.js";
 
 describe("XMLDocuments", () => {
@@ -35,6 +39,129 @@ describe("XMLDocuments", () => {
         const taxes = getTaxesData(taxesConfig)(receiptRequestData.products);
         const data = getReceiptDocument({
           ...receiptRequestData,
+          taxes,
+        });
+        expect(builder.buildObject(data)).toBe(
+          '<?xml version="1.0" encoding="windows-1251"?>\n' +
+            "<CHECK>\n" +
+            "  <CHECKHEAD>\n" +
+            "    <DOCTYPE>0</DOCTYPE>\n" +
+            "    <DOCSUBTYPE>0</DOCSUBTYPE>\n" +
+            "    <UID>11111111-1111-1111-1111-111111111111</UID>\n" +
+            "    <TIN>44657555</TIN>\n" +
+            "    <ORGNM>ТОВ ТЕСТ ПРРО</ORGNM>\n" +
+            "    <POINTNM>кафе Ромашка</POINTNM>\n" +
+            "    <POINTADDR>Дніпропетровська область, м. Дніпро, вул. Шевченка, 1</POINTADDR>\n" +
+            "    <ORDERDATE>18042024</ORDERDATE>\n" +
+            "    <ORDERTIME>151617</ORDERTIME>\n" +
+            "    <ORDERNUM>2834</ORDERNUM>\n" +
+            "    <CASHDESKNUM>123</CASHDESKNUM>\n" +
+            "    <CASHREGISTERNUM>4000438533</CASHREGISTERNUM>\n" +
+            "    <CASHIER>Шевченко Т.Г.</CASHIER>\n" +
+            "    <VER>1</VER>\n" +
+            "    <ORDERTAXNUM>23649865.4.1077</ORDERTAXNUM>\n" +
+            "    <OFFLINE>true</OFFLINE>\n" +
+            "    <PREVDOCHASH>47a08c017274237765f9081d994e76e08742dcef85056d655a8458ec43dff6e4</PREVDOCHASH>\n" +
+            "    <TESTING>true</TESTING>\n" +
+            "  </CHECKHEAD>\n" +
+            "  <CHECKTOTAL>\n" +
+            "    <SUM>950.04</SUM>\n" +
+            "    <DISCOUNTSUM>50.35</DISCOUNTSUM>\n" +
+            "  </CHECKTOTAL>\n" +
+            "  <CHECKPAY>\n" +
+            '    <ROW ROWNUM="1">\n' +
+            "      <PAYFORMCD>0</PAYFORMCD>\n" +
+            "      <PAYFORMNM>ГОТІВКА</PAYFORMNM>\n" +
+            "      <SUM>100.00</SUM>\n" +
+            "      <PROVIDED>100.00</PROVIDED>\n" +
+            "    </ROW>\n" +
+            '    <ROW ROWNUM="2">\n' +
+            "      <PAYFORMCD>1</PAYFORMCD>\n" +
+            "      <PAYFORMNM>КАРТКА</PAYFORMNM>\n" +
+            "      <SUM>850.04</SUM>\n" +
+            "      <PROVIDED>850.04</PROVIDED>\n" +
+            "    </ROW>\n" +
+            "  </CHECKPAY>\n" +
+            "  <CHECKTAX>\n" +
+            '    <ROW ROWNUM="1">\n' +
+            "      <TYPE>5</TYPE>\n" +
+            "      <NAME>Акциз</NAME>\n" +
+            "      <LETTER>Д</LETTER>\n" +
+            "      <PRC>5.00</PRC>\n" +
+            "      <TURNOVER>980.26</TURNOVER>\n" +
+            "      <SUM>44.30</SUM>\n" +
+            "    </ROW>\n" +
+            '    <ROW ROWNUM="2">\n' +
+            "      <TYPE>4</TYPE>\n" +
+            "      <NAME>ПДВ 0%</NAME>\n" +
+            "      <LETTER>Г</LETTER>\n" +
+            "      <PRC>0.00</PRC>\n" +
+            "      <TURNOVER>800.00</TURNOVER>\n" +
+            "      <SUM>0.00</SUM>\n" +
+            "    </ROW>\n" +
+            '    <ROW ROWNUM="3">\n' +
+            "      <TYPE>2</TYPE>\n" +
+            "      <NAME>ПДВ 7%</NAME>\n" +
+            "      <LETTER>Б</LETTER>\n" +
+            "      <PRC>7.00</PRC>\n" +
+            "      <TURNOVER>180.26</TURNOVER>\n" +
+            "      <SUM>9.99</SUM>\n" +
+            "    </ROW>\n" +
+            '    <ROW ROWNUM="4">\n' +
+            "      <TYPE>3</TYPE>\n" +
+            "      <NAME>ПДВ 20%</NAME>\n" +
+            "      <LETTER>В</LETTER>\n" +
+            "      <PRC>20.00</PRC>\n" +
+            "      <TURNOVER>20.13</TURNOVER>\n" +
+            "      <SUM>3.30</SUM>\n" +
+            "    </ROW>\n" +
+            "  </CHECKTAX>\n" +
+            "  <CHECKBODY>\n" +
+            '    <ROW ROWNUM="1">\n' +
+            "      <CODE>54</CODE>\n" +
+            "      <NAME>Сирна паличка</NAME>\n" +
+            "      <UNITNM>шт</UNITNM>\n" +
+            "      <AMOUNT>4</AMOUNT>\n" +
+            "      <PRICE>200.00</PRICE>\n" +
+            "      <LETTERS>ГД</LETTERS>\n" +
+            "      <COST>800.00</COST>\n" +
+            "      <DISCOUNTTYPE>0</DISCOUNTTYPE>\n" +
+            "      <DISCOUNTSUM>30.00</DISCOUNTSUM>\n" +
+            "    </ROW>\n" +
+            '    <ROW ROWNUM="2">\n' +
+            "      <CODE>55</CODE>\n" +
+            "      <NAME>Морозиво</NAME>\n" +
+            "      <UNITNM>шт</UNITNM>\n" +
+            "      <AMOUNT>2</AMOUNT>\n" +
+            "      <PRICE>90.13</PRICE>\n" +
+            "      <LETTERS>БД</LETTERS>\n" +
+            "      <COST>180.26</COST>\n" +
+            "      <DISCOUNTTYPE>0</DISCOUNTTYPE>\n" +
+            "      <DISCOUNTSUM>20.00</DISCOUNTSUM>\n" +
+            "    </ROW>\n" +
+            '    <ROW ROWNUM="3">\n' +
+            "      <CODE>56</CODE>\n" +
+            "      <NAME>Кава</NAME>\n" +
+            "      <UNITNM>шт</UNITNM>\n" +
+            "      <AMOUNT>1</AMOUNT>\n" +
+            "      <PRICE>20.13</PRICE>\n" +
+            "      <LETTERS>В</LETTERS>\n" +
+            "      <COST>20.13</COST>\n" +
+            "      <DISCOUNTTYPE>0</DISCOUNTTYPE>\n" +
+            "      <DISCOUNTSUM>0.35</DISCOUNTSUM>\n" +
+            "    </ROW>\n" +
+            "  </CHECKBODY>\n" +
+            "</CHECK>",
+        );
+      });
+
+      it("should generate valid receipt XML, with a correct tag's order if money in cents format", () => {
+        const taxesConfig = getTaxPrograms(mockCustomTaxes);
+        const taxes = getTaxesData(taxesConfig)(
+          receiptRequestDatInCentsAndGrams.products,
+        );
+        const data = getReceiptDocument({
+          ...receiptRequestDatInCentsAndGrams,
           taxes,
         });
         expect(builder.buildObject(data)).toBe(

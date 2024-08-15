@@ -34,7 +34,7 @@ const getRoundedDiff = (item, type = PAYMENT_TYPE_CASH) => {
     const roundedCashSum =
       cashSum && cashSumDecimalRounding(cashSum, isInCents);
     if (cashSum !== roundedCashSum) {
-      roundDiff = cashSum - roundedCashSum;
+      roundDiff = getData(isInCents, cashSum - roundedCashSum);
     }
   }
   return roundDiff;

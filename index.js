@@ -40,6 +40,7 @@ import {
 } from "./modules/XMLDocuments/index.js";
 
 import { getTaxesData, getTaxPrograms } from "./modules/taxes/index.js";
+import { getReceiptTotal } from "./helpers/centsFormat.js";
 
 export {
   generateTextFiscalReceipt,
@@ -66,6 +67,7 @@ export {
   roundWithPrecision,
   cashSumDecimalRounding,
   getBalanceDiffByRequest,
+  getReceiptTotal,
   DOCUMENT_TYPE_RECEIPT,
   DOCUMENT_TYPE_RETURN_RECEIPT,
   DOCUMENT_TYPE_SERVICE_ENTRY,

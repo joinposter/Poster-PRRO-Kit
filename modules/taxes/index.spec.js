@@ -164,4 +164,82 @@ describe("taxes", () => {
       },
     ]);
   });
+
+  it("getTaxesData should return list of uniq taxes with common amount in cents and grams format", () => {
+    expect(
+      getTaxesData(mockCustomTaxes)([
+        {
+          id: 54,
+          name: "Сирна паличка",
+          count: 4000,
+          unit: "шт",
+          price: 20000,
+          discount: 3000,
+          taxPrograms: "ГД",
+          isInCentsAndGrams: true,
+        },
+        {
+          id: 55,
+          name: "Морозиво",
+          count: 2000,
+          unit: "шт",
+          price: 9013,
+          discount: 2000,
+          taxPrograms: "БД",
+          isInCentsAndGrams: true,
+        },
+        {
+          id: 56,
+          name: "Кава",
+          count: 1000,
+          unit: "шт",
+          price: 2013,
+          discount: 35,
+          taxPrograms: "В",
+          isInCentsAndGrams: true,
+        },
+      ]),
+    ).toEqual([
+      {
+        name: "Акциз",
+        percent: 5,
+        program: "Д",
+        sum: 4430,
+        turnover: 98026,
+        sourceSum: 93026,
+        type: 5,
+        isInCentsAndGrams: true,
+      },
+      {
+        name: "ПДВ 0%",
+        percent: 0,
+        program: "Г",
+        sum: 0,
+        turnover: 80000,
+        sourceSum: 73333,
+        type: 4,
+        isInCentsAndGrams: true,
+      },
+      {
+        name: "ПДВ 7%",
+        percent: 7,
+        program: "Б",
+        sum: 999,
+        turnover: 18026,
+        sourceSum: 15263,
+        type: 2,
+        isInCentsAndGrams: true,
+      },
+      {
+        name: "ПДВ 20%",
+        percent: 20,
+        program: "В",
+        sum: 330,
+        turnover: 2013,
+        sourceSum: 1978,
+        type: 3,
+        isInCentsAndGrams: true,
+      },
+    ]);
+  });
 });

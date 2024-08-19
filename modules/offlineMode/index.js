@@ -14,7 +14,7 @@ import { getDocument, getDocumentHash } from "../XMLDocuments/index.js";
 import { expandDocumentData } from "./helpers/offline.js";
 import {
   createXZReportData,
-  inpitOutputServiceFieldAcc,
+  inputOutputServiceFieldAcc,
   realizReturnFieldAcc,
 } from "./helpers/XZReportData.js";
 import getDFSFiscalLink from "../dfs/index.js";
@@ -236,11 +236,11 @@ const mergeOperationsAndXReport = async ({
     ...operationsXReport,
     realiz: realizReturnFieldAcc(xReport.realiz, operationsXReport.realiz),
     return: realizReturnFieldAcc(xReport.return, operationsXReport.return),
-    serviceInput: inpitOutputServiceFieldAcc(
+    serviceInput: inputOutputServiceFieldAcc(
       xReport.serviceInput,
       operationsXReport.serviceInput,
     ),
-    serviceOutput: inpitOutputServiceFieldAcc(
+    serviceOutput: inputOutputServiceFieldAcc(
       xReport.serviceOutput,
       operationsXReport.serviceOutput,
     ),

@@ -28,11 +28,11 @@ export const getCalculatedSourceSum = (product) =>
 export const getAccumulatedTaxValue = (isInCentsAndGrams, value) =>
   isInCentsAndGrams ? Math.round(value) : roundWithPrecision(value);
 
-export const getTotalDiscount = (isInCants, discount) =>
-  discount / (isInCants ? CENTS_IN_UAH : 1);
+export const getTotalDiscount = (isInCents, discount) =>
+  discount / (isInCents ? CENTS_IN_UAH : 1);
 
 export const getPaymentSum = (payment) =>
-  payment.isInCents ? payment.sum / CENTS_IN_UAH : payment.sum;
+  payment?.isInCents ? payment.sum / CENTS_IN_UAH : payment?.sum;
 
 export const getTaxTurnover = (tax) =>
   tax.isInCentsAndGrams ? tax.turnover / CENTS_IN_UAH : tax.turnover;

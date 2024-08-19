@@ -1,10 +1,16 @@
 import { getHeader, getRowNum, rowsToMapper } from "./commonXMLTagGenerator.js";
 import { formatToFixedDecimal } from "../../../helpers/round.js";
+import {
+  getData,
+  getPaymentSum,
+  getTaxSum,
+  getTaxTurnover,
+} from "../../../helpers/centsFormat.js";
 
 const paymentMapper = (payment, index) => {
   const PAYFORMCD = payment.payFormCode;
   const PAYFORMNM = payment.payFormName;
-  const SUM = formatToFixedDecimal(payment.sum);
+  const SUM = formatToFixedDecimal(getPaymentSum(payment));
 
   return {
     $: getRowNum(index),
@@ -15,20 +21,12 @@ const paymentMapper = (payment, index) => {
 };
 
 const taxesMapper = (tax, index) => {
-  const {
-    sum,
-    type: TYPE,
-    name: NAME,
-    program: LETTER,
-    percent,
-    turnover,
-    // sourceSum,
-  } = tax;
+  const { type: TYPE, name: NAME, program: LETTER, percent } = tax;
 
   const PRC = formatToFixedDecimal(percent);
-  const TURNOVER = formatToFixedDecimal(turnover);
-  const SUM = formatToFixedDecimal(sum);
-  // const SOURCESUM = formatToFixedDecimal(sourceSum);
+  const TURNOVER = formatToFixedDecimal(getTaxTurnover(tax));
+  const SUM = formatToFixedDecimal(getTaxSum(tax));
+  // const SOURCESUM = formatToFixedDecimal(getTaxSourceSum(tax));
 
   return {
     $: getRowNum(index),
@@ -50,7 +48,8 @@ const getZReportPaymentsAndTaxes = (data) => {
   const { sum, receiptCount: ORDERSCNT, payments, taxes } = data;
   const PAYFORMS = rowsToMapper(payments, paymentMapper);
   const TAXES = taxes.length ? { TAXES: rowsToMapper(taxes, taxesMapper) } : {};
-  const SUM = formatToFixedDecimal(sum);
+  const currentSum = getData(sum?.isInCents, sum?.isInCents ? sum.value : sum);
+  const SUM = formatToFixedDecimal(currentSum);
 
   return {
     SUM,
@@ -61,8 +60,18 @@ const getZReportPaymentsAndTaxes = (data) => {
 };
 
 const getZReportBody = ({ serviceInput, serviceOutput }) => ({
-  SERVICEINPUT: formatToFixedDecimal(serviceInput),
-  SERVICEOUTPUT: formatToFixedDecimal(serviceOutput),
+  SERVICEINPUT: formatToFixedDecimal(
+    getData(
+      serviceInput?.isInCents,
+      serviceInput?.isInCents ? serviceInput.value : serviceInput,
+    ),
+  ),
+  SERVICEOUTPUT: formatToFixedDecimal(
+    getData(
+      serviceOutput?.isInCents,
+      serviceOutput?.isInCents ? serviceOutput.value : serviceOutput,
+    ),
+  ),
 });
 
 const getZReportDocument = (data) => {

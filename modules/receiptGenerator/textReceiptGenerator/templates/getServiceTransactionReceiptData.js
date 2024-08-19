@@ -2,8 +2,9 @@ import getFiscalCompanyData from "./blocks/fiscalCompanyBlock.js";
 import { priceFormat } from "../../helpers/receipt.js";
 import { getDateTime } from "../../../../helpers/common.js";
 import textFooterBlock from "./blocks/smartFooterBlock/textFooterBlock.js";
+import { getData } from "../../../../helpers/centsFormat.js";
 
-const getServiceTransactionBody = ({ sum, receiptConfig }) => {
+const getServiceTransactionBody = ({ sum, isInCents, receiptConfig }) => {
   const operationType = sum > 0 ? "ВНЕСЕННЯ" : "ВИЛУЧЕННЯ";
   return [
     { type: "ruler" },
@@ -15,7 +16,7 @@ const getServiceTransactionBody = ({ sum, receiptConfig }) => {
         {
           row: [
             "Готівка",
-            `${priceFormat(Math.abs(sum))}${receiptConfig.currency}`,
+            `${priceFormat(Math.abs(getData(isInCents, sum)))}${receiptConfig.currency}`,
           ],
         },
       ],

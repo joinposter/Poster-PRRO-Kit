@@ -17,6 +17,7 @@ import {
   getUIDFields,
   getVersionFields,
 } from "./commonXMLTagGenerator.js";
+import { getData } from "../../../helpers/centsFormat.js";
 
 const isServiceEntry = (data) => data.type === DOCUMENT_TYPE_SERVICE_ENTRY;
 
@@ -47,7 +48,7 @@ const getTypeFields = (data) =>
   );
 
 const getServiceTransactionTotal = (data) => {
-  return { SUM: formatToFixedDecimal(data.sum) };
+  return { SUM: formatToFixedDecimal(getData(data.isInCents, data.sum)) };
 };
 
 const getServiceTransactionDocument = (data) => {

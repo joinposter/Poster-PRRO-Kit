@@ -19,7 +19,7 @@ export const getProductRoundSum = (product) =>
 
 export const getCalculatedTurnover = (product) =>
   product.isInCentsAndGrams
-    ? Math.round((product.count / GRAMS_IN_KG) * product.price)
+    ? (product.count / GRAMS_IN_KG) * product.price
     : product.count * product.price;
 
 export const getCalculatedSourceSum = (product) =>

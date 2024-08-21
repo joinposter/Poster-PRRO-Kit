@@ -14,11 +14,12 @@ import { getDocument, getDocumentHash } from "../XMLDocuments/index.js";
 import { expandDocumentData } from "./helpers/offline.js";
 import {
   createXZReportData,
-  inpitOutputServiceFieldAcc,
+  inputOutputServiceFieldAcc,
   realizReturnFieldAcc,
 } from "./helpers/XZReportData.js";
 import getDFSFiscalLink from "../dfs/index.js";
 import { getDateTime } from "../../helpers/common.js";
+import { getReceiptTotal } from "../../helpers/centsFormat.js";
 
 const getReceiptOfflineModeRequestData = async (data) => {
   if (
@@ -46,7 +47,7 @@ const getReceiptOfflineModeRequestData = async (data) => {
   const fiscalLink = getDFSFiscalLink({
     fiscalId,
     cashbox: cashboxData.cashbox,
-    sum: data.total,
+    sum: getReceiptTotal(data),
     date: getDateTime({ date: dateTime, format: "dateDfsLink" }),
     time: getDateTime({ date: dateTime, format: "timeDfsLink" }),
     previousDocumentHash: cashboxData.offlineSessionData.lastDocumentHash,
@@ -235,11 +236,11 @@ const mergeOperationsAndXReport = async ({
     ...operationsXReport,
     realiz: realizReturnFieldAcc(xReport.realiz, operationsXReport.realiz),
     return: realizReturnFieldAcc(xReport.return, operationsXReport.return),
-    serviceInput: inpitOutputServiceFieldAcc(
+    serviceInput: inputOutputServiceFieldAcc(
       xReport.serviceInput,
       operationsXReport.serviceInput,
     ),
-    serviceOutput: inpitOutputServiceFieldAcc(
+    serviceOutput: inputOutputServiceFieldAcc(
       xReport.serviceOutput,
       operationsXReport.serviceOutput,
     ),

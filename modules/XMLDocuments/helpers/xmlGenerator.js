@@ -7,6 +7,12 @@ import {
   cashSumDecimalRounding,
   roundWithPrecision,
 } from "../../../helpers/round.js";
+import {
+  getProductCount,
+  getProductDiscount,
+  getProductPrice,
+  getProductRoundSum,
+} from "../../../helpers/centsFormat.js";
 
 export const getFiscalNumberControlCode = (string) => {
   const HEX_RADIX = 16;
@@ -42,11 +48,13 @@ export const getDiscountTotal = (products) =>
   products.reduce(accumulateDiscount, 0);
 
 export const getDiscount = (product) => {
-  const { discount, roundSum } = product;
+  const { discount, roundSum, isInCentsAndGrams } = product;
   // Якщо roundSum дорівнює значенню discount, але відʼємний, це означає, що ціна була нижчою за 10 копійок,
   // а оплата здійснювалася готівкою, де немає номіналу нижче 10 копійок, і discount повинен бути відʼємним.
   // В усіх інших випадках потрібно використовувати значення discount.
-  return roundSum < 0 && roundSum + discount === 0 ? roundSum : discount;
+  return roundSum < 0 && roundSum + discount === 0
+    ? getProductRoundSum({ isInCentsAndGrams, roundSum })
+    : getProductDiscount({ isInCentsAndGrams, discount });
 };
 
 export const findCashPayment = (payment) => payment.type === PAYMENT_TYPE_CASH;
@@ -57,7 +65,9 @@ export const getRoundedDiff = (item, type = PAYMENT_TYPE_CASH) => {
   let roundDiff = 0;
   if (type === PAYMENT_TYPE_CASH) {
     const cashSum = item.payments.find(findCashPayment)?.sum;
-    const roundedCashSum = cashSum && cashSumDecimalRounding(cashSum);
+    const isInCents = item.payments.find(findCashPayment)?.isInCents;
+    const roundedCashSum =
+      cashSum && cashSumDecimalRounding(cashSum, isInCents);
     if (cashSum !== roundedCashSum) {
       roundDiff = cashSum - roundedCashSum;
     }
@@ -65,8 +75,12 @@ export const getRoundedDiff = (item, type = PAYMENT_TYPE_CASH) => {
   return roundDiff;
 };
 
-export const getProductSum = (price, amount) =>
-  roundWithPrecision(price * amount);
+export const getProductSum = ({ price, count, isInCentsAndGrams }) => {
+  const sum =
+    getProductCount({ isInCentsAndGrams, count }) *
+    getProductPrice({ isInCentsAndGrams, price });
+  return roundWithPrecision(sum);
+};
 
 const fillUid = (request) => {
   const uid = uuidv4();

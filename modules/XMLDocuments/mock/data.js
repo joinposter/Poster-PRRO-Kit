@@ -58,6 +58,69 @@ export const receiptRequestData = {
   uid: "11111111-1111-1111-1111-111111111111",
 };
 
+export const receiptRequestDatInCentsAndGrams = {
+  type: "receipt",
+  total: { sum: 95004, isInCents: true },
+  payments: [
+    { sum: 10000, type: "cash", isInCents: true },
+    { sum: 85004, type: "card", isInCents: true },
+  ],
+  products: [
+    {
+      id: 54,
+      name: "Сирна паличка",
+      count: 4000,
+      unit: "шт",
+      price: 20000,
+      discount: 3000,
+      taxPrograms: "ГД",
+      isInCentsAndGrams: true,
+    },
+    {
+      id: 55,
+      name: "Морозиво",
+      count: 2000,
+      unit: "шт",
+      price: 9013,
+      discount: 2000,
+      taxPrograms: "БД",
+      isInCentsAndGrams: true,
+    },
+    {
+      id: 56,
+      name: "Кава",
+      count: 1000,
+      unit: "шт",
+      price: 2013,
+      discount: 35,
+      taxPrograms: "В",
+      isInCentsAndGrams: true,
+    },
+  ],
+  cashboxData: {
+    cashbox: "4000438533",
+    tin: 44657555,
+    ipn: null,
+    name: "ТОВ ТЕСТ ПРРО",
+    pointName: "кафе Ромашка",
+    pointAddress: "Дніпропетровська область, м. Дніпро, вул. Шевченка, 1",
+    cashboxLocalNumber: "123",
+    isOffline: true,
+    isTestingMode: true,
+    nextDocumentNumber: 2834,
+    offlineSessionData: {
+      id: "23649865",
+      seed: "135969449201653",
+      nextOfflineDocumentNumber: 4,
+      lastDocumentHash:
+        "47a08c017274237765f9081d994e76e08742dcef85056d655a8458ec43dff6e4",
+    },
+  },
+  cashier: "Шевченко Т.Г.",
+  dateTime: "2024-04-18T15:16:17",
+  uid: "11111111-1111-1111-1111-111111111111",
+};
+
 export const operationData = {
   cashboxData: {
     cashbox: "4000438533",

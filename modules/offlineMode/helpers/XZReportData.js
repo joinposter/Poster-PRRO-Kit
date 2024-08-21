@@ -15,8 +15,9 @@ import {
 import { getTaxesData } from "../../taxes/index.js";
 import { getRoundedDiff } from "../../XMLDocuments/index.js";
 import { roundWithPrecision } from "../../../helpers/round.js";
+import { getPaymentSum } from "../../../helpers/centsFormat.js";
 
-export { createXZReportData, realizReturnFieldAcc, inpitOutputServiceFieldAcc };
+export { createXZReportData, realizReturnFieldAcc, inputOutputServiceFieldAcc };
 
 const isReceipt = (item) => item.type === DOCUMENT_TYPE_RECEIPT;
 const isServiceEntry = (item) => item.type === DOCUMENT_TYPE_SERVICE_ENTRY;
@@ -38,12 +39,14 @@ const hasServiceDeliveries = (data) => data.some(isServiceDelivery);
 
 const hasPaymentByType = (data, type) => data.some(existPaymentByType(type));
 
-const getPaymentSum = (item, type) =>
-  item.payments.find(isPaymentByType(type)).sum - getRoundedDiff(item, type);
+const getPaymentSumData = (item, type) => {
+  const currentPayment = item.payments.find(isPaymentByType(type));
+  return getPaymentSum(currentPayment) - getRoundedDiff(item, type);
+};
 
 const accumulateTotalByType = (type) => (acc, item) =>
   (isReceipt(item) || isReturnReceipt(item)) && existPaymentByType(type)(item)
-    ? roundWithPrecision(acc + getPaymentSum(item, type))
+    ? roundWithPrecision(acc + getPaymentSumData(item, type))
     : acc;
 
 const getPaymentsTotalByType = (data, type) =>
@@ -72,19 +75,40 @@ const getReceiptCount = (data) => data.length;
 const accumulateTotal = (acc, item) =>
   roundWithPrecision(acc + item.total - getRoundedDiff(item));
 
-const getReceiptTotal = (data) => data.reduce(accumulateTotal, 0);
+const getTotal = (data) => data.reduce(accumulateTotal, 0);
+
+const accumulateTotalInCents = (acc, item) => {
+  const CENTS_IN_UAH = 100;
+  const multiplier = item.total?.isInCents ? 1 : CENTS_IN_UAH;
+  const total = item.total?.isInCents ? item.total.sum : item.total;
+  return Math.round(acc + multiplier * (total - getRoundedDiff(item)));
+};
+const getTotalInCents = (data) => data.reduce(accumulateTotalInCents, 0);
 
 const accumulateSum = (acc, item) => roundWithPrecision(acc + item.sum);
 
 const getTransactionsSum = (data) => data.reduce(accumulateSum, 0);
+
+const accumulateSumInCents = (acc, item) => {
+  const CENTS_IN_UAH = 100;
+  const multiplier = item?.isInCents ? 1 : CENTS_IN_UAH;
+  return Math.round(acc + multiplier * item.sum);
+};
+const getTransactionsSumInCents = (data) =>
+  data.reduce(accumulateSumInCents, 0);
 
 const getRealizData = (data, taxesConfig) => {
   if (!hasReceipts(data)) return null;
 
   const receipts = data.filter(isReceipt);
 
+  const isInCents = receipts.some((receipt) => receipt.total.isInCents);
+  const sum = isInCents
+    ? { value: getTotalInCents(receipts), isInCents }
+    : getTotal(receipts);
+
   return {
-    sum: getReceiptTotal(receipts),
+    sum,
     receiptCount: getReceiptCount(receipts),
     payments: [
       createCashPaymentsData(receipts),
@@ -98,23 +122,33 @@ const getServiceEntryData = (data) => {
   if (!hasServiceEntries(data)) return null;
 
   const serviceEntries = data.filter(isServiceEntry);
-  return getTransactionsSum(serviceEntries);
+  const isInCents = serviceEntries.some((entry) => entry.isInCents);
+  return isInCents
+    ? { value: getTransactionsSumInCents(serviceEntries), isInCents }
+    : getTransactionsSum(serviceEntries);
 };
 
 const getServiceDeliveryData = (data) => {
   if (!hasServiceDeliveries(data)) return null;
 
   const serviceDeliveries = data.filter(isServiceDelivery);
-  return getTransactionsSum(serviceDeliveries);
+  const isInCents = serviceDeliveries.some((delivery) => delivery.isInCents);
+  return isInCents
+    ? { value: getTransactionsSumInCents(serviceDeliveries), isInCents }
+    : getTransactionsSum(serviceDeliveries);
 };
 
 const getReturnData = (data, taxesConfig) => {
   if (!hasReturnReceipts(data)) return null;
 
   const returnReceipts = data.filter(isReturnReceipt);
+  const isInCents = returnReceipts.some((receipt) => receipt.total.isInCents);
+  const sum = isInCents
+    ? { value: getTotalInCents(returnReceipts), isInCents }
+    : getTotal(returnReceipts);
 
   return {
-    sum: getReceiptTotal(returnReceipts),
+    sum,
     receiptCount: getReceiptCount(returnReceipts),
     payments: [
       createCashPaymentsData(returnReceipts),
@@ -180,8 +214,41 @@ const aggregateTaxes = (arr) =>
     return acc;
   }, {});
 
-const inpitOutputServiceFieldAcc = (operationData, xReportData) =>
-  xReportData ? xReportData + operationData : operationData;
+const inputOutputServiceFieldAcc = (xReportData, operationData) => {
+  const isOperationInCents = operationData?.isInCents;
+  const isXReportInCents = xReportData?.isInCents;
+  const CENTS_IN_UAH = 100;
+
+  switch (true) {
+    case isXReportInCents && isOperationInCents: {
+      return {
+        isInCents: true,
+        value: Math.round(xReportData.value + operationData.value),
+      };
+    }
+    case !isXReportInCents && !isOperationInCents: {
+      return roundWithPrecision((xReportData || 0) + operationData);
+    }
+    case isXReportInCents && !isOperationInCents: {
+      return {
+        isInCents: true,
+        value: Math.round(xReportData.value + operationData * CENTS_IN_UAH),
+      };
+    }
+    case !isXReportInCents && isOperationInCents: {
+      return {
+        isInCents: true,
+        value: Math.round(
+          (xReportData || 0) * CENTS_IN_UAH + operationData.value,
+        ),
+      };
+    }
+    default:
+      console.error("Invalid xReportData or operationData ");
+  }
+  return xReportData ? xReportData + operationData : operationData;
+};
+
 const realizReturnFieldAcc = (operationData, xReportData) => {
   if (!operationData) return xReportData;
   if (!xReportData) return operationData;

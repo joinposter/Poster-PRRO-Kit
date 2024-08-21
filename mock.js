@@ -73,6 +73,37 @@ export const productsData = [
   },
 ];
 
+export const productsDataInCentsAndGrams = [
+  {
+    barcodes: ["12345678"],
+    marking: ["ADCC123123"],
+    name: "2204109600#Вино игристое вкусное",
+    count: 2000,
+    price: 13002,
+    taxPrograms: "ДГ",
+    discount: 1004,
+    isInCentsAndGrams: true,
+  },
+  {
+    barcodes: null,
+    marking: null,
+    name: "2204888600#Сир",
+    count: 4000,
+    price: 26000,
+    taxPrograms: "Д",
+    isInCentsAndGrams: true,
+  },
+  {
+    barcodes: null,
+    marking: null,
+    name: "Сирна палочка",
+    count: 1000,
+    price: 500,
+    taxPrograms: "Д",
+    isInCentsAndGrams: true,
+  },
+];
+
 export const sstData = {
   adv: "ПриватБанк.",
   adv2p: "Беремо i робимо!",
@@ -182,6 +213,70 @@ export const fiscalReceiptDataMock = {
       turnover: 184.26,
       sourceSum: 0,
       program: "Г",
+    },
+  ],
+  headerServiceData: [
+    { name: "Чек №", value: 485 },
+    { name: "Тип замовлення", value: "У закладі" },
+    { name: "Відкрито", value: "16 липня 2024 19:29:35" },
+    { name: "Надруковано", value: "16 липня 2024 19:30:35" },
+    { name: "Стіл №", value: "6 (Основний зал)" },
+    { name: "К-сть гостей", value: "2" },
+  ],
+  footerServiceData: "На вас чекає приємний сюрприз!",
+  sstData,
+  fiscalLink: "https://d.fiscalservice.gov.ua/receipt/12345678",
+};
+
+export const fiscalReceiptInCentsAndGramsDataMock = {
+  type: "receipt",
+  fiscalId: "2462757750",
+  dateTime: "2024-05-16T16:29:35.710Z",
+  cashbox: cashboxData.cashbox,
+  cashboxData,
+  cashier: "Шевченко Т.Г.",
+  offlineSessionData: {
+    id: 23649865,
+    seed: 135969449201653,
+    nextDocumentNumber: 2834,
+    nextOfflineDocumentNumber: 4,
+    lastDocumentHash:
+      "47a08c017274237765f9081d994e76e08742dcef85056d655a8458ec43dff6e4",
+  },
+  total: { sum: 38426, isInCents: true },
+  payments: [
+    {
+      sum: 28426,
+      type: "cash",
+      isInCents: true,
+    },
+    {
+      sum: 10000,
+      type: "card",
+      isInCents: true,
+    },
+  ],
+  products: productsDataInCentsAndGrams,
+  taxes: [
+    {
+      type: 5,
+      name: "Акциз 5%",
+      percent: 5,
+      sum: 1829,
+      turnover: 38426,
+      sourceSum: 0,
+      program: "Д",
+      isInCentsAndGrams: true,
+    },
+    {
+      type: 4,
+      name: "ПДВ 20%",
+      percent: 20,
+      sum: 2925,
+      turnover: 18426,
+      sourceSum: 0,
+      program: "Г",
+      isInCentsAndGrams: true,
     },
   ],
   headerServiceData: [

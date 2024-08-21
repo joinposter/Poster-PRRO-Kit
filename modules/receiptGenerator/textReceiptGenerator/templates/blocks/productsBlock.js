@@ -1,9 +1,17 @@
 import { priceFormat } from "../../../helpers/receipt.js";
+import { roundWithPrecision } from "../../../../../helpers/round.js";
+import {
+  getProductCount,
+  getProductDiscount,
+  getProductPrice,
+} from "../../../../../helpers/centsFormat.js";
 
 const createProductRow = (product) => ({
   row: [
     product.name.trim(),
-    priceFormat(product.count * product.price),
+    priceFormat(
+      roundWithPrecision(getProductCount(product) * getProductPrice(product)),
+    ),
     product.taxPrograms,
   ],
   styles: {
@@ -12,8 +20,8 @@ const createProductRow = (product) => ({
     },
   },
   additionalData: [
-    Number(product.count) !== 1
-      ? `${product.count} x ${priceFormat(product.price)}`
+    Number(getProductCount(product)) !== 1
+      ? `${getProductCount(product)} x ${priceFormat(getProductPrice(product))}`
       : null,
     product.uktzed || null,
     product.barcodes || null,
@@ -25,7 +33,11 @@ const createProductRow = (product) => ({
 const createDiscountRow = (product) =>
   product.discount > 0
     ? {
-        row: ["Знижка", priceFormat(product.discount), product.taxPrograms],
+        row: [
+          "Знижка",
+          priceFormat(getProductDiscount(product)),
+          product.taxPrograms,
+        ],
         styles: {
           1: {
             color: "text-secondary",
@@ -40,7 +52,11 @@ const createDiffWithDiscountRow = (product) =>
     ? {
         row: [
           "Ціна зі знижкою",
-          priceFormat(product.count * product.price - product.discount),
+          priceFormat(
+            roundWithPrecision(
+              getProductCount(product) * getProductPrice(product),
+            ) - getProductDiscount(product),
+          ),
           product.taxPrograms,
         ],
         styles: {

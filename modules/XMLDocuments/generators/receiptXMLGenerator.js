@@ -61,13 +61,13 @@ const getPaymentDetails = (type) => {
 };
 
 const getDiscountBlock = (product) => {
-  const { discount } = product;
-  if (discount) {
-    return {
-      DISCOUNTTYPE: 0,
-      DISCOUNTSUM: formatToFixedDecimal(getDiscount(product)),
-    };
-  }
+  // const { discount } = product;
+  // if (discount) {
+  //   return {
+  //     DISCOUNTTYPE: 0,
+  //     DISCOUNTSUM: formatToFixedDecimal(getDiscount(product)),
+  //   };
+  // }
   return {};
 };
 

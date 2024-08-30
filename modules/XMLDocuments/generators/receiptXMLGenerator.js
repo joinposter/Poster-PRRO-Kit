@@ -61,13 +61,13 @@ const getPaymentDetails = (type) => {
 };
 
 const getDiscountBlock = (product) => {
-  // const { discount } = product;
-  // if (discount) {
-  //   return {
-  //     DISCOUNTTYPE: 0,
-  //     DISCOUNTSUM: formatToFixedDecimal(getDiscount(product)),
-  //   };
-  // }
+  const { discount } = product;
+  if (discount) {
+    return {
+      DISCOUNTTYPE: 0,
+      DISCOUNTSUM: formatToFixedDecimal(getDiscount(product)),
+    };
+  }
   return {};
 };
 
@@ -111,7 +111,6 @@ const productMapper = (product, index) => {
   const AMOUNT = getProductCount({ isInCentsAndGrams, count });
   const COST = formatToFixedDecimal(getProductSum(product));
   const UKTZED = uktzed ? { UKTZED: uktzed } : {};
-  const DISCOUNTBLOCK = getDiscountBlock(product);
 
   return {
     $: getRowNum(index),
@@ -123,7 +122,6 @@ const productMapper = (product, index) => {
     PRICE,
     ...LETTERS,
     COST,
-    ...DISCOUNTBLOCK,
   };
 };
 

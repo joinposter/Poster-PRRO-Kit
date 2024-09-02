@@ -1,5 +1,5 @@
-import textFooterBlock from "./textFooterBlock.js";
-import htmlFooterBlock from "./htmlFooterBlock.js";
+import textFooterBlock from "./smartFooterBlock/textFooterBlock.js";
+import htmlFooterBlock from "./smartFooterBlock/htmlFooterBlock.js";
 
 const getSmartFooterBlock = (data, isHtml) =>
   isHtml ? htmlFooterBlock(data) : textFooterBlock(data);

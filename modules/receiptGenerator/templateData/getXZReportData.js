@@ -1,18 +1,18 @@
 import {
   DOCUMENT_TYPE_X_REPORT,
   DOCUMENT_TYPE_Z_REPORT,
-} from "../../const/receipt.js";
-import getFiscalCompanyData from "./blocks/fiscalCompanyBlock.js";
-import textFooterBlock from "./blocks/smartFooterBlock/textFooterBlock.js";
-import { getDateTime } from "../../../../helpers/common.js";
-import { priceFormat } from "../../helpers/receipt.js";
-import { findCashPaymentData } from "../../helpers/receiptData.js";
+} from "../const/receipt.js";
+import getFiscalCompanyData from "../templateBlocks/fiscalCompanyBlock.js";
+import textFooterBlock from "../templateBlocks/smartFooterBlock/textFooterBlock.js";
+import { getDateTime } from "../../../helpers/common.js";
+import { priceFormat } from "../helpers/receipt.js";
+import { findCashPaymentData } from "../helpers/receiptData.js";
 import {
   getData,
   getTaxSum,
   getTaxTurnover,
   getPaymentSum,
-} from "../../../../helpers/centsFormat.js";
+} from "../../../helpers/centsFormat.js";
 
 const getTaxData = (taxes) => {
   if (!taxes) return [];

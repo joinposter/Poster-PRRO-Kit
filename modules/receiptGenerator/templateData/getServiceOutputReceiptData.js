@@ -1,5 +1,5 @@
-import getFiscalCompanyData from "./blocks/fiscalCompanyBlock.js";
-import { priceFormat } from "../../helpers/receipt.js";
+import getFiscalCompanyData from "../templateBlocks/fiscalCompanyBlock.js";
+import { priceFormat } from "../helpers/receipt.js";
 
 const getServiceOutputBody = ({
   sum,

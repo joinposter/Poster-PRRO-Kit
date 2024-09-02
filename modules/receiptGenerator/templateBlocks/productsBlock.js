@@ -1,10 +1,10 @@
-import { priceFormat } from "../../../helpers/receipt.js";
-import { roundWithPrecision } from "../../../../../helpers/round.js";
+import { priceFormat } from "../helpers/receipt.js";
+import { roundWithPrecision } from "../../../helpers/round.js";
 import {
   getProductCount,
   getProductDiscount,
   getProductPrice,
-} from "../../../../../helpers/centsFormat.js";
+} from "../../../helpers/centsFormat.js";
 
 const createProductRow = (product) => ({
   row: [

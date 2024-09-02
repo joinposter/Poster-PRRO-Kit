@@ -1,12 +1,12 @@
-import defaultReceiptConfig from "../../config/receipt.js";
-import getFiscalCompanyData from "./blocks/fiscalCompanyBlock.js";
-import getProductsData from "./blocks/productsBlock.js";
-import getSummaryBlock from "./blocks/summaryBlock.js";
-import getSstData from "./blocks/sstBlock.js";
-import getSmartFooterBlock from "./blocks/smartFooterBlock/smartFooterBlock.js";
-import getFiscalReceiptType from "./blocks/fiscalReceiptTypeBlock.js";
-import headerServiceBlock from "./blocks/headerServiceBlock.js";
-import footerServiceBlock from "./blocks/footerServiceBlock.js";
+import defaultReceiptConfig from "../config/receipt.js";
+import getFiscalCompanyData from "../templateBlocks/fiscalCompanyBlock.js";
+import getProductsData from "../templateBlocks/productsBlock.js";
+import getSummaryBlock from "../templateBlocks/summaryBlock.js";
+import getSstData from "../templateBlocks/sstBlock.js";
+import getSmartFooterBlock from "../templateBlocks/smartFooterBlock.js";
+import getFiscalReceiptType from "../templateBlocks/fiscalReceiptTypeBlock.js";
+import headerServiceBlock from "../templateBlocks/headerServiceBlock.js";
+import footerServiceBlock from "../templateBlocks/footerServiceBlock.js";
 
 const fiscalCompanyData = ({ cashboxData, cashier }) =>
   getFiscalCompanyData({ ...cashboxData, cashier });

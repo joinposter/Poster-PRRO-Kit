@@ -125,6 +125,8 @@ describe("XMLDocuments", () => {
             "      <PRICE>200.00</PRICE>\n" +
             "      <LETTERS>ГД</LETTERS>\n" +
             "      <COST>800.00</COST>\n" +
+            "      <DISCOUNTTYPE>0</DISCOUNTTYPE>\n" +
+            "      <DISCOUNTSUM>30.00</DISCOUNTSUM>\n" +
             "    </ROW>\n" +
             '    <ROW ROWNUM="2">\n' +
             "      <CODE>55</CODE>\n" +
@@ -134,6 +136,8 @@ describe("XMLDocuments", () => {
             "      <PRICE>90.13</PRICE>\n" +
             "      <LETTERS>БД</LETTERS>\n" +
             "      <COST>180.26</COST>\n" +
+            "      <DISCOUNTTYPE>0</DISCOUNTTYPE>\n" +
+            "      <DISCOUNTSUM>20.00</DISCOUNTSUM>\n" +
             "    </ROW>\n" +
             '    <ROW ROWNUM="3">\n' +
             "      <CODE>56</CODE>\n" +
@@ -143,6 +147,8 @@ describe("XMLDocuments", () => {
             "      <PRICE>20.13</PRICE>\n" +
             "      <LETTERS>В</LETTERS>\n" +
             "      <COST>20.13</COST>\n" +
+            "      <DISCOUNTTYPE>0</DISCOUNTTYPE>\n" +
+            "      <DISCOUNTSUM>0.35</DISCOUNTSUM>\n" +
             "    </ROW>\n" +
             "  </CHECKBODY>\n" +
             "</CHECK>",
@@ -242,6 +248,8 @@ describe("XMLDocuments", () => {
             "      <PRICE>200.00</PRICE>\n" +
             "      <LETTERS>ГД</LETTERS>\n" +
             "      <COST>800.00</COST>\n" +
+            "      <DISCOUNTTYPE>0</DISCOUNTTYPE>\n" +
+            "      <DISCOUNTSUM>30.00</DISCOUNTSUM>\n" +
             "    </ROW>\n" +
             '    <ROW ROWNUM="2">\n' +
             "      <CODE>55</CODE>\n" +
@@ -251,6 +259,8 @@ describe("XMLDocuments", () => {
             "      <PRICE>90.13</PRICE>\n" +
             "      <LETTERS>БД</LETTERS>\n" +
             "      <COST>180.26</COST>\n" +
+            "      <DISCOUNTTYPE>0</DISCOUNTTYPE>\n" +
+            "      <DISCOUNTSUM>20.00</DISCOUNTSUM>\n" +
             "    </ROW>\n" +
             '    <ROW ROWNUM="3">\n' +
             "      <CODE>56</CODE>\n" +
@@ -260,6 +270,9 @@ describe("XMLDocuments", () => {
             "      <PRICE>20.13</PRICE>\n" +
             "      <LETTERS>В</LETTERS>\n" +
             "      <COST>20.13</COST>\n" +
+            "      <DISCOUNTTYPE>0</DISCOUNTTYPE>\n" +
+
+          "      <DISCOUNTSUM>0.35</DISCOUNTSUM>\n" +
             "    </ROW>\n" +
             "  </CHECKBODY>\n" +
             "</CHECK>",

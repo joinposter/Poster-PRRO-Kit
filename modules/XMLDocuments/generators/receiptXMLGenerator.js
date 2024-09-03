@@ -111,6 +111,7 @@ const productMapper = (product, index) => {
   const AMOUNT = getProductCount({ isInCentsAndGrams, count });
   const COST = formatToFixedDecimal(getProductSum(product));
   const UKTZED = uktzed ? { UKTZED: uktzed } : {};
+  const DISCOUNTBLOCK = getDiscountBlock(product);
 
   return {
     $: getRowNum(index),
@@ -122,6 +123,7 @@ const productMapper = (product, index) => {
     PRICE,
     ...LETTERS,
     COST,
+    ...DISCOUNTBLOCK,
   };
 };
 

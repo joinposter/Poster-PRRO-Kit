@@ -271,8 +271,7 @@ describe("XMLDocuments", () => {
             "      <LETTERS>В</LETTERS>\n" +
             "      <COST>20.13</COST>\n" +
             "      <DISCOUNTTYPE>0</DISCOUNTTYPE>\n" +
-
-          "      <DISCOUNTSUM>0.35</DISCOUNTSUM>\n" +
+            "      <DISCOUNTSUM>0.35</DISCOUNTSUM>\n" +
             "    </ROW>\n" +
             "  </CHECKBODY>\n" +
             "</CHECK>",

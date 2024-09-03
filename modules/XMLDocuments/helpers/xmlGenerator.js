@@ -11,7 +11,6 @@ import {
   getProductCount,
   getProductDiscount,
   getProductPrice,
-  getProductRoundSum,
 } from "../../../helpers/centsFormat.js";
 
 export const getFiscalNumberControlCode = (string) => {
@@ -48,13 +47,8 @@ export const getDiscountTotal = (products) =>
   products.reduce(accumulateDiscount, 0);
 
 export const getDiscount = (product) => {
-  const { discount, roundSum, isInCentsAndGrams } = product;
-  // Якщо roundSum дорівнює значенню discount, але відʼємний, це означає, що ціна була нижчою за 10 копійок,
-  // а оплата здійснювалася готівкою, де немає номіналу нижче 10 копійок, і discount повинен бути відʼємним.
-  // В усіх інших випадках потрібно використовувати значення discount.
-  return roundSum < 0 && roundSum + discount === 0
-    ? getProductRoundSum({ isInCentsAndGrams, roundSum })
-    : getProductDiscount({ isInCentsAndGrams, discount });
+  const { discount, isInCentsAndGrams } = product;
+  return getProductDiscount({ isInCentsAndGrams, discount });
 };
 
 export const findCashPayment = (payment) => payment.type === PAYMENT_TYPE_CASH;

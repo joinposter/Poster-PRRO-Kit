@@ -3,10 +3,10 @@ import getFiscalCompanyData from "../templateBlocks/fiscalCompanyBlock.js";
 import getProductsData from "../templateBlocks/productsBlock.js";
 import getSummaryBlock from "../templateBlocks/summaryBlock.js";
 import getSstData from "../templateBlocks/sstBlock.js";
-import getSmartFooterBlock from "../templateBlocks/smartFooterBlock.js";
 import getFiscalReceiptType from "../templateBlocks/fiscalReceiptTypeBlock.js";
 import headerServiceBlock from "../templateBlocks/headerServiceBlock.js";
 import footerServiceBlock from "../templateBlocks/footerServiceBlock.js";
+import getSmartReceiptFooterBlock from "../templateBlocks/smartReceiptFooterBlock.js";
 
 const fiscalCompanyData = ({ cashboxData, cashier }) =>
   getFiscalCompanyData({ ...cashboxData, cashier });
@@ -36,7 +36,7 @@ const getFiscalReceiptData = (data, isHtml) =>
     ...summaryData(data),
     ...sstData(data),
     ...footerServiceData(data),
-    ...getSmartFooterBlock(data, isHtml),
+    ...getSmartReceiptFooterBlock(data, isHtml),
   ].filter(Boolean);
 
 export default getFiscalReceiptData;

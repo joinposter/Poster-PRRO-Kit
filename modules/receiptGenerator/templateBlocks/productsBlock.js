@@ -16,7 +16,7 @@ const createProductRow = (product) => ({
   ],
   styles: {
     1: {
-      color: "text-secondary",
+      extraCssClass: "text-secondary",
     },
   },
   additionalData: [
@@ -40,7 +40,7 @@ const createDiscountRow = (product) =>
         ],
         styles: {
           1: {
-            color: "text-secondary",
+            extraCssClass: "text-secondary",
           },
         },
         hasSpaceBefore: false,
@@ -61,7 +61,7 @@ const createDiffWithDiscountRow = (product) =>
         ],
         styles: {
           1: {
-            color: "text-secondary",
+            extraCssClass: "text-secondary",
           },
         },
         hasSpaceBefore: false,

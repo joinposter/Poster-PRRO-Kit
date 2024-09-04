@@ -5,7 +5,7 @@ const renderAdditionalData = (additionalData) =>
   additionalData.filter(Boolean).map(createAdditionalDataRow).join("");
 
 const createRowCell = (val, style) =>
-  `<td class="border-0 p-1 ${style?.color || ""}">${val}</td>`;
+  `<td class="border-0 p-1 ${style?.extraCssClass || ""}">${val}</td>`;
 
 const mapRowCell = (styles) => (val, index) =>
   createRowCell(val, styles?.[index]);
@@ -23,9 +23,15 @@ const renderRowItem = (rowItem) => {
 
 const renderSmartTable = (item) => {
   const rowItemsHtml = item.items.map(renderRowItem).join("");
+  const wrapperCssClasses = item?.extraCssClass?.wrapper
+    ? `"${item?.extraCssClass.wrapper}"`
+    : "mb-3 mt-3";
+  const tableCssClasses = item?.extraCssClass?.table
+    ? `"table ${item?.extraCssClass.table}"`
+    : "table";
   return `
-    <div class="mb-3 mt-3">
-        <table class="table">
+    <div class=${wrapperCssClasses}>
+        <table class=${tableCssClasses}>
             <tbody>
                 ${rowItemsHtml}
             </tbody>

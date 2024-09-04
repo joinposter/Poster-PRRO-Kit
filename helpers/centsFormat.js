@@ -14,9 +14,6 @@ export const getProductPrice = (product) =>
 export const getProductDiscount = (product) =>
   product.discount / (product.isInCentsAndGrams ? CENTS_IN_UAH : 1);
 
-export const getProductRoundSum = (product) =>
-  product.roundSum / (product.isInCentsAndGrams ? CENTS_IN_UAH : 1);
-
 export const getCalculatedTurnover = (product) =>
   product.isInCentsAndGrams
     ? (product.count / GRAMS_IN_KG) * product.price

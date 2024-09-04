@@ -1,13 +1,7 @@
 import qrcode from "qrcode-generator";
-import PosterLogo from "../../../../../../i/public/Poster.js";
-import {
-  getCashboxStatus,
-  getControlSum,
-} from "../../../../helpers/receiptData.js";
-import {
-  DEFAULT_QR_MARGIN,
-  DEFAULT_QR_SIZE,
-} from "../../../../const/receipt.js";
+import PosterLogo from "../../../../i/public/Poster.js";
+import { getCashboxStatus, getControlSum } from "../../helpers/receiptData.js";
+import { DEFAULT_QR_MARGIN, DEFAULT_QR_SIZE } from "../../const/receipt.js";
 
 const generateSvgQrCode = (data) => {
   const qrCode = qrcode(0, "L");

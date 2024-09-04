@@ -1,7 +1,7 @@
 import receipt from "receipt";
-import smartTableFormatter from "../textReceiptGenerator/formatters/smartTable/smartTableFormatter.js";
-import summaryFormatter from "../textReceiptGenerator/formatters/summaryFormatter.js";
-import smartPropertiesFormatter from "../textReceiptGenerator/formatters/smartPropertiesFormatter.js";
+import smartTableFormatter from "../formatters/text/smartTable/smartTableFormatter.js";
+import summaryFormatter from "../formatters/text/summaryFormatter.js";
+import smartPropertiesFormatter from "../formatters/text/smartPropertiesFormatter.js";
 
 export const initReceipt = (receiptConfig) => {
   receipt.config.currency = receiptConfig.currency;

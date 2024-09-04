@@ -1,8 +1,8 @@
-import getFiscalCompanyData from "./blocks/fiscalCompanyBlock.js";
-import { priceFormat } from "../../helpers/receipt.js";
-import { getDateTime } from "../../../../helpers/common.js";
-import textFooterBlock from "./blocks/smartFooterBlock/textFooterBlock.js";
-import { getData } from "../../../../helpers/centsFormat.js";
+import getFiscalCompanyData from "../templateBlocks/fiscalCompanyBlock.js";
+import { priceFormat } from "../helpers/receipt.js";
+import { getDateTime } from "../../../helpers/common.js";
+import textFooterBlock from "../templateBlocks/smartReceiptFooterBlock/textFooterBlock.js";
+import { getData } from "../../../helpers/centsFormat.js";
 
 const getServiceTransactionBody = ({ sum, isInCents, receiptConfig }) => {
   const operationType = sum > 0 ? "ВНЕСЕННЯ" : "ВИЛУЧЕННЯ";

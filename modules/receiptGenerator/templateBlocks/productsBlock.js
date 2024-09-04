@@ -1,10 +1,10 @@
-import { priceFormat } from "../../../helpers/receipt.js";
-import { roundWithPrecision } from "../../../../../helpers/round.js";
+import { priceFormat } from "../helpers/receipt.js";
+import { roundWithPrecision } from "../../../helpers/round.js";
 import {
   getProductCount,
   getProductDiscount,
   getProductPrice,
-} from "../../../../../helpers/centsFormat.js";
+} from "../../../helpers/centsFormat.js";
 
 const createProductRow = (product) => ({
   row: [
@@ -16,7 +16,7 @@ const createProductRow = (product) => ({
   ],
   styles: {
     1: {
-      color: "text-secondary",
+      extraCssClass: "text-secondary",
     },
   },
   additionalData: [
@@ -40,7 +40,7 @@ const createDiscountRow = (product) =>
         ],
         styles: {
           1: {
-            color: "text-secondary",
+            extraCssClass: "text-secondary",
           },
         },
         hasSpaceBefore: false,
@@ -61,7 +61,7 @@ const createDiffWithDiscountRow = (product) =>
         ],
         styles: {
           1: {
-            color: "text-secondary",
+            extraCssClass: "text-secondary",
           },
         },
         hasSpaceBefore: false,

@@ -1,8 +1,8 @@
-import renderText from "./text.js";
-import renderRuler from "./ruler.js";
-import renderSmartTable from "./smartTable.js";
-import renderSummary from "./summary.js";
-import renderFooter from "./footer.js";
+import renderText from "../formatters/html/text.js";
+import renderRuler from "../formatters/html/ruler.js";
+import renderSmartTable from "../formatters/html/smartTable.js";
+import renderSummary from "../formatters/html/summary.js";
+import renderFooter from "../formatters/html/footer.js";
 
 const templateMap = {
   text: renderText,

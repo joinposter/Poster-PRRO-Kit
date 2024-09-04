@@ -1,7 +1,4 @@
-import {
-  getCashboxStatus,
-  getControlSum,
-} from "../../../../helpers/receiptData.js";
+import { getCashboxStatus, getControlSum } from "../../helpers/receiptData.js";
 
 const textFooterBlock = (data) =>
   [

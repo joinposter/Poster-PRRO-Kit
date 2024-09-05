@@ -17,7 +17,7 @@ import { getRoundedDiff } from "../../XMLDocuments/index.js";
 import { roundWithPrecision } from "../../../helpers/round.js";
 import { getPaymentSum } from "../../../helpers/centsFormat.js";
 
-export { createXZReportData, realizReturnFieldAcc, inputOutputServiceFieldAcc };
+export { createXZReportData, realizReturnFieldAcc, sumFieldAcc };
 
 const isReceipt = (item) => item.type === DOCUMENT_TYPE_RECEIPT;
 const isServiceEntry = (item) => item.type === DOCUMENT_TYPE_SERVICE_ENTRY;
@@ -214,11 +214,10 @@ const aggregateTaxes = (arr) =>
     return acc;
   }, {});
 
-const inputOutputServiceFieldAcc = (xReportData, operationData) => {
+const sumFieldAcc = (xReportData, operationData) => {
   const isOperationInCents = operationData?.isInCents;
   const isXReportInCents = xReportData?.isInCents;
   const CENTS_IN_UAH = 100;
-
   switch (true) {
     case isXReportInCents && isOperationInCents: {
       return {
@@ -249,7 +248,7 @@ const inputOutputServiceFieldAcc = (xReportData, operationData) => {
   return xReportData ? xReportData + operationData : operationData;
 };
 
-const realizReturnFieldAcc = (operationData, xReportData) => {
+const realizReturnFieldAcc = (xReportData, operationData) => {
   if (!operationData) return xReportData;
   if (!xReportData) return operationData;
 
@@ -268,7 +267,7 @@ const realizReturnFieldAcc = (operationData, xReportData) => {
   return {
     payments: Object.values(paymentsMap),
     receiptCount: totalReceiptCount,
-    sum: (operationData.sum || 0) + (xReportData.sum || 0),
+    sum: sumFieldAcc(xReportData.sum || 0, operationData.sum || 0),
     taxes: Object.values(taxesMap),
   };
 };

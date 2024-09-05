@@ -15,7 +15,6 @@ import {
 import { getTaxesData } from "../../taxes/index.js";
 import { getRoundedDiff } from "../../XMLDocuments/index.js";
 import { roundWithPrecision } from "../../../helpers/round.js";
-import { getPaymentSum } from "../../../helpers/centsFormat.js";
 
 export { createXZReportData, realizReturnFieldAcc, sumFieldAcc };
 
@@ -40,8 +39,11 @@ const hasServiceDeliveries = (data) => data.some(isServiceDelivery);
 const hasPaymentByType = (data, type) => data.some(existPaymentByType(type));
 
 const getPaymentSumData = (item, type) => {
+  const CENTS_IN_UAH = 100;
   const currentPayment = item.payments.find(isPaymentByType(type));
-  return getPaymentSum(currentPayment) - getRoundedDiff(item, type);
+  return currentPayment.isInCents
+    ? currentPayment.sum
+    : currentPayment.sum * CENTS_IN_UAH - getRoundedDiff(item, type);
 };
 
 const accumulateTotalByType = (type) => (acc, item) =>
@@ -52,12 +54,15 @@ const accumulateTotalByType = (type) => (acc, item) =>
 const getPaymentsTotalByType = (data, type) =>
   data.reduce(accumulateTotalByType(type), 0);
 
+const getIsInCents = (data) => data.some((item) => item.total.isInCents);
+
 const createCashPaymentsData = (data) =>
   hasPaymentByType(data, PAYMENT_TYPE_CASH)
     ? {
         payFormCode: PAYMENT_CODE_CASH,
         payFormName: PAYMENT_TYPE_TITLE_CASH,
         sum: getPaymentsTotalByType(data, PAYMENT_TYPE_CASH),
+        isInCents: getIsInCents(data),
       }
     : null;
 
@@ -67,6 +72,7 @@ const createCardPaymentsData = (data) =>
         payFormCode: PAYMENT_CODE_CARD,
         payFormName: PAYMENT_TYPE_TITLE_CARD,
         sum: getPaymentsTotalByType(data, PAYMENT_TYPE_CARD),
+        isInCents: getIsInCents(data),
       }
     : null;
 

@@ -187,10 +187,8 @@ const groupByTaxes = (
       program: excise,
       isInCentsAndGrams,
       ...taxesConfig.exciseTaxList[excise],
+      type: 1
     };
-    if (taxesConfig.exciseTaxList[excise].useNewType) {
-      acc[excise].type = 1;
-    }
   }
 
   if (VAT) {
@@ -210,10 +208,8 @@ const groupByTaxes = (
       program: VAT,
       isInCentsAndGrams,
       ...taxesConfig.VATTaxList[VAT],
+      type: 0,
     };
-    if (taxesConfig.VATTaxList[VAT].useNewType) {
-      acc[VAT].type = 0;
-    }
   }
   return acc;
 };

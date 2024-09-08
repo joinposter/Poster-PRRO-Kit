@@ -92,3 +92,9 @@ const fillDateTimeIfEmpty = (request) => {
 };
 
 export const expandDocumentData = pipe(fillUid, fillDateTimeIfEmpty);
+
+export const hasProductBarcode = ({ barcodes }) =>
+  Array.isArray(barcodes) && barcodes.length;
+
+export const hasProductMarking = ({ marking }) =>
+  Array.isArray(marking) && marking.length;

@@ -20,6 +20,8 @@ import {
   getDiscountTotal,
   getProductSum,
   getRoundedDiff,
+  hasProductBarcode,
+  hasProductMarking,
 } from "../helpers/xmlGenerator.js";
 import {
   getCashboxFields,
@@ -71,6 +73,36 @@ const getDiscountBlock = (product) => {
   return {};
 };
 
+const getExciseLabelsBlock = (product) => {
+  if (!hasProductBarcode(product) && hasProductMarking(product)) {
+    console.error(
+      "Invalid ExciseLabels data product has marking but no barcodes",
+    );
+    return {};
+  }
+
+  if (hasProductBarcode(product) && !hasProductMarking(product)) {
+    console.error(
+      "Invalid ExciseLabels data product has barcodes but no marking",
+    );
+    return {};
+  }
+
+  if (hasProductBarcode(product) && hasProductMarking(product)) {
+    const { barcodes, marking } = product;
+    const exciseLabels = marking.map((mark) => `${barcodes[0]} ${mark}`);
+    return { EXCISELABELS: rowsToMapper(exciseLabels, exciseLabelMapper) };
+  }
+  return {};
+};
+
+const exciseLabelMapper = (exciseLabel, index) => {
+  return {
+    $: getRowNum(index),
+    EXCISELABEL: exciseLabel,
+  };
+};
+
 const paymentMapper = (payment, index) => {
   const { PAYFORMCD, PAYFORMNM } = getPaymentDetails(payment.type);
   const SUM =
@@ -112,6 +144,7 @@ const productMapper = (product, index) => {
   const COST = formatToFixedDecimal(getProductSum(product));
   const UKTZED = uktzed ? { UKTZED: uktzed } : {};
   const DISCOUNTBLOCK = getDiscountBlock(product);
+  const EXCISELABELSBLOCK = getExciseLabelsBlock(product);
 
   return {
     $: getRowNum(index),
@@ -124,6 +157,7 @@ const productMapper = (product, index) => {
     ...LETTERS,
     COST,
     ...DISCOUNTBLOCK,
+    ...EXCISELABELSBLOCK,
   };
 };
 

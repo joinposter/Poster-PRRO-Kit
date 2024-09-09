@@ -20,6 +20,7 @@ import {
   getDiscountTotal,
   getProductSum,
   getRoundedDiff,
+  hasProductMarking,
 } from "../helpers/xmlGenerator.js";
 import {
   getCashboxFields,
@@ -71,6 +72,21 @@ const getDiscountBlock = (product) => {
   return {};
 };
 
+const getExciseLabelsBlock = (product) => {
+  if (hasProductMarking(product)) {
+    const { marking } = product;
+    return { EXCISELABELS: rowsToMapper(marking, exciseLabelMapper) };
+  }
+  return {};
+};
+
+const exciseLabelMapper = (exciseLabel, index) => {
+  return {
+    $: getRowNum(index),
+    EXCISELABEL: exciseLabel,
+  };
+};
+
 const paymentMapper = (payment, index) => {
   const { PAYFORMCD, PAYFORMNM } = getPaymentDetails(payment.type);
   const SUM =
@@ -112,6 +128,7 @@ const productMapper = (product, index) => {
   const COST = formatToFixedDecimal(getProductSum(product));
   const UKTZED = uktzed ? { UKTZED: uktzed } : {};
   const DISCOUNTBLOCK = getDiscountBlock(product);
+  const EXCISELABELSBLOCK = getExciseLabelsBlock(product);
 
   return {
     $: getRowNum(index),
@@ -124,6 +141,7 @@ const productMapper = (product, index) => {
     ...LETTERS,
     COST,
     ...DISCOUNTBLOCK,
+    ...EXCISELABELSBLOCK,
   };
 };
 

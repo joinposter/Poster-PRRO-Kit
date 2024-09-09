@@ -74,24 +74,9 @@ const getDiscountBlock = (product) => {
 };
 
 const getExciseLabelsBlock = (product) => {
-  if (!hasProductBarcode(product) && hasProductMarking(product)) {
-    console.error(
-      "Invalid ExciseLabels data product has marking but no barcodes",
-    );
-    return {};
-  }
-
-  if (hasProductBarcode(product) && !hasProductMarking(product)) {
-    console.error(
-      "Invalid ExciseLabels data product has barcodes but no marking",
-    );
-    return {};
-  }
-
-  if (hasProductBarcode(product) && hasProductMarking(product)) {
-    const { barcodes, marking } = product;
-    const exciseLabels = marking.map((mark) => `${barcodes[0]} ${mark}`);
-    return { EXCISELABELS: rowsToMapper(exciseLabels, exciseLabelMapper) };
+  if (hasProductMarking(product)) {
+    const { marking } = product;
+    return { EXCISELABELS: rowsToMapper(marking, exciseLabelMapper) };
   }
   return {};
 };

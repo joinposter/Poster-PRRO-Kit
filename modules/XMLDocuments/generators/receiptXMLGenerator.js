@@ -20,7 +20,6 @@ import {
   getDiscountTotal,
   getProductSum,
   getRoundedDiff,
-  hasProductBarcode,
   hasProductMarking,
 } from "../helpers/xmlGenerator.js";
 import {

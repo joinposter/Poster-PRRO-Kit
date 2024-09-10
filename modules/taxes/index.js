@@ -187,7 +187,7 @@ const groupByTaxes = (
       program: excise,
       isInCentsAndGrams,
       ...taxesConfig.exciseTaxList[excise],
-      type: 1
+      type: 1,
     };
   }
 

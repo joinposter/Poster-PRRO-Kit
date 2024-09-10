@@ -4,6 +4,7 @@ import {
   DOC_TYPE_PRODUCT,
   PAYMENT_CODE_CARD,
   PAYMENT_CODE_CASH,
+  PAYMENT_TYPE_CARD,
   PAYMENT_TYPE_TITLE_CARD,
   PAYMENT_TYPE_TITLE_CASH,
 } from "../const/fiscal.js";
@@ -20,6 +21,7 @@ import {
   getDiscountTotal,
   getProductSum,
   getRoundedDiff,
+  hasProductBarcode,
   hasProductMarking,
 } from "../helpers/xmlGenerator.js";
 import {
@@ -61,6 +63,14 @@ const getPaymentDetails = (type) => {
   return paymentType[type];
 };
 
+const getBarcodeBlock = (product) => {
+  if (hasProductBarcode(product)) {
+    const { barcodes } = product;
+    return { BARCODE: barcodes.join(" ") };
+  }
+  return {};
+};
+
 const getDiscountBlock = (product) => {
   const { discount } = product;
   if (discount) {
@@ -87,6 +97,29 @@ const exciseLabelMapper = (exciseLabel, index) => {
   };
 };
 
+const paySysMapper = (sstData, index) => {
+  return {
+    $: getRowNum(index),
+    NAME: sstData.paymentSystem || sstData.paymentSystemName || "",
+    ACQUIRENM: sstData.merchant || sstData.merchantId || "",
+    ACQUIRETRANSID: sstData.rrn,
+    DEVICEID: sstData.terminalId || sstData.terminal || "",
+    EPZDETAILS: sstData.pan || sstData.cardNumber || "",
+    AUTHCD: sstData.authCode,
+    SUM: sstData.amount || sstData.sum || 0,
+  };
+};
+
+const getPaySysBlock = (payment) => {
+  if (!payment.sstData) {
+    return {};
+  }
+  const sstData = Array.isArray(payment.sstData)
+    ? payment.sstData
+    : [payment.sstData];
+  return { PAYSYS: rowsToMapper(sstData, paySysMapper) };
+};
+
 const paymentMapper = (payment, index) => {
   const { PAYFORMCD, PAYFORMNM } = getPaymentDetails(payment.type);
   const SUM =
@@ -99,12 +132,15 @@ const paymentMapper = (payment, index) => {
         )
       : formatToFixedDecimal(getPaymentSum(payment));
 
+  const PAYSYSBLOCK = getPaySysBlock(payment);
+
   return {
     $: getRowNum(index),
     PAYFORMCD,
     PAYFORMNM,
     SUM,
     PROVIDED: SUM,
+    ...PAYSYSBLOCK,
   };
 };
 
@@ -126,6 +162,7 @@ const productMapper = (product, index) => {
   );
   const AMOUNT = getProductCount({ isInCentsAndGrams, count });
   const COST = formatToFixedDecimal(getProductSum(product));
+  const BARCODEBLOCK = getBarcodeBlock(product);
   const UKTZED = uktzed ? { UKTZED: uktzed } : {};
   const DISCOUNTBLOCK = getDiscountBlock(product);
   const EXCISELABELSBLOCK = getExciseLabelsBlock(product);
@@ -133,6 +170,7 @@ const productMapper = (product, index) => {
   return {
     $: getRowNum(index),
     CODE,
+    ...BARCODEBLOCK,
     ...UKTZED,
     NAME,
     UNITNM,
@@ -228,11 +266,19 @@ const getTotal = (orderData) => {
   };
 };
 
+const mixinSstDataToPayments = (payments, sstData) => {
+  return payments.map((payment) => ({
+    ...payment,
+    ...(sstData && payment.type === PAYMENT_TYPE_CARD ? { sstData } : {}),
+  }));
+};
+
 const getReceiptDocument = (data) => {
-  const { products, payments, taxes } = data;
+  const { products, payments, taxes, sstData } = data;
+  const updatedPayments = mixinSstDataToPayments(payments, sstData);
   const CHECKHEAD = getReceiptHeader(data);
   const CHECKTOTAL = getTotal(data);
-  const CHECKPAY = rowsToMapper(payments, paymentMapper);
+  const CHECKPAY = rowsToMapper(updatedPayments, paymentMapper);
   const CHECKTAX = rowsToMapper(taxes, taxesMapper);
   const CHECKBODY = rowsToMapper(products, productMapper);
 

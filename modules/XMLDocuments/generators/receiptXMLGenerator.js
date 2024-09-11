@@ -98,9 +98,7 @@ const exciseLabelMapper = (exciseLabel, index) => {
 };
 
 const sumField = (sstData) =>
-  sstData?.amount || sstData?.sum
-    ? { SUM: sstData?.amount || sstData?.sum }
-    : {};
+  sstData?.amount || sstData?.sum ? { SUM: sstData.amount || sstData.sum } : {};
 
 const paySysMapper = (sstData, index) => {
   return {

@@ -95,3 +95,6 @@ export const expandDocumentData = pipe(fillUid, fillDateTimeIfEmpty);
 
 export const hasProductMarking = ({ marking }) =>
   Array.isArray(marking) && marking.length;
+
+export const hasProductBarcode = ({ barcodes }) =>
+  Array.isArray(barcodes) && barcodes.length;

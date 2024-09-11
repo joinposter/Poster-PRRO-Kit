@@ -17,11 +17,11 @@ const getSstData = ({
     hideTopBorder: false,
     items: [
       bank ? { row: [bank, ""] } : null,
-      terminalId || terminal ? { row: [terminal, ""] } : null,
+      terminalId || terminal ? { row: [terminalId || terminal, ""] } : null,
       actionType ? { row: [actionType, ""] } : null,
       cardNumber || pan
         ? {
-            row: ["ЕПЗ", cardNumber],
+            row: ["ЕПЗ", cardNumber || pan],
             styles: { 0: { extraCssClass: "text-secondary" } },
           }
         : null,

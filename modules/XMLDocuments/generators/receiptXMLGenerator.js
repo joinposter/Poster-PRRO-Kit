@@ -97,16 +97,19 @@ const exciseLabelMapper = (exciseLabel, index) => {
   };
 };
 
+const sumField = (sstData) =>
+  sstData?.amount || sstData?.sum ? { SUM: sstData.amount } : {};
+
 const paySysMapper = (sstData, index) => {
   return {
     $: getRowNum(index),
-    NAME: sstData.paymentSystem || sstData.paymentSystemName || "",
-    ACQUIRENM: sstData.merchant || sstData.merchantId || "",
+    NAME: sstData.paymentSystem || sstData.paymentSystemName,
+    ACQUIRENM: sstData.merchant || sstData.merchantId,
     ACQUIRETRANSID: sstData.rrn,
-    DEVICEID: sstData.terminalId || sstData.terminal || "",
-    EPZDETAILS: sstData.pan || sstData.cardNumber || "",
+    DEVICEID: sstData.terminalId || sstData.terminal,
+    EPZDETAILS: sstData.pan || sstData.cardNumber,
     AUTHCD: sstData.authCode,
-    SUM: sstData.amount || sstData.sum || 0,
+    ...sumField(sstData),
   };
 };
 

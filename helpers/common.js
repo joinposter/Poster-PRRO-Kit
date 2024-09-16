@@ -8,13 +8,31 @@ export const formatNumber = (num, format) =>
 
 export const getDateTime = ({ date, format }) => {
   if (!Date.parse(date)) return null;
-  const localISOTime = new Date(date);
-  const year = formatNumber(localISOTime.getFullYear(), "yyyy");
-  const month = formatNumber(localISOTime.getMonth() + 1, "MM");
-  const day = formatNumber(localISOTime.getDate(), "dd");
-  const hours = formatNumber(localISOTime.getHours(), "HH");
-  const minutes = formatNumber(localISOTime.getMinutes(), "mm");
-  const seconds = formatNumber(localISOTime.getSeconds(), "ss");
+  const utcDate = new Date(date);
+  const options = {
+    timeZone: "Europe/Kyiv",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  };
+
+  const formattedTime = new Intl.DateTimeFormat(
+    "default",
+    options,
+  ).formatToParts(utcDate);
+  const timeParts = Object.fromEntries(
+    formattedTime.map(({ type, value }) => [type, value]),
+  );
+
+  const year = formatNumber(timeParts.year, "yyyy");
+  const month = formatNumber(timeParts.month, "MM");
+  const day = formatNumber(timeParts.day, "dd");
+  const hours = formatNumber(timeParts.hour, "HH");
+  const minutes = formatNumber(timeParts.minute, "mm");
+  const seconds = formatNumber(timeParts.second, "ss");
 
   if (format === "date") {
     return `${day}.${month}.${year}`;

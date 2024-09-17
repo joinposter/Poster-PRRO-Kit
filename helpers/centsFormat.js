@@ -16,7 +16,7 @@ export const getProductDiscount = (product) =>
 
 export const getCalculatedTurnover = (product) =>
   product.isInCentsAndGrams
-    ? (product.count / GRAMS_IN_KG) * product.price
+    ? (product.count * product.price) / GRAMS_IN_KG
     : product.count * product.price;
 
 export const getCalculatedSourceSum = (product) =>

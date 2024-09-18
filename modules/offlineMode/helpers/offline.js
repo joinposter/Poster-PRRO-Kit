@@ -1,5 +1,6 @@
 import { pipe } from "ramda";
 import { v4 as uuidv4 } from "uuid";
+import createDateWithUATimezone from "../../receiptGenerator/helpers/time.js";
 
 const fillUid = (request) => {
   const uid = uuidv4();
@@ -8,12 +9,9 @@ const fillUid = (request) => {
 };
 
 const fillDateTimeIfEmpty = (request) => {
-  const { dateTime } = request;
+  const dateTime = createDateWithUATimezone();
 
-  if (!dateTime) {
-    return { ...request, dateTime: new Date() };
-  }
-  return request;
+  return { request, dateTime };
 };
 
 // eslint-disable-next-line import/prefer-default-export

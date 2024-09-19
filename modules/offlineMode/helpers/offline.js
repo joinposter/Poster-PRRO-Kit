@@ -9,9 +9,9 @@ const fillUid = (request) => {
 };
 
 const fillDateTimeIfEmpty = (request) => {
-  const dateTime = createDateWithUATimezone();
+  const dateTime = createDateWithUATimezone(request.dateTime);
 
-  return { request, dateTime };
+  return { ...request, dateTime };
 };
 
 // eslint-disable-next-line import/prefer-default-export

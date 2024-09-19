@@ -1,4 +1,5 @@
 import { DECIMAL_PLACES } from "../modules/receiptGenerator/const/receipt.js";
+import createDateWithUATimezone from "../modules/receiptGenerator/helpers/time.js";
 
 export const formatToFixedDecimal = (sum) =>
   Number(sum).toFixed(DECIMAL_PLACES);
@@ -8,7 +9,7 @@ export const formatNumber = (num, format) =>
 
 export const getDateTime = ({ date, format }) => {
   if (!Date.parse(date)) return null;
-  const localISOTime = new Date(date);
+  const localISOTime = createDateWithUATimezone(date);
   const year = formatNumber(localISOTime.getFullYear(), "yyyy");
   const month = formatNumber(localISOTime.getMonth() + 1, "MM");
   const day = formatNumber(localISOTime.getDate(), "dd");

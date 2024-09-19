@@ -42,14 +42,13 @@ const getReceiptOfflineModeRequestData = async (data) => {
     taxes,
   });
   const documentHash = await getDocumentHash(XML);
-  const { dateTime } = expandDocumentData(data);
   const fiscalId = XML?.CHECK?.CHECKHEAD?.ORDERTAXNUM;
   const fiscalLink = getDFSFiscalLink({
     fiscalId,
     cashbox: cashboxData.cashbox,
     sum: getReceiptTotal(data),
-    date: getDateTime({ date: dateTime, format: "dateDfsLink" }),
-    time: getDateTime({ date: dateTime, format: "timeDfsLink" }),
+    date: getDateTime({ date: data.dateTime, format: "dateDfsLink" }),
+    time: getDateTime({ date: data.dateTime, format: "timeDfsLink" }),
     previousDocumentHash: cashboxData.offlineSessionData.lastDocumentHash,
   });
   const uid = XML?.CHECK?.CHECKHEAD?.UID;
@@ -58,7 +57,7 @@ const getReceiptOfflineModeRequestData = async (data) => {
     fiscalId,
     fiscalLink,
     uid,
-    dateTime,
+    dateTime: data.dateTime,
     taxes,
     documentHash,
     cashboxData: {
@@ -167,7 +166,7 @@ const getStartOfflineModeRequestData = async (data) => {
   return {
     ...data,
     uid,
-    dateTime: expandDocumentData(data).dateTime,
+    dateTime: data.dateTime,
     documentHash,
     cashboxData: { ...data.cashboxData, isOffline: true },
   };

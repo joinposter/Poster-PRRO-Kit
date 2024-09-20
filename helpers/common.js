@@ -31,3 +31,10 @@ export const getDateTime = ({ date, format }) => {
 
   return `${day}.${month}.${year} ${hours}:${minutes}:${seconds}`;
 };
+
+const SORT_GREATER = 1;
+const SORT_LESS = -1;
+export const sortByPayFormCode = (a, b) =>
+  a.payFormCode > b.payFormCode ? SORT_GREATER : SORT_LESS;
+export const sortByProgram = (a, b) =>
+  a.program > b.program ? SORT_GREATER : SORT_LESS;

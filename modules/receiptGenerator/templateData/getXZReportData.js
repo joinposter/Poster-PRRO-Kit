@@ -16,7 +16,7 @@ import {
 
 const getTaxData = (taxes, styles) => {
   if (!taxes) return [];
-  return taxes.sort(sortByProgram).reduce((acc, tax) => {
+  return [...taxes].sort(sortByProgram).reduce((acc, tax) => {
     const name = {
       type: "text",
       value: `${tax.name} ${tax.program} ${tax.percent}%`,

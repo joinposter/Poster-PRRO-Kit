@@ -47,8 +47,8 @@ const getZReportPaymentsAndTaxes = (data) => {
     return null;
   }
   const { sum, receiptCount: ORDERSCNT, payments, taxes } = data;
-  const sortedPayments = payments.sort(sortByPayFormCode);
-  const sortedTaxes = taxes.sort(sortByProgram);
+  const sortedPayments = [...payments].sort(sortByPayFormCode);
+  const sortedTaxes = [...taxes].sort(sortByProgram);
   const PAYFORMS = rowsToMapper(sortedPayments, paymentMapper);
   const TAXES = sortedTaxes.length
     ? { TAXES: rowsToMapper(sortedTaxes, taxesMapper) }

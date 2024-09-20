@@ -59,7 +59,7 @@ const getTaxesData = (data) => {
     total: getReceiptTotal(data),
     card: card ? formatToFixedDecimal(getData(isInCents, card)) : null,
     cash: cash ? formatToFixedDecimal(getData(isInCents, cash)) : null,
-    taxes: data.taxes.sort(sortByProgram).map((tax) => ({
+    taxes: [...data.taxes].sort(sortByProgram).map((tax) => ({
       name: expandedTaxesName(tax),
       value: getTaxSum(tax),
       program: tax.program,

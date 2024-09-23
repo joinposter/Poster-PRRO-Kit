@@ -4,7 +4,7 @@ import {
 } from "../const/receipt.js";
 import getFiscalCompanyData from "../templateBlocks/fiscalCompanyBlock.js";
 import getSmartXZReceiptFooterBlock from "../templateBlocks/smartXZReceiptFooterBlock.js";
-import { getDateTime } from "../../../helpers/common.js";
+import { getDateTime, sortByProgram } from "../../../helpers/common.js";
 import { priceFormat } from "../helpers/receipt.js";
 import { findCashPaymentData } from "../helpers/receiptData.js";
 import {
@@ -16,39 +16,37 @@ import {
 
 const getTaxData = (taxes, styles) => {
   if (!taxes) return [];
-  return taxes
-    .sort((a, b) => a.type - b.type)
-    .reduce((acc, tax) => {
-      const name = {
-        type: "text",
-        value: `${tax.name} ${tax.program} ${tax.percent}%`,
-        extraCssClass:
-          "m-2 mb-0 p-3 pt-1 pb-1 bg-light border-bottom rounded-top",
-      };
-      const table = {
-        type: "smartTable",
-        extraCssClass: {
-          wrapper: "m-2 mb-2 mt-0 p-2 pt-0 pb-1 bg-light rounded-end",
-          table: "mb-0",
+  return [...taxes].sort(sortByProgram).reduce((acc, tax) => {
+    const name = {
+      type: "text",
+      value: `${tax.name} ${tax.program} ${tax.percent}%`,
+      extraCssClass:
+        "m-2 mb-0 p-3 pt-1 pb-1 bg-light border-bottom rounded-top",
+    };
+    const table = {
+      type: "smartTable",
+      extraCssClass: {
+        wrapper: "m-2 mb-2 mt-0 p-2 pt-0 pb-1 bg-light rounded-end",
+        table: "mb-0",
+      },
+      hideTopBorder: true,
+      items: [
+        { row: ["Сума податку", priceFormat(getTaxSum(tax))], styles },
+        {
+          row: [
+            "Обіг без податку",
+            priceFormat(getTaxTurnover(tax) - getTaxSum(tax)),
+          ],
+          styles,
         },
-        hideTopBorder: true,
-        items: [
-          { row: ["Сума податку", priceFormat(getTaxSum(tax))], styles },
-          {
-            row: [
-              "Обіг без податку",
-              priceFormat(getTaxTurnover(tax) - getTaxSum(tax)),
-            ],
-            styles,
-          },
-          {
-            row: ["Обіг за податком", priceFormat(getTaxTurnover(tax))],
-            styles,
-          },
-        ],
-      };
-      return acc.concat([name, table]);
-    }, []);
+        {
+          row: ["Обіг за податком", priceFormat(getTaxTurnover(tax))],
+          styles,
+        },
+      ],
+    };
+    return acc.concat([name, table]);
+  }, []);
 };
 
 const getTitle = ({ type, cashboxData }, isHtml) => {

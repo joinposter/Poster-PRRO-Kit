@@ -6,6 +6,7 @@ import {
   getTaxSum,
   getTaxTurnover,
 } from "../../../helpers/centsFormat.js";
+import { sortByProgram, sortByPayFormCode } from "../../../helpers/common.js";
 
 const paymentMapper = (payment, index) => {
   const PAYFORMCD = payment.payFormCode;
@@ -46,8 +47,12 @@ const getZReportPaymentsAndTaxes = (data) => {
     return null;
   }
   const { sum, receiptCount: ORDERSCNT, payments, taxes } = data;
-  const PAYFORMS = rowsToMapper(payments, paymentMapper);
-  const TAXES = taxes.length ? { TAXES: rowsToMapper(taxes, taxesMapper) } : {};
+  const sortedPayments = [...payments].sort(sortByPayFormCode);
+  const sortedTaxes = [...taxes].sort(sortByProgram);
+  const PAYFORMS = rowsToMapper(sortedPayments, paymentMapper);
+  const TAXES = sortedTaxes.length
+    ? { TAXES: rowsToMapper(sortedTaxes, taxesMapper) }
+    : {};
   const currentSum = getData(sum?.isInCents, sum?.isInCents ? sum.value : sum);
   const SUM = formatToFixedDecimal(currentSum);
 

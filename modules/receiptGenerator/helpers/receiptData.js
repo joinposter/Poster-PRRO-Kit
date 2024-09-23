@@ -7,7 +7,11 @@ import {
   RECEIPT_RETURN_TYPE,
   RECEIPT_TYPE,
 } from "../const/receipt.js";
-import { formatToFixedDecimal, getDateTime } from "../../../helpers/common.js";
+import {
+  formatToFixedDecimal,
+  getDateTime,
+  sortByProgram,
+} from "../../../helpers/common.js";
 import { cashSumDecimalRounding } from "../../../helpers/round.js";
 import defaultReceiptConfig from "../config/receipt.js";
 import {
@@ -55,13 +59,11 @@ const getTaxesData = (data) => {
     total: getReceiptTotal(data),
     card: card ? formatToFixedDecimal(getData(isInCents, card)) : null,
     cash: cash ? formatToFixedDecimal(getData(isInCents, cash)) : null,
-    taxes: data.taxes
-      .sort((a, b) => a.type - b.type)
-      .map((tax) => ({
-        name: expandedTaxesName(tax),
-        value: getTaxSum(tax),
-        program: tax.program,
-      })),
+    taxes: [...data.taxes].sort(sortByProgram).map((tax) => ({
+      name: expandedTaxesName(tax),
+      value: getTaxSum(tax),
+      program: tax.program,
+    })),
   };
 };
 

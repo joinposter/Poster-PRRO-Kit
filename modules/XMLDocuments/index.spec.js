@@ -391,20 +391,20 @@ describe("XMLDocuments", () => {
             "        <SUM>901.50</SUM>\n" +
             "      </ROW>\n" +
             '      <ROW ROWNUM="2">\n' +
-            "        <TYPE>5</TYPE>\n" +
-            "        <NAME>Акциз 5%</NAME>\n" +
-            "        <LETTER>Д</LETTER>\n" +
-            "        <PRC>5.00</PRC>\n" +
-            "        <TURNOVER>20900.94</TURNOVER>\n" +
-            "        <SUM>1019.05</SUM>\n" +
-            "      </ROW>\n" +
-            '      <ROW ROWNUM="3">\n' +
             "        <TYPE>4</TYPE>\n" +
             "        <NAME>ПДВ 20%</NAME>\n" +
             "        <LETTER>Г</LETTER>\n" +
             "        <PRC>20.00</PRC>\n" +
             "        <TURNOVER>3777.33</TURNOVER>\n" +
             "        <SUM>603.22</SUM>\n" +
+            "      </ROW>\n" +
+            '      <ROW ROWNUM="3">\n' +
+            "        <TYPE>5</TYPE>\n" +
+            "        <NAME>Акциз 5%</NAME>\n" +
+            "        <LETTER>Д</LETTER>\n" +
+            "        <PRC>5.00</PRC>\n" +
+            "        <TURNOVER>20900.94</TURNOVER>\n" +
+            "        <SUM>1019.05</SUM>\n" +
             "      </ROW>\n" +
             "    </TAXES>\n" +
             "  </ZREPREALIZ>\n" +

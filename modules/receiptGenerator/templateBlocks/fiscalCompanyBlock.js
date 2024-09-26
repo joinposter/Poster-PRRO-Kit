@@ -1,7 +1,7 @@
 const getFiscalCompanyData = ({
   name,
   pointName,
-  pointType,
+  pointType = "",
   pointAddress,
   tin,
   ipn,

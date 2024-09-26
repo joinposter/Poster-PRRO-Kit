@@ -18,7 +18,7 @@ describe("receiptGenerator", () => {
   it("generateFiscalReceipt should has this structure", () => {
     const expectedReceipt = [
       "              ТОВ ТЕСТ ПРРО             ",
-      '              Кафе "Мʼята"              ',
+      '             "Кафе "Мʼята""             ',
       "  Дніпропетровська область, м. Дніпро,  ",
       "   Амур-Нижньодніпровський район, вул.  ",
       "    Шолом-Алейхема, 4, кв. (Офіс) 31    ",
@@ -89,7 +89,7 @@ describe("receiptGenerator", () => {
   it("generateFiscalReceipt should support cents and grams data format", () => {
     const expectedReceipt = [
       "              ТОВ ТЕСТ ПРРО             ",
-      '              Кафе "Мʼята"              ',
+      '             "Кафе "Мʼята""             ',
       "  Дніпропетровська область, м. Дніпро,  ",
       "   Амур-Нижньодніпровський район, вул.  ",
       "    Шолом-Алейхема, 4, кв. (Офіс) 31    ",
@@ -160,7 +160,7 @@ describe("receiptGenerator", () => {
   it("generateFiscalReceipt with alternative sstData", () => {
     const expectedReceipt = [
       "              ТОВ ТЕСТ ПРРО             ",
-      '              Кафе "Мʼята"              ',
+      '             "Кафе "Мʼята""             ',
       "  Дніпропетровська область, м. Дніпро,  ",
       "   Амур-Нижньодніпровський район, вул.  ",
       "    Шолом-Алейхема, 4, кв. (Офіс) 31    ",
@@ -223,7 +223,7 @@ describe("receiptGenerator", () => {
   it("generateTextServiceTransactionReceipt should has this structure for input", () => {
     const expectedReceipt = [
       "              ТОВ ТЕСТ ПРРО             ",
-      '              Кафе "Мʼята"              ',
+      '             "Кафе "Мʼята""             ',
       "  Дніпропетровська область, м. Дніпро,  ",
       "   Амур-Нижньодніпровський район, вул.  ",
       "    Шолом-Алейхема, 4, кв. (Офіс) 31    ",
@@ -249,7 +249,7 @@ describe("receiptGenerator", () => {
   it("generateTextServiceTransactionReceipt should has this structure for output", async () => {
     const expectedReceipt = [
       "              ТОВ ТЕСТ ПРРО             ",
-      '              Кафе "Мʼята"              ',
+      '             "Кафе "Мʼята""             ',
       "  Дніпропетровська область, м. Дніпро,  ",
       "   Амур-Нижньодніпровський район, вул.  ",
       "    Шолом-Алейхема, 4, кв. (Офіс) 31    ",
@@ -275,7 +275,7 @@ describe("receiptGenerator", () => {
   it("generateXReport should has this structure", () => {
     const expectedReceipt = [
       "              ТОВ ТЕСТ ПРРО             ",
-      '              Кафе "Мʼята"              ',
+      '             "Кафе "Мʼята""             ',
       "  Дніпропетровська область, м. Дніпро,  ",
       "   Амур-Нижньодніпровський район, вул.  ",
       "    Шолом-Алейхема, 4, кв. (Офіс) 31    ",
@@ -354,7 +354,7 @@ describe("receiptGenerator", () => {
   it("generateZReport should have this structure", () => {
     const expectedReceipt = [
       "              ТОВ ТЕСТ ПРРО             ",
-      '              Кафе "Мʼята"              ',
+      '             "Кафе "Мʼята""             ',
       "  Дніпропетровська область, м. Дніпро,  ",
       "   Амур-Нижньодніпровський район, вул.  ",
       "    Шолом-Алейхема, 4, кв. (Офіс) 31    ",

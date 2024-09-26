@@ -1,6 +1,7 @@
 const getFiscalCompanyData = ({
   name,
   pointName,
+  pointType,
   pointAddress,
   tin,
   ipn,
@@ -9,7 +10,12 @@ const getFiscalCompanyData = ({
   [
     name ? { type: "text", value: name, align: "center", bold: true } : null,
     pointName
-      ? { type: "text", value: pointName, align: "center", bold: false }
+      ? {
+          type: "text",
+          value: `${pointType} "${pointName}"`,
+          align: "center",
+          bold: false,
+        }
       : null,
     pointAddress
       ? { type: "text", value: pointAddress, align: "center", bold: false }

@@ -13,7 +13,6 @@ import {
   PAYMENT_TYPE_TITLE_CASH,
 } from "../../XMLDocuments/const/fiscal.js";
 import { getTaxesData } from "../../taxes/index.js";
-import { getRoundedDiff } from "../../XMLDocuments/index.js";
 import { roundWithPrecision } from "../../../helpers/round.js";
 
 export { createXZReportData, realizReturnFieldAcc, sumFieldAcc };
@@ -43,7 +42,7 @@ const getPaymentSumData = (item, type) => {
   const currentPayment = item.payments.find(isPaymentByType(type));
   return currentPayment.isInCents
     ? currentPayment.sum
-    : currentPayment.sum * CENTS_IN_UAH - getRoundedDiff(item, type);
+    : currentPayment.sum * CENTS_IN_UAH;
 };
 
 const accumulateTotalByType = (type) => (acc, item) =>
@@ -78,8 +77,7 @@ const createCardPaymentsData = (data) =>
 
 const getReceiptCount = (data) => data.length;
 
-const accumulateTotal = (acc, item) =>
-  roundWithPrecision(acc + item.total - getRoundedDiff(item));
+const accumulateTotal = (acc, item) => roundWithPrecision(acc + item.total);
 
 const getTotal = (data) => data.reduce(accumulateTotal, 0);
 
@@ -87,7 +85,7 @@ const accumulateTotalInCents = (acc, item) => {
   const CENTS_IN_UAH = 100;
   const multiplier = item.total?.isInCents ? 1 : CENTS_IN_UAH;
   const total = item.total?.isInCents ? item.total.sum : item.total;
-  return Math.round(acc + multiplier * (total - getRoundedDiff(item)));
+  return Math.round(acc + multiplier * total);
 };
 const getTotalInCents = (data) => data.reduce(accumulateTotalInCents, 0);
 

@@ -20,7 +20,6 @@ import {
   getDiscount,
   getDiscountTotal,
   getProductSum,
-  getRoundedDiff,
   hasProductBarcode,
   hasProductMarking,
 } from "../helpers/xmlGenerator.js";
@@ -39,7 +38,6 @@ import {
   rowsToMapper,
 } from "./commonXMLTagGenerator.js";
 import {
-  getData,
   getPaymentSum,
   getProductCount,
   getProductPrice,
@@ -247,7 +245,6 @@ const getReturnReceiptFields = (orderData) => {
 const getTotal = (orderData) => {
   const isInCents = !!orderData.total?.isInCents;
   const total = getReceiptTotal(orderData);
-  const roundDiff = getData(isInCents, getRoundedDiff(orderData));
   const discountTotal = getTotalDiscount(
     isInCents,
     getDiscountTotal(orderData.products),
@@ -255,14 +252,16 @@ const getTotal = (orderData) => {
   const DISCOUNTSUM = discountTotal
     ? { DISCOUNTSUM: formatToFixedDecimal(discountTotal) }
     : {};
-  if (roundDiff) {
-    return {
-      SUM: formatToFixedDecimal(total),
-      RNDSUM: formatToFixedDecimal(roundDiff),
-      NORNDSUM: formatToFixedDecimal(total),
-      ...DISCOUNTSUM,
-    };
-  }
+  // Не використовуємо поки roundSum є складником discount поля, треба будет ПЕРЕРОБИТИ коли виправлять discount
+  // Переробити - це не розраховувати самим, а акумулювати з полів продуктів
+  // if (roundDiff) {
+  //   return {
+  //     SUM: formatToFixedDecimal(total),
+  //     RNDSUM: formatToFixedDecimal(roundDiff),
+  //     NORNDSUM: formatToFixedDecimal(total - roundDiff),
+  //     ...DISCOUNTSUM,
+  //   };
+  // }
   return {
     SUM: formatToFixedDecimal(total),
     ...DISCOUNTSUM,

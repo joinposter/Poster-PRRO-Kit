@@ -57,20 +57,13 @@ export const isFiscalReceiptReturnType = (type) =>
 
 const getRoundReceiptData = (data) => {
   const isReturnType = isFiscalReceiptReturnType(data.type);
-  const roundDiff = 0;
   const total = getReceiptTotal(data);
   return [
     {
       name: isReturnType ? "До повернення" : "До сплати",
-      value: formatToFixedDecimal(total - roundDiff),
+      value: formatToFixedDecimal(total),
     },
-    roundDiff
-      ? {
-          name: "Заокруглення",
-          value: formatToFixedDecimal(roundDiff),
-        }
-      : null,
-  ].filter(Boolean);
+  ];
 };
 
 const getReceiptType = (type) => {

@@ -12,7 +12,6 @@ import {
   getDateTime,
   sortByProgram,
 } from "../../../helpers/common.js";
-import { cashSumDecimalRounding } from "../../../helpers/round.js";
 import defaultReceiptConfig from "../config/receipt.js";
 import {
   getData,
@@ -29,20 +28,6 @@ const getProductName = (name) =>
 export const findCashPayment = (payment) => payment.type === PAYMENT_TYPE_CASH;
 
 export const findCardPayment = (payment) => payment.type === PAYMENT_TYPE_CARD;
-
-const getRoundedDiff = (item, type = PAYMENT_TYPE_CASH) => {
-  let roundDiff = 0;
-  if (type === PAYMENT_TYPE_CASH) {
-    const cashSum = item.payments.find(findCashPayment)?.sum;
-    const isInCents = item.payments.find(findCashPayment)?.isInCents;
-    const roundedCashSum =
-      cashSum && cashSumDecimalRounding(cashSum, isInCents);
-    if (cashSum !== roundedCashSum) {
-      roundDiff = getData(isInCents, cashSum - roundedCashSum);
-    }
-  }
-  return roundDiff;
-};
 
 const expandedTaxesName = (tax) => {
   return `${tax.name} ${tax.program} ${tax.percent}%`;
@@ -72,20 +57,13 @@ export const isFiscalReceiptReturnType = (type) =>
 
 const getRoundReceiptData = (data) => {
   const isReturnType = isFiscalReceiptReturnType(data.type);
-  const roundDiff = getRoundedDiff(data);
   const total = getReceiptTotal(data);
-  return roundDiff
-    ? [
-        {
-          name: isReturnType ? "До повернення" : "До сплати",
-          value: formatToFixedDecimal(total - roundDiff),
-        },
-        {
-          name: "Заокруглення",
-          value: formatToFixedDecimal(roundDiff),
-        },
-      ]
-    : null;
+  return [
+    {
+      name: isReturnType ? "До повернення" : "До сплати",
+      value: formatToFixedDecimal(total),
+    },
+  ];
 };
 
 const getReceiptType = (type) => {

@@ -3,10 +3,7 @@ import { Buffer } from "buffer";
 import { crc32 } from "crc";
 import { v4 as uuidv4 } from "uuid";
 import { PAYMENT_TYPE_CARD, PAYMENT_TYPE_CASH } from "../const/fiscal.js";
-import {
-  cashSumDecimalRounding,
-  roundWithPrecision,
-} from "../../../helpers/round.js";
+import { roundWithPrecision } from "../../../helpers/round.js";
 import {
   getProductCount,
   getProductDiscount,
@@ -54,20 +51,6 @@ export const getDiscount = (product) => {
 export const findCashPayment = (payment) => payment.type === PAYMENT_TYPE_CASH;
 
 export const findCardPayment = (payment) => payment.type === PAYMENT_TYPE_CARD;
-
-export const getRoundedDiff = (item, type = PAYMENT_TYPE_CASH) => {
-  let roundDiff = 0;
-  if (type === PAYMENT_TYPE_CASH) {
-    const cashSum = item.payments.find(findCashPayment)?.sum;
-    const isInCents = item.payments.find(findCashPayment)?.isInCents;
-    const roundedCashSum =
-      cashSum && cashSumDecimalRounding(cashSum, isInCents);
-    if (cashSum !== roundedCashSum) {
-      roundDiff = cashSum - roundedCashSum;
-    }
-  }
-  return roundDiff;
-};
 
 export const getProductSum = ({ price, count, isInCentsAndGrams }) => {
   const sum =

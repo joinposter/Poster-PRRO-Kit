@@ -186,11 +186,11 @@ export const fiscalReceiptDataMock = {
   total: 384.26,
   payments: [
     {
-      sum: 284.26,
+      sum: 284.3,
       type: "cash",
     },
     {
-      sum: 100,
+      sum: 99.96,
       type: "card",
     },
   ],
@@ -246,12 +246,12 @@ export const fiscalReceiptInCentsAndGramsDataMock = {
   total: { sum: 38426, isInCents: true },
   payments: [
     {
-      sum: 28426,
+      sum: 28430,
       type: "cash",
       isInCents: true,
     },
     {
-      sum: 10000,
+      sum: 9996,
       type: "card",
       isInCents: true,
     },

@@ -37,7 +37,6 @@ import {
   getDocument,
   getDocumentHash,
   buildXMLDocument,
-  getRoundedDiff,
 } from "./modules/XMLDocuments/index.js";
 
 import { getTaxesData, getTaxPrograms } from "./modules/taxes/index.js";
@@ -77,7 +76,6 @@ export {
   getDocument,
   getDocumentHash,
   buildXMLDocument,
-  getRoundedDiff,
   getTaxesData,
   getTaxPrograms,
   getDateTime,

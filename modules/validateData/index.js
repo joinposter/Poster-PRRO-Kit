@@ -1,50 +1,71 @@
+const getRules = (validationRules, path) => {
+  let rulePath = path;
+  const arrayIndexPattern = /\[\d+\]/g;
+  const isArrayIndexPath = arrayIndexPattern.test(path);
+
+  if (!validationRules[path] && isArrayIndexPath) {
+    rulePath = path.replace(arrayIndexPattern, "[]");
+  }
+
+  // Якщо такого правила по шляху не існує і шлях містить індекси масиву (наприклад, foo.bar[2]),
+  // замінюємо на foo.bar[] для використання загального правила
+  if (!validationRules[path] && isArrayIndexPath) {
+    rulePath = path.replace(arrayIndexPattern, "[]");
+  }
+
+  return validationRules[rulePath];
+};
+
+const checkValue = (value, currentPath, rules) =>
+  rules.reduce((acc, rule) => {
+    const isValid = rule(value);
+    if (!isValid) {
+      return {
+        ...acc,
+        [currentPath]: [
+          ...(acc[currentPath] || []),
+          `Invalid value for ${currentPath}`,
+        ],
+      };
+    }
+    return acc;
+  }, {});
+
+const checkArrayOfValues = (value, currentPath, validationRules) =>
+  value.reduce(
+    (acc, item, index) => ({
+      ...acc,
+      ...createValidator(validationRules)(item, `${currentPath}[${index}]`)
+        .errors,
+    }),
+    {},
+  );
+
+const checkObjectOfValues = (value, currentPath, validationRules) =>
+  createValidator(validationRules)(value, currentPath).errors;
+
 export const createValidator =
   (validationRules) =>
   (data, path = "") => {
     const errors = Object.entries(data).reduce((acc, [key, value]) => {
       const currentPath = path ? `${path}.${key}` : key;
-      let rulePath = currentPath;
-
-      // Якщо такого правила по шляху не існує і шлях містить індекси масиву (наприклад, foo.bar[2]),
-      // замінюємо на foo.bar[] для використання загального правила
-      if (!validationRules[rulePath] && /\[\d+\]/.test(currentPath)) {
-        rulePath = currentPath.replace(/\[\d+\]/g, "[]");
-      }
-
-      const rules = validationRules[rulePath];
+      const rules = getRules(validationRules, currentPath);
+      let currentErrors = {};
 
       if (rules) {
-        rules.forEach((rule) => {
-          const isValid = rule(value);
-          if (!isValid) {
-            acc[currentPath] = acc[currentPath] || [];
-            acc[currentPath].push(`Invalid value for ${currentPath}`);
-          }
-        });
+        currentErrors = checkValue(value, currentPath, rules);
       }
 
-      // Якщо значення є масивом, перевіряємо кожен елемент масиву
       if (Array.isArray(value)) {
-        value.forEach((item, index) => {
-          const arrayPath = `${currentPath}[${index}]`;
-          const nestedErrors = createValidator(validationRules)(
-            item,
-            arrayPath,
-          );
-          Object.assign(acc, nestedErrors.errors);
-        });
-      }
-
-      // Якщо значення є об'єктом, перевіряємо вкладену структуру
-      else if (typeof value === "object" && value !== null) {
-        const nestedErrors = createValidator(validationRules)(
+        currentErrors = checkArrayOfValues(value, currentPath, validationRules);
+      } else if (typeof value === "object" && value !== null) {
+        currentErrors = checkObjectOfValues(
           value,
           currentPath,
+          validationRules,
         );
-        Object.assign(acc, nestedErrors.errors);
       }
-
-      return acc;
+      return { ...acc, ...currentErrors };
     }, {});
 
     return Object.keys(errors).length

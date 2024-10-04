@@ -140,12 +140,14 @@ describe("createValidator", () => {
     const totalByProducts = getTotalByProducts(data);
 
     const validationRules = {
-      "payments[].sum": [
-        isNotZero,
-        (sum, type) =>
-          type === "cash" ? isMultiplesOf10(sum * CENTS_IN_UAH) : true,
-      ],
+      "payments[].sum": [isNotZero],
       payments: [
+        (payments) =>
+          payments.reduce(
+            (acc, { sum, type }) =>
+              type === "cash" ? isMultiplesOf10(sum * CENTS_IN_UAH) : true,
+            true,
+          ),
         (payments) => equals(getTotalByPayments(payments), totalByProducts),
       ],
     };

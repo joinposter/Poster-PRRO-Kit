@@ -55,6 +55,8 @@ import {
   isNotZero,
   isNonEmptyArray,
   isNonEmptyObject,
+  isPaymentByCashMultipleOf10,
+  isReceiptTotalValid,
 } from "./modules/validateData/index.js";
 
 export {
@@ -103,4 +105,6 @@ export {
   isNotZero,
   isNonEmptyArray,
   isNonEmptyObject,
+  isPaymentByCashMultipleOf10,
+  isReceiptTotalValid,
 };

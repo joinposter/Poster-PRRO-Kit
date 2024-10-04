@@ -1,3 +1,5 @@
+import { GRAMS_IN_KG } from "../../helpers/centsFormat.js";
+
 const getRules = (validationRules, path) => {
   let rulePath = path;
   const arrayIndexPattern = /\[\d+\]/g;
@@ -85,3 +87,24 @@ export const isNonEmptyObject = (value) =>
   typeof value === "object" && value !== null && Object.keys(value).length > 0;
 
 export const equals = (value1, value2) => value1 === value2;
+
+export const isPaymentByCashMultipleOf10 = (payments) =>
+  isMultiplesOf10(payments.find((p) => p.type === "cash").sum || 0);
+
+const getTotalByProducts = ({ products }) =>
+  products.reduce((acc, product) => {
+    return (
+      acc +
+      Math.round((product.count * product.price) / GRAMS_IN_KG) -
+      product.discount
+    );
+  }, 0);
+
+const getTotalByPayments = ({ payments }) =>
+  payments.reduce((acc, payment) => acc + Math.round(payment.sum), 0);
+
+export const isReceiptTotalValid = (receiptData) => {
+  const totalByProducts = getTotalByProducts(receiptData);
+  const totalByPayments = getTotalByPayments(receiptData);
+  return equals(totalByProducts, totalByPayments);
+};

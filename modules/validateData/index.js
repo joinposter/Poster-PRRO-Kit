@@ -1,4 +1,4 @@
-import { GRAMS_IN_KG } from "../../helpers/centsFormat.js";
+import { CENTS_IN_UAH } from "../../helpers/centsFormat.js";
 
 const getRules = (validationRules, path) => {
   let rulePath = path;
@@ -49,13 +49,21 @@ const checkObjectOfValues = (value, currentPath, validationRules) =>
 export const createValidator =
   (validationRules) =>
   (data, path = "") => {
+    // Якщо є ключ з порожнім рядком, застосовуємо перевірки до всього об'єкта data
+    if (validationRules[""] && path === "") {
+      const hasInvalidRule = validationRules[""].some((rule) => !rule(data));
+      if (hasInvalidRule) {
+        return { valid: false, errors: { "": ["Invalid input data"] } };
+      }
+    }
+
     const errors = Object.entries(data).reduce((acc, [key, value]) => {
       const currentPath = path ? `${path}.${key}` : key;
       const rules = getRules(validationRules, currentPath);
       let currentErrors = {};
-
       if (rules) {
         currentErrors = checkValue(value, currentPath, rules);
+        return { ...acc, ...currentErrors };
       }
 
       if (Array.isArray(value)) {
@@ -89,19 +97,25 @@ export const isNonEmptyObject = (value) =>
 export const equals = (value1, value2) => value1 === value2;
 
 export const isPaymentByCashMultipleOf10 = (payments) =>
-  isMultiplesOf10(payments.find((p) => p.type === "cash").sum || 0);
+  isMultiplesOf10(
+    // eslint-disable-next-line no-unsafe-optional-chaining
+    payments.find((p) => p.type === "cash")?.sum * CENTS_IN_UAH || 0,
+  );
 
 const getTotalByProducts = ({ products }) =>
-  products.reduce((acc, product) => {
-    return (
+  products?.reduce(
+    (acc, product) =>
       acc +
-      Math.round((product.count * product.price) / GRAMS_IN_KG) -
-      product.discount
-    );
-  }, 0);
+      (Math.round(product.price * CENTS_IN_UAH) * product.count +
+        Math.round(product.discount * CENTS_IN_UAH || 0)),
+    0,
+  );
 
 const getTotalByPayments = ({ payments }) =>
-  payments.reduce((acc, payment) => acc + Math.round(payment.sum), 0);
+  payments?.reduce(
+    (acc, payment) => acc + Math.round(payment.sum * CENTS_IN_UAH),
+    0,
+  );
 
 export const isReceiptTotalValid = (receiptData) => {
   const totalByProducts = getTotalByProducts(receiptData);

@@ -46,6 +46,19 @@ import {
   getData,
 } from "./helpers/centsFormat.js";
 
+import {
+  createValidator,
+  isNumber,
+  isMultiplesOf10,
+  equals,
+  isArray,
+  isNotZero,
+  isNonEmptyArray,
+  isNonEmptyObject,
+  isPaymentByCashMultipleOf10,
+  isReceiptTotalValid,
+} from "./modules/validateData/index.js";
+
 export {
   generateTextFiscalReceipt,
   generateTextServiceTransactionReceipt,
@@ -84,4 +97,14 @@ export {
   DOCUMENT_TYPE_X_REPORT,
   DOCUMENT_TYPE_OFFLINE_START,
   DOCUMENT_TYPE_OFFLINE_FINISH,
+  createValidator,
+  isNumber,
+  isMultiplesOf10,
+  equals,
+  isArray,
+  isNotZero,
+  isNonEmptyArray,
+  isNonEmptyObject,
+  isPaymentByCashMultipleOf10,
+  isReceiptTotalValid,
 };

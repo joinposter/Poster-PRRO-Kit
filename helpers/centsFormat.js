@@ -1,7 +1,7 @@
 import { roundWithPrecision } from "./round.js";
 
-const CENTS_IN_UAH = 100;
-const GRAMS_IN_KG = 1000;
+export const CENTS_IN_UAH = 100;
+export const GRAMS_IN_KG = 1000;
 export const getReceiptTotal = (data) =>
   data.total?.isInCents ? data.total.sum / CENTS_IN_UAH : data.total;
 

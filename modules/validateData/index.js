@@ -99,7 +99,7 @@ export const equals = (value1, value2) => value1 === value2;
 export const isPaymentByCashMultipleOf10 = (payments) =>
   isMultiplesOf10(
     // eslint-disable-next-line no-unsafe-optional-chaining
-    payments.find((p) => p.type === "cash")?.sum * CENTS_IN_UAH || 0,
+    payments.find((p) => p.type === PAYMENT_TYPE_CASH)?.sum * CENTS_IN_UAH || 0,
   );
 
 const getTotalByProducts = ({ products }) =>

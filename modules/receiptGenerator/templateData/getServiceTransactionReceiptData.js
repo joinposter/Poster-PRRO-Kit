@@ -1,8 +1,7 @@
 import getFiscalCompanyData from "../templateBlocks/fiscalCompanyBlock.js";
 import { priceFormat } from "../helpers/receipt.js";
-import { getDateTime } from "../../../helpers/common.js";
-import textFooterBlock from "../templateBlocks/smartReceiptFooterBlock/textFooterBlock.js";
 import { getData } from "../../../helpers/centsFormat.js";
+import getSmartTransactionFooterBlock from "../templateBlocks/smartTransactionFooterBlock.js";
 
 const getServiceTransactionBody = ({ sum, isInCents, receiptConfig }) => {
   const operationType = sum > 0 ? "ВНЕСЕННЯ" : "ВИЛУЧЕННЯ";
@@ -18,6 +17,11 @@ const getServiceTransactionBody = ({ sum, isInCents, receiptConfig }) => {
             "Готівка",
             `${priceFormat(Math.abs(getData(isInCents, sum)))}${receiptConfig.currency}`,
           ],
+          styles: {
+            1: {
+              extraCssClass: "text-end",
+            },
+          },
         },
       ],
     },
@@ -28,18 +32,10 @@ const fiscalCompanyData = ({ cashboxData, cashier }) =>
   getFiscalCompanyData({ ...cashboxData, cashier });
 const serviceInputBody = (data) => getServiceTransactionBody(data);
 
-const getServiceTransactionReceiptData = (data) => [
+const getServiceTransactionReceiptData = (data, isHtml) => [
   ...fiscalCompanyData(data),
   ...serviceInputBody(data),
-  ...textFooterBlock({
-    ...data,
-    dateTime: getDateTime({ date: data.dateTime }),
-    footerData: {
-      docType: "СЛУЖБОВИЙ ЧЕК",
-      software: "Poster POS",
-      isOffline: data?.cashboxData?.isOffline,
-    },
-  }),
+  ...getSmartTransactionFooterBlock(data, isHtml),
 ];
 
 export default getServiceTransactionReceiptData;

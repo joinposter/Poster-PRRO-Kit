@@ -2,6 +2,7 @@ import {
   generateTextFiscalReceipt,
   generateTextServiceTransactionReceipt,
   generateXZReport,
+  generateHtmlServiceTransactionReceipt,
   generateHtmlFiscalReceipt,
   generateHTMLXZReport,
 } from "./modules/receiptGenerator/index.js";
@@ -64,6 +65,7 @@ export {
   generateTextServiceTransactionReceipt,
   generateXZReport,
   getDFSFiscalLink,
+  generateHtmlServiceTransactionReceipt,
   generateHtmlFiscalReceipt,
   generateHTMLXZReport,
   getReceiptOfflineModeRequestData,

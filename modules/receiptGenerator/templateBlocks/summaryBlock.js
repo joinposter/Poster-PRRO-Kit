@@ -18,18 +18,18 @@ const taxesBlock = (data, currency) =>
   [
     {
       name: "Готівкою",
-      value: `${priceFormat(data.cash)}${currency}`,
+      value: `${priceFormat(data.cash)} ${currency}`,
       hidden: !data.cash,
     },
     {
       name: "Карткою",
-      value: `${priceFormat(data.card)}${currency}`,
+      value: `${priceFormat(data.card)} ${currency}`,
       hidden: !data.card,
     },
     { type: "ruler" },
     {
       name: "Сума",
-      value: `${priceFormat(data.total)}${currency}`,
+      value: `${priceFormat(data.total)} ${currency}`,
       bold: true,
     },
     ...data.taxes.map((tax) => ({
@@ -46,7 +46,7 @@ const getRoundData = (data, currency) => [
   { type: "ruler" },
   ...data.map((item) => ({
     name: item.name,
-    value: `${priceFormat(item.value)}${currency}`,
+    value: `${priceFormat(item.value)} ${currency}`,
     hidden: !item.value,
   })),
 ];

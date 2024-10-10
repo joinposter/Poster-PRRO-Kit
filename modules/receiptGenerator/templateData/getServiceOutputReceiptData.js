@@ -12,7 +12,7 @@ const getServiceOutputBody = ({
   { type: "text", value: "Службове вилучення", align: "center" },
   {
     type: "smartTable",
-    items: [["Готівка", `-${priceFormat(sum || 0)}${receiptConfig.currency}`]],
+    items: [["Готівка", `-${priceFormat(sum || 0)} ${receiptConfig.currency}`]],
   },
   {
     type: "smartTable",

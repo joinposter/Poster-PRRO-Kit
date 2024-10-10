@@ -15,7 +15,7 @@ const getServiceTransactionBody = ({ sum, isInCents, receiptConfig }) => {
         {
           row: [
             "Готівка",
-            `${priceFormat(Math.abs(getData(isInCents, sum)))}${receiptConfig.currency}`,
+            `${priceFormat(Math.abs(getData(isInCents, sum)))} ${receiptConfig.currency}`,
           ],
           styles: {
             1: {

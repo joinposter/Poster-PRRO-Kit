@@ -19,7 +19,7 @@ import {
 } from "./helpers/XZReportData.js";
 import getDFSFiscalLink from "../dfs/index.js";
 import { getDateTime } from "../../helpers/common.js";
-import { getReceiptTotal } from "../../helpers/centsFormat.js";
+import { getData, getReceiptTotal } from "../../helpers/centsFormat.js";
 
 const getReceiptOfflineModeRequestData = async (data) => {
   if (
@@ -81,13 +81,23 @@ const getTransactionOfflineModeRequestData = async (data) => {
       cashboxData: { ...data.cashboxData, isOffline: true },
     }),
   );
+  const { dateTime } = expandDocumentData(data);
   const documentHash = await getDocumentHash(XML);
   const fiscalId = XML?.CHECK?.CHECKHEAD?.ORDERTAXNUM;
+  const fiscalLink = getDFSFiscalLink({
+    fiscalId,
+    cashbox: data.cashboxData.cashbox,
+    sum: getData(data.isInCents, data.sum),
+    date: getDateTime({ date: dateTime, format: "dateDfsLink" }),
+    time: getDateTime({ date: dateTime, format: "timeDfsLink" }),
+    previousDocumentHash: data.cashboxData.offlineSessionData.lastDocumentHash,
+  });
   const uid = XML?.CHECK?.CHECKHEAD?.UID;
   return {
     ...data,
     cashboxData: { ...data.cashboxData, isOffline: true },
     fiscalId,
+    fiscalLink,
     uid,
     dateTime: expandDocumentData(data).dateTime,
     documentHash,

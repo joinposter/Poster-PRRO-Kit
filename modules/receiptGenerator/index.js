@@ -15,7 +15,10 @@ const generateHtmlFiscalReceipt = (data) => {
 };
 
 const generateHtmlServiceTransactionReceipt = (data) => {
-  const serviceTransactionReceiptData = getServiceTransactionReceiptData(data);
+  const serviceTransactionReceiptData = getServiceTransactionReceiptData(
+    data,
+    true,
+  );
   return renderFiscalReceipt(serviceTransactionReceiptData);
 };
 

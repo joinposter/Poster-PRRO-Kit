@@ -44,37 +44,37 @@ describe("offline mode", () => {
           },
         },
         cashier: "Шевченко Т.Г.",
-        total: 950.04,
+        total: 95004,
         payments: [
-          { sum: 100, type: "cash" },
-          { sum: 850.04, type: "card" },
+          { sum: 10000, type: "cash" },
+          { sum: 85004, type: "card" },
         ],
         products: [
           {
             id: 54,
             name: "Сирна паличка",
-            count: 4,
+            count: 4000,
             unit: "шт",
-            price: 200,
-            discount: 30,
+            price: 20000,
+            discount: 3000,
             taxPrograms: "ГД",
           },
           {
             id: 55,
             name: "Морозиво",
-            count: 2,
+            count: 2000,
             unit: "шт",
-            price: 90.13,
-            discount: 20,
+            price: 9013,
+            discount: 2000,
             taxPrograms: "БД",
           },
           {
             id: 56,
             name: "Кава",
-            count: 1,
+            count: 1000,
             unit: "шт",
-            price: 20.13,
-            discount: 0.35,
+            price: 2013,
+            discount: 35,
             taxPrograms: "В",
           },
         ],
@@ -115,42 +115,42 @@ describe("offline mode", () => {
       shiftOpenData: {
         dateTime: "2024-06-04T10:26:18.293Z",
       },
-      total: 950.04,
+      total: 95004,
       payments: [
         {
-          sum: 100,
+          sum: 10000,
           type: "cash",
         },
         {
-          sum: 850.04,
+          sum: 85004,
           type: "card",
         },
       ],
       products: [
         {
-          count: 4,
-          discount: 30,
+          count: 4000,
+          discount: 3000,
           id: 54,
           name: "Сирна паличка",
-          price: 200,
+          price: 20000,
           taxPrograms: "ГД",
           unit: "шт",
         },
         {
-          count: 2,
-          discount: 20,
+          count: 2000,
+          discount: 2000,
           id: 55,
           name: "Морозиво",
-          price: 90.13,
+          price: 9013,
           taxPrograms: "БД",
           unit: "шт",
         },
         {
-          count: 1,
-          discount: 0.35,
+          count: 1000,
+          discount: 35,
           id: 56,
           name: "Кава",
-          price: 20.13,
+          price: 2013,
           taxPrograms: "В",
           unit: "шт",
         },
@@ -160,36 +160,36 @@ describe("offline mode", () => {
           name: "Акциз",
           percent: 5,
           program: "Д",
-          sourceSum: 930.26,
-          sum: 44.3,
-          turnover: 980.26,
+          sourceSum: 93026,
+          sum: 4430,
+          turnover: 98026,
           type: 1,
         },
         {
           name: "ПДВ 0%",
           percent: 0,
           program: "Г",
-          sourceSum: 733.33,
+          sourceSum: 73333,
           sum: 0,
-          turnover: 800,
+          turnover: 80000,
           type: 0,
         },
         {
           name: "ПДВ 7%",
           percent: 7,
           program: "Б",
-          sourceSum: 152.63,
-          sum: 9.99,
-          turnover: 180.26,
+          sourceSum: 15263,
+          sum: 999,
+          turnover: 18026,
           type: 0,
         },
         {
           name: "ПДВ 20%",
           percent: 20,
           program: "В",
-          sourceSum: 19.78,
-          sum: 3.3,
-          turnover: 20.13,
+          sourceSum: 1978,
+          sum: 330,
+          turnover: 2013,
           type: 0,
         },
       ],
@@ -220,10 +220,10 @@ describe("offline mode", () => {
           },
         },
         cashier: "Шевченко Т.Г.",
-        total: { sum: 95004, isInCents: true },
+        total: 95004,
         payments: [
-          { sum: 10000, type: "cash", isInCents: true },
-          { sum: 85004, type: "card", isInCents: true },
+          { sum: 10000, type: "cash" },
+          { sum: 85004, type: "card" },
         ],
         products: [
           {
@@ -234,7 +234,6 @@ describe("offline mode", () => {
             price: 20000,
             discount: 3000,
             taxPrograms: "ГД",
-            isInCentsAndGrams: true,
           },
           {
             id: 55,
@@ -244,7 +243,6 @@ describe("offline mode", () => {
             price: 9013,
             discount: 2000,
             taxPrograms: "БД",
-            isInCentsAndGrams: true,
           },
           {
             id: 56,
@@ -254,7 +252,6 @@ describe("offline mode", () => {
             price: 2013,
             discount: 35,
             taxPrograms: "В",
-            isInCentsAndGrams: true,
           },
         ],
         shiftOpenData: {
@@ -294,17 +291,15 @@ describe("offline mode", () => {
       shiftOpenData: {
         dateTime: "2024-06-04T10:26:18.293Z",
       },
-      total: { isInCents: true, sum: 95004 },
+      total: 95004,
       payments: [
         {
           sum: 10000,
           type: "cash",
-          isInCents: true,
         },
         {
           sum: 85004,
           type: "card",
-          isInCents: true,
         },
       ],
       products: [
@@ -316,7 +311,6 @@ describe("offline mode", () => {
           price: 20000,
           taxPrograms: "ГД",
           unit: "шт",
-          isInCentsAndGrams: true,
         },
         {
           count: 2000,
@@ -326,7 +320,6 @@ describe("offline mode", () => {
           price: 9013,
           taxPrograms: "БД",
           unit: "шт",
-          isInCentsAndGrams: true,
         },
         {
           count: 1000,
@@ -336,7 +329,6 @@ describe("offline mode", () => {
           price: 2013,
           taxPrograms: "В",
           unit: "шт",
-          isInCentsAndGrams: true,
         },
       ],
       taxes: [
@@ -348,7 +340,6 @@ describe("offline mode", () => {
           sum: 4430,
           turnover: 98026,
           type: 1,
-          isInCentsAndGrams: true,
         },
         {
           name: "ПДВ 0%",
@@ -358,7 +349,6 @@ describe("offline mode", () => {
           sum: 0,
           turnover: 80000,
           type: 0,
-          isInCentsAndGrams: true,
         },
         {
           name: "ПДВ 7%",
@@ -368,7 +358,6 @@ describe("offline mode", () => {
           sum: 999,
           turnover: 18026,
           type: 0,
-          isInCentsAndGrams: true,
         },
         {
           name: "ПДВ 20%",
@@ -378,7 +367,6 @@ describe("offline mode", () => {
           sum: 330,
           turnover: 2013,
           type: 0,
-          isInCentsAndGrams: true,
         },
       ],
     });
@@ -410,7 +398,7 @@ describe("offline mode", () => {
         shiftOpenData: {
           dateTime: "2024-06-04T10:26:18.293Z",
         },
-        sum: 1000,
+        sum: 100000,
       }),
     ).toEqual({
       type: "serviceEntry",
@@ -1141,10 +1129,10 @@ describe("offline mode", () => {
       shiftOpenData: {
         dateTime: "2024-06-04T10:26:18.293Z",
       },
-      total: { isInCents: true, sum: 95004 },
+      total: 95004,
       payments: [
-        { sum: 10000, type: "cash", isInCents: true },
-        { sum: 85004, type: "card", isInCents: true },
+        { sum: 10000, type: "cash" },
+        { sum: 85004, type: "card" },
       ],
       products: [
         {
@@ -1155,7 +1143,6 @@ describe("offline mode", () => {
           price: 20000,
           discount: 3000,
           taxPrograms: "ГД",
-          isInCentsAndGrams: true,
         },
         {
           id: 55,
@@ -1165,7 +1152,6 @@ describe("offline mode", () => {
           price: 9013,
           discount: 2000,
           taxPrograms: "БД",
-          isInCentsAndGrams: true,
         },
         {
           id: 56,
@@ -1175,7 +1161,6 @@ describe("offline mode", () => {
           price: 2013,
           discount: 35,
           taxPrograms: "В",
-          isInCentsAndGrams: true,
         },
       ],
       taxesConfig: mockCustomTaxes,
@@ -1205,7 +1190,7 @@ describe("offline mode", () => {
       shiftOpenData: {
         dateTime: "2024-06-04T10:26:18.293Z",
       },
-      sum: { value: 1000, isInCents: true },
+      sum: 1000,
     };
     const serviceDeliveryOperation = {
       type: "serviceDelivery",
@@ -1233,7 +1218,7 @@ describe("offline mode", () => {
       shiftOpenData: {
         dateTime: "2024-06-04T10:26:18.293Z",
       },
-      sum: { value: 900, isInCents: true },
+      sum: 900,
     };
     const returnOperation = {
       type: "returnReceipt",
@@ -1261,12 +1246,11 @@ describe("offline mode", () => {
       shiftOpenData: {
         dateTime: "2024-06-04T10:26:18.293Z",
       },
-      total: { sum: 1604, isInCents: true },
+      total: 1604,
       payments: [
         {
           sum: 1604,
           type: "cash",
-          isInCents: true,
         },
       ],
       products: [
@@ -1286,7 +1270,6 @@ describe("offline mode", () => {
           marking: [],
           barcodes: [],
           taxPrograms: "Г",
-          isInCentsAndGrams: true,
         },
         {
           count: 1000,
@@ -1347,17 +1330,15 @@ describe("offline mode", () => {
             payFormCode: 0,
             payFormName: "ГОТІВКА",
             sum: 2800,
-            isInCents: true,
           },
           {
             payFormCode: 1,
             payFormName: "КАРТКА",
             sum: 1100,
-            isInCents: true,
           },
         ],
         receiptCount: 2,
-        sum: { value: 3900, isInCents: true },
+        sum: 3900,
         taxes: [
           {
             name: "Акциз",
@@ -1367,7 +1348,6 @@ describe("offline mode", () => {
             sum: 110,
             turnover: 230,
             type: 9,
-            isInCentsAndGrams: true,
           },
           {
             name: "Без ПДВ + Акциз 5%",
@@ -1377,7 +1357,6 @@ describe("offline mode", () => {
             sum: 0,
             turnover: 2300,
             type: 8,
-            isInCentsAndGrams: true,
           },
           {
             name: "ПДВ 0%",
@@ -1396,7 +1375,6 @@ describe("offline mode", () => {
             sum: 5,
             turnover: 104,
             type: 5,
-            isInCentsAndGrams: true,
           },
           {
             name: "ПДВ 20%",
@@ -1406,7 +1384,6 @@ describe("offline mode", () => {
             sum: 17,
             turnover: 104,
             type: 3,
-            isInCentsAndGrams: true,
           },
         ],
       },
@@ -1416,17 +1393,15 @@ describe("offline mode", () => {
             payFormCode: 0,
             payFormName: "ГОТІВКА",
             sum: 1500,
-            isInCents: true,
           },
           {
             payFormCode: 1,
             payFormName: "КАРТКА",
             sum: 100,
-            isInCents: true,
           },
         ],
         receiptCount: 1,
-        sum: { value: 1600, isInCents: true },
+        sum: 1600,
         taxes: [
           {
             name: "ПДВ 0%",
@@ -1436,7 +1411,6 @@ describe("offline mode", () => {
             sum: 0,
             turnover: 1500,
             type: 4,
-            isInCentsAndGrams: true,
           },
           {
             name: "Акциз",
@@ -1446,7 +1420,6 @@ describe("offline mode", () => {
             sum: 5,
             turnover: 104,
             type: 5,
-            isInCentsAndGrams: true,
           },
           {
             name: "ПДВ 20%",
@@ -1456,7 +1429,6 @@ describe("offline mode", () => {
             sum: 17,
             turnover: 104,
             type: 3,
-            isInCentsAndGrams: true,
           },
         ],
       },
@@ -1483,20 +1455,18 @@ describe("offline mode", () => {
       realiz: {
         payments: [
           {
-            isInCents: true,
             payFormCode: 0,
             payFormName: "ГОТІВКА",
             sum: 12800,
           },
           {
-            isInCents: true,
             payFormCode: 1,
             payFormName: "КАРТКА",
             sum: 86104,
           },
         ],
         receiptCount: 3,
-        sum: { value: 98904, isInCents: true },
+        sum: 98904,
         taxes: [
           {
             name: "Акциз",
@@ -1506,7 +1476,6 @@ describe("offline mode", () => {
             sum: 110,
             turnover: 2300,
             type: 9,
-            isInCentsAndGrams: true,
           },
           {
             name: "Без ПДВ + Акциз 5%",
@@ -1516,7 +1485,6 @@ describe("offline mode", () => {
             sum: 0,
             turnover: 2300,
             type: 8,
-            isInCentsAndGrams: true,
           },
           {
             name: "ПДВ 0%",
@@ -1526,7 +1494,6 @@ describe("offline mode", () => {
             sum: 0,
             turnover: 81500,
             type: 4,
-            isInCentsAndGrams: true,
           },
           {
             name: "Акциз",
@@ -1536,7 +1503,6 @@ describe("offline mode", () => {
             sum: 4435,
             turnover: 98130,
             type: 5,
-            isInCentsAndGrams: true,
           },
           {
             name: "ПДВ 20%",
@@ -1546,7 +1512,6 @@ describe("offline mode", () => {
             sum: 347,
             turnover: 2117,
             type: 3,
-            isInCentsAndGrams: true,
           },
           {
             name: "ПДВ 7%",
@@ -1556,7 +1521,6 @@ describe("offline mode", () => {
             sum: 999,
             turnover: 18026,
             type: 2,
-            isInCentsAndGrams: true,
           },
         ],
       },
@@ -1566,17 +1530,15 @@ describe("offline mode", () => {
             payFormCode: 0,
             payFormName: "ГОТІВКА",
             sum: 3104,
-            isInCents: true,
           },
           {
             payFormCode: 1,
             payFormName: "КАРТКА",
             sum: 100,
-            isInCents: true,
           },
         ],
         receiptCount: 2,
-        sum: { value: 3200, isInCents: true },
+        sum: 3200,
         taxes: [
           {
             name: "ПДВ 0%",
@@ -1586,7 +1548,6 @@ describe("offline mode", () => {
             sum: 0,
             turnover: 3000,
             type: 4,
-            isInCentsAndGrams: true,
           },
           {
             name: "Акциз",
@@ -1596,7 +1557,6 @@ describe("offline mode", () => {
             sum: 10,
             turnover: 208,
             type: 5,
-            isInCentsAndGrams: true,
           },
           {
             name: "ПДВ 20%",
@@ -1606,12 +1566,11 @@ describe("offline mode", () => {
             sum: 34,
             turnover: 208,
             type: 3,
-            isInCentsAndGrams: true,
           },
         ],
       },
-      serviceInput: { value: 1000, isInCents: true },
-      serviceOutput: { value: 900, isInCents: true },
+      serviceInput: 1000,
+      serviceOutput: 900,
       shiftOpenData: {
         dateTime: "2024-06-04T10:26:18.293Z",
       },

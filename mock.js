@@ -14,7 +14,7 @@ export const cashboxData = {
   shiftNumber: 1,
 };
 export const getServiceInputBodyMock = {
-  sum: 2850,
+  sum: 285000,
   dateTime: "2024-05-16T16:28:35.679Z",
   receiptConfig: defaultReceiptConfig,
   cashboxData,
@@ -30,7 +30,7 @@ export const getServiceInputBodyMock = {
 };
 
 export const getServiceOutputBodyMock = {
-  sum: -750,
+  sum: -75000,
   dateTime: "2024-05-16T16:28:35.679Z",
   receiptConfig: defaultReceiptConfig,
   cashboxData,
@@ -50,25 +50,25 @@ export const productsData = [
     barcodes: ["12345678"],
     marking: ["ADCC123123"],
     name: "2204109600#Вино игристое вкусное",
-    count: 2,
-    price: 130.02,
+    count: 2000,
+    price: 13002,
     taxPrograms: "ДГ",
-    discount: 10.04,
+    discount: 1004,
   },
   {
     barcodes: null,
     marking: null,
     name: "2204888600#Сир",
-    count: 4,
-    price: 260,
+    count: 4000,
+    price: 26000,
     taxPrograms: "Д",
   },
   {
     barcodes: null,
     marking: null,
     name: "Сирна палочка",
-    count: 1,
-    price: 5,
+    count: 1000,
+    price: 500,
     taxPrograms: "Д",
   },
 ];
@@ -82,7 +82,6 @@ export const productsDataInCentsAndGrams = [
     price: 13002,
     taxPrograms: "ДГ",
     discount: 1004,
-    isInCentsAndGrams: true,
   },
   {
     barcodes: null,
@@ -91,7 +90,6 @@ export const productsDataInCentsAndGrams = [
     count: 4000,
     price: 26000,
     taxPrograms: "Д",
-    isInCentsAndGrams: true,
   },
   {
     barcodes: null,
@@ -100,7 +98,6 @@ export const productsDataInCentsAndGrams = [
     count: 1000,
     price: 500,
     taxPrograms: "Д",
-    isInCentsAndGrams: true,
   },
 ];
 
@@ -183,14 +180,14 @@ export const fiscalReceiptDataMock = {
     lastDocumentHash:
       "47a08c017274237765f9081d994e76e08742dcef85056d655a8458ec43dff6e4",
   },
-  total: 384.26,
+  total: 38426,
   payments: [
     {
-      sum: 284.3,
+      sum: 28430,
       type: "cash",
     },
     {
-      sum: 99.96,
+      sum: 9996,
       type: "card",
     },
   ],
@@ -200,73 +197,10 @@ export const fiscalReceiptDataMock = {
       type: 5,
       name: "Акциз 5%",
       percent: 5,
-      sum: 18.29,
-      turnover: 384.26,
-      sourceSum: 0,
-      program: "Д",
-    },
-    {
-      type: 4,
-      name: "ПДВ 20%",
-      percent: 20,
-      sum: 29.25,
-      turnover: 184.26,
-      sourceSum: 0,
-      program: "Г",
-    },
-  ],
-  headerServiceData: [
-    { name: "Чек №", value: 485 },
-    { name: "Тип замовлення", value: "У закладі" },
-    { name: "Відкрито", value: "16 липня 2024 19:29:35" },
-    { name: "Надруковано", value: "16 липня 2024 19:30:35" },
-    { name: "Стіл №", value: "6 (Основний зал)" },
-    { name: "К-сть гостей", value: "2" },
-  ],
-  footerServiceData: "На вас чекає приємний сюрприз!",
-  sstData,
-  fiscalLink: "https://d.fiscalservice.gov.ua/receipt/12345678",
-};
-
-export const fiscalReceiptInCentsAndGramsDataMock = {
-  type: "receipt",
-  fiscalId: "2462757750",
-  dateTime: "2024-05-16T16:29:35.710Z",
-  cashbox: cashboxData.cashbox,
-  cashboxData,
-  cashier: "Шевченко Т.Г.",
-  offlineSessionData: {
-    id: 23649865,
-    seed: 135969449201653,
-    nextDocumentNumber: 2834,
-    nextOfflineDocumentNumber: 4,
-    lastDocumentHash:
-      "47a08c017274237765f9081d994e76e08742dcef85056d655a8458ec43dff6e4",
-  },
-  total: { sum: 38426, isInCents: true },
-  payments: [
-    {
-      sum: 28430,
-      type: "cash",
-      isInCents: true,
-    },
-    {
-      sum: 9996,
-      type: "card",
-      isInCents: true,
-    },
-  ],
-  products: productsDataInCentsAndGrams,
-  taxes: [
-    {
-      type: 5,
-      name: "Акциз 5%",
-      percent: 5,
       sum: 1829,
       turnover: 38426,
       sourceSum: 0,
       program: "Д",
-      isInCentsAndGrams: true,
     },
     {
       type: 4,
@@ -276,7 +210,6 @@ export const fiscalReceiptInCentsAndGramsDataMock = {
       turnover: 18426,
       sourceSum: 0,
       program: "Г",
-      isInCentsAndGrams: true,
     },
   ],
   headerServiceData: [
@@ -295,18 +228,18 @@ export const fiscalReceiptInCentsAndGramsDataMock = {
 export const xReportDataMock = {
   type: "XReport",
   realiz: {
-    sum: 2681.7999999999997,
+    sum: 268180,
     receiptCount: 31,
     payments: [
       {
         payFormCode: 0,
         payFormName: "ГОТІВКА",
-        sum: 2020.8,
+        sum: 202080,
       },
       {
         payFormCode: 1,
         payFormName: "КАРТКА",
-        sum: 661,
+        sum: 66100,
       },
     ],
     taxes: [
@@ -314,8 +247,8 @@ export const xReportDataMock = {
         type: 5,
         name: "Акцизний податок",
         percent: 5,
-        sum: 127.54,
-        turnover: 2681.6,
+        sum: 12754,
+        turnover: 268160,
         sourceSum: 0,
         program: "Д",
       },
@@ -323,8 +256,8 @@ export const xReportDataMock = {
         type: 3,
         name: "ПДВ",
         percent: 7,
-        sum: 23.31,
-        turnover: 376.04,
+        sum: 2331,
+        turnover: 37604,
         sourceSum: 0,
         program: "В",
       },
@@ -332,26 +265,26 @@ export const xReportDataMock = {
         type: 4,
         name: "ПДВ",
         percent: 20,
-        sum: 175.5,
-        turnover: 1105.56,
+        sum: 17550,
+        turnover: 110556,
         sourceSum: 0,
         program: "Г",
       },
     ],
   },
   return: {
-    sum: 31,
+    sum: 3100,
     receiptCount: 2,
     payments: [
       {
         payFormCode: 0,
         payFormName: "ГОТІВКА",
-        sum: 30,
+        sum: 3000,
       },
       {
         payFormCode: 1,
         payFormName: "КАРТКА",
-        sum: 1,
+        sum: 100,
       },
     ],
     taxes: [
@@ -359,8 +292,8 @@ export const xReportDataMock = {
         type: 5,
         name: "Акцизний податок",
         percent: 5,
-        sum: 1.47,
-        turnover: 31.04,
+        sum: 147,
+        turnover: 3104,
         sourceSum: 0,
         program: "Д",
       },
@@ -368,8 +301,8 @@ export const xReportDataMock = {
         type: 3,
         name: "ПДВ",
         percent: 7,
-        sum: 1.92,
-        turnover: 31.04,
+        sum: 192,
+        turnover: 3104,
         sourceSum: 0,
         program: "В",
       },
@@ -380,6 +313,7 @@ export const xReportDataMock = {
   cashboxData,
   shiftOpenData: {
     dateTime: "2024-05-24T13:20:05.407Z",
+    balance: 0,
   },
   lastFiscalDocumentData: {
     dateTime: "2024-05-27T17:22:06.973Z",
@@ -406,18 +340,18 @@ export const xReportDataMock = {
 export const zReportDataMock = {
   type: "ZReport",
   realiz: {
-    sum: 2681.7999999999997,
+    sum: 268180,
     receiptCount: 31,
     payments: [
       {
         payFormCode: 0,
         payFormName: "ГОТІВКА",
-        sum: 2020.8,
+        sum: 202080,
       },
       {
         payFormCode: 1,
         payFormName: "КАРТКА",
-        sum: 661,
+        sum: 66100,
       },
     ],
     taxes: [
@@ -425,8 +359,8 @@ export const zReportDataMock = {
         type: 5,
         name: "Акцизний податок",
         percent: 5,
-        sum: 127.54,
-        turnover: 2681.6,
+        sum: 12754,
+        turnover: 268160,
         sourceSum: 0,
         program: "Д",
       },
@@ -434,8 +368,8 @@ export const zReportDataMock = {
         type: 3,
         name: "ПДВ",
         percent: 7,
-        sum: 23.31,
-        turnover: 376.04,
+        sum: 2331,
+        turnover: 37604,
         sourceSum: 0,
         program: "В",
       },
@@ -443,26 +377,26 @@ export const zReportDataMock = {
         type: 4,
         name: "ПДВ",
         percent: 20,
-        sum: 175.5,
-        turnover: 1105.56,
+        sum: 17550,
+        turnover: 110556,
         sourceSum: 0,
         program: "Г",
       },
     ],
   },
   return: {
-    sum: 31,
+    sum: 3100,
     receiptCount: 2,
     payments: [
       {
         payFormCode: 0,
         payFormName: "ГОТІВКА",
-        sum: 30,
+        sum: 3000,
       },
       {
         payFormCode: 1,
         payFormName: "КАРТКА",
-        sum: 1,
+        sum: 100,
       },
     ],
     taxes: [
@@ -470,8 +404,8 @@ export const zReportDataMock = {
         type: 5,
         name: "Акцизний податок",
         percent: 5,
-        sum: 1.47,
-        turnover: 31.04,
+        sum: 147,
+        turnover: 3104,
         sourceSum: 0,
         program: "Д",
       },
@@ -479,18 +413,19 @@ export const zReportDataMock = {
         type: 3,
         name: "ПДВ",
         percent: 7,
-        sum: 1.92,
-        turnover: 31.04,
+        sum: 192,
+        turnover: 3104,
         sourceSum: 0,
         program: "В",
       },
     ],
   },
-  serviceInput: 100,
-  serviceOutput: -200,
+  serviceInput: 10000,
+  serviceOutput: -20000,
   cashboxData,
   shiftOpenData: {
     dateTime: "2024-05-24T13:20:05.407Z",
+    balance: 0,
   },
   lastFiscalDocumentData: {
     dateTime: "2024-05-27T17:22:06.973Z",

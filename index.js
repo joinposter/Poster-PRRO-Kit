@@ -41,11 +41,7 @@ import {
 } from "./modules/XMLDocuments/index.js";
 
 import { getTaxesData, getTaxPrograms } from "./modules/taxes/index.js";
-import {
-  getReceiptTotal,
-  getPaymentSum,
-  getData,
-} from "./helpers/centsFormat.js";
+import { getReceiptTotal, getPaymentSum } from "./helpers/centsFormat.js";
 
 import {
   createValidator,
@@ -88,7 +84,6 @@ export {
   getBalanceDiffByRequest,
   getReceiptTotal,
   getPaymentSum,
-  getData,
   DOCUMENT_TYPE_RECEIPT,
   DOCUMENT_TYPE_RETURN_RECEIPT,
   DOCUMENT_TYPE_SERVICE_ENTRY,

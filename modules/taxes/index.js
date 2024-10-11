@@ -9,7 +9,6 @@ import {
 } from "./const/taxes.js";
 import { showError } from "./helpers/taxes.js";
 import {
-  getAccumulatedTaxValue,
   getCalculatedSourceSum,
   getCalculatedTurnover,
 } from "../../helpers/centsFormat.js";
@@ -61,28 +60,20 @@ const taxProgramValidation = ({ taxPrograms, taxesConfig, ...rest }) => {
 const extractTax = (sum, taxPercent) =>
   (sum * taxPercent) / (ONE_HUNDRED_PERCENT + taxPercent);
 
-const calculateTurnover = ({ count, price, isInCentsAndGrams, ...rest }) => {
+const calculateTurnover = ({ count, price, ...rest }) => {
   return {
-    turnover: getCalculatedTurnover({ isInCentsAndGrams, count, price }),
-    isInCentsAndGrams,
+    turnover: getCalculatedTurnover({ count, price }),
     ...rest,
   };
 };
 
-const calculateSourceSum = ({
-  turnover,
-  discount,
-  isInCentsAndGrams,
-  ...rest
-}) => {
+const calculateSourceSum = ({ turnover, discount, ...rest }) => {
   return {
     turnover,
     sourceSum: getCalculatedSourceSum({
       discount,
       turnover,
-      isInCentsAndGrams,
     }),
-    isInCentsAndGrams,
     ...rest,
   };
 };
@@ -155,16 +146,7 @@ const summarize = (taxGroups) => (program) => (key, value) =>
 
 const groupByTaxes = (
   acc,
-  {
-    excise,
-    exciseAmount,
-    turnover,
-    sourceSum,
-    VAT,
-    VATAmount,
-    taxesConfig,
-    isInCentsAndGrams,
-  },
+  { excise, exciseAmount, turnover, sourceSum, VAT, VATAmount, taxesConfig },
 ) => {
   const summarizeTaxes = summarize(acc);
   const summarizeExcise = summarizeTaxes(excise);
@@ -172,20 +154,10 @@ const groupByTaxes = (
 
   if (excise) {
     acc[excise] = {
-      sum: getAccumulatedTaxValue(
-        isInCentsAndGrams,
-        summarizeExcise("sum", exciseAmount),
-      ),
-      turnover: getAccumulatedTaxValue(
-        isInCentsAndGrams,
-        summarizeExcise("turnover", turnover),
-      ),
-      sourceSum: getAccumulatedTaxValue(
-        isInCentsAndGrams,
-        summarizeExcise("sourceSum", sourceSum),
-      ),
+      sum: Math.round(summarizeExcise("sum", exciseAmount)),
+      turnover: Math.round(summarizeExcise("turnover", turnover)),
+      sourceSum: Math.round(summarizeExcise("sourceSum", sourceSum)),
       program: excise,
-      isInCentsAndGrams,
       ...taxesConfig.exciseTaxList[excise],
       type: 1,
     };
@@ -193,20 +165,10 @@ const groupByTaxes = (
 
   if (VAT) {
     acc[VAT] = {
-      sum: getAccumulatedTaxValue(
-        isInCentsAndGrams,
-        summarizeVAT("sum", VATAmount),
-      ),
-      turnover: getAccumulatedTaxValue(
-        isInCentsAndGrams,
-        summarizeVAT("turnover", turnover),
-      ),
-      sourceSum: getAccumulatedTaxValue(
-        isInCentsAndGrams,
-        sourceSum - (exciseAmount || 0),
-      ),
+      sum: Math.round(summarizeVAT("sum", VATAmount)),
+      turnover: Math.round(summarizeVAT("turnover", turnover)),
+      sourceSum: Math.round(sourceSum - (exciseAmount || 0)),
       program: VAT,
-      isInCentsAndGrams,
       ...taxesConfig.VATTaxList[VAT],
       type: 0,
     };

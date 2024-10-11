@@ -1,7 +1,7 @@
 import { getHeader, getRowNum, rowsToMapper } from "./commonXMLTagGenerator.js";
 import { formatToFixedDecimal } from "../../../helpers/round.js";
 import {
-  getData,
+  convertKopecksToGrivnas,
   getPaymentSum,
   getTaxSum,
   getTaxTurnover,
@@ -53,7 +53,7 @@ const getZReportPaymentsAndTaxes = (data) => {
   const TAXES = sortedTaxes.length
     ? { TAXES: rowsToMapper(sortedTaxes, taxesMapper) }
     : {};
-  const currentSum = getData(sum?.isInCents, sum?.isInCents ? sum.value : sum);
+  const currentSum = convertKopecksToGrivnas(sum?.isInCents ? sum.value : sum);
   const SUM = formatToFixedDecimal(currentSum);
 
   return {
@@ -66,14 +66,12 @@ const getZReportPaymentsAndTaxes = (data) => {
 
 const getZReportBody = ({ serviceInput, serviceOutput }) => ({
   SERVICEINPUT: formatToFixedDecimal(
-    getData(
-      serviceInput?.isInCents,
+    convertKopecksToGrivnas(
       serviceInput?.isInCents ? serviceInput.value : serviceInput,
     ),
   ),
   SERVICEOUTPUT: formatToFixedDecimal(
-    getData(
-      serviceOutput?.isInCents,
+    convertKopecksToGrivnas(
       serviceOutput?.isInCents ? serviceOutput.value : serviceOutput,
     ),
   ),

@@ -111,10 +111,10 @@ const getTotalByProducts = ({ products }) =>
     (acc, product) =>
       acc +
       Math.round(
-        (product.price * CENTS_IN_UAH * (product.count * GRAMS_IN_KG) +
-          (product.discount * CENTS_IN_UAH || 0)) /
+        (product.price * CENTS_IN_UAH * (product.count * GRAMS_IN_KG)) /
           GRAMS_IN_KG,
-      ),
+      ) +
+      Math.round(product.discount * CENTS_IN_UAH || 0),
     0,
   );
 

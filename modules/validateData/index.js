@@ -1,4 +1,4 @@
-import { CENTS_IN_UAH } from "../../helpers/centsFormat.js";
+import { CENTS_IN_UAH, GRAMS_IN_KG } from "../../helpers/centsFormat.js";
 import { PAYMENT_TYPE_CASH } from "../../const/types.js";
 
 const getRules = (validationRules, path) => {
@@ -110,8 +110,11 @@ const getTotalByProducts = ({ products }) =>
   products?.reduce(
     (acc, product) =>
       acc +
-      (Math.round(product.price * CENTS_IN_UAH * product.count) +
-        Math.round(product.discount * CENTS_IN_UAH || 0)),
+      Math.round(
+        (product.price * CENTS_IN_UAH * (product.count * GRAMS_IN_KG)) /
+          GRAMS_IN_KG,
+      ) +
+      Math.round(product.discount * CENTS_IN_UAH || 0),
     0,
   );
 

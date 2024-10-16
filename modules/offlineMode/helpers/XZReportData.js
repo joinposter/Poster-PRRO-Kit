@@ -189,13 +189,13 @@ const sumFieldAcc = (xReportData, operationData) => {
       return Math.round(xReportData.value + operationData.value);
     }
     case !isXReportHasIsInCents && !isOperationHasIsInCents: {
-      return Math.round((xReportData || 0) + operationData);
+      return Math.round((xReportData?.sum || 0) + operationData);
     }
     case isXReportHasIsInCents && !isOperationHasIsInCents: {
       return Math.round(xReportData.value + operationData);
     }
     case !isXReportHasIsInCents && isOperationHasIsInCents: {
-      return Math.round((xReportData || 0) + operationData.value);
+      return Math.round((xReportData?.sum || 0) + operationData.value);
     }
     default:
       console.error("Invalid xReportData or operationData ");

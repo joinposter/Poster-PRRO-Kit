@@ -98,7 +98,6 @@ const getTransactionOfflineModeRequestData = async (data) => {
   const uid = XML?.CHECK?.CHECKHEAD?.UID;
   return {
     ...data,
-    sum: convertKopecksToGrivnas(data.sum),
     cashboxData: { ...data.cashboxData, isOffline: true },
     fiscalId,
     fiscalLink,
@@ -250,14 +249,12 @@ const mergeOperationsAndXReport = async ({
     ...operationsXReport,
     realiz: realizReturnFieldAcc(xReport.realiz, operationsXReport.realiz),
     return: realizReturnFieldAcc(xReport.return, operationsXReport.return),
-    serviceInput: sumFieldAcc(
-      xReport.serviceInput,
-      operationsXReport.serviceInput,
-    ),
-    serviceOutput: sumFieldAcc(
-      xReport.serviceOutput,
-      operationsXReport.serviceOutput,
-    ),
+    serviceInput: {
+      sum: sumFieldAcc(xReport.serviceInput, operationsXReport.serviceInput),
+    },
+    serviceOutput: {
+      sum: sumFieldAcc(xReport.serviceOutput, operationsXReport.serviceOutput),
+    },
     shiftOpenData: xReport.shiftOpenData,
   };
 };

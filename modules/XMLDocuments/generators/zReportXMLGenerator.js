@@ -53,7 +53,7 @@ const getZReportPaymentsAndTaxes = (data) => {
   const TAXES = sortedTaxes.length
     ? { TAXES: rowsToMapper(sortedTaxes, taxesMapper) }
     : {};
-  const currentSum = convertKopecksToGrivnas(sum?.isInCents ? sum.value : sum);
+  const currentSum = convertKopecksToGrivnas(sum?.isInCents ? sum?.value : sum);
   const SUM = formatToFixedDecimal(currentSum);
 
   return {
@@ -64,18 +64,23 @@ const getZReportPaymentsAndTaxes = (data) => {
   };
 };
 
-const getZReportBody = ({ serviceInput, serviceOutput }) => ({
-  SERVICEINPUT: formatToFixedDecimal(
-    convertKopecksToGrivnas(
-      serviceInput?.isInCents ? serviceInput.value : serviceInput.sum,
+const getZReportBody = ({ serviceInput, serviceOutput }) => {
+  const serviceInputData = serviceInput?.isInCents
+    ? serviceInput?.value
+    : serviceInput?.sum || 0;
+  const serviceOutputData = serviceOutput?.isInCents
+    ? serviceOutput?.value
+    : serviceOutput?.sum || 0;
+
+  return {
+    SERVICEINPUT: formatToFixedDecimal(
+      convertKopecksToGrivnas(serviceInputData),
     ),
-  ),
-  SERVICEOUTPUT: formatToFixedDecimal(
-    convertKopecksToGrivnas(
-      serviceOutput?.isInCents ? serviceOutput.value : serviceOutput.sum,
+    SERVICEOUTPUT: formatToFixedDecimal(
+      convertKopecksToGrivnas(serviceOutputData),
     ),
-  ),
-});
+  };
+};
 
 const getZReportDocument = (data) => {
   const ZREPHEAD = getHeader(data);

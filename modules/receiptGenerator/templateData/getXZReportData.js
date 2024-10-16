@@ -237,11 +237,11 @@ const calcBalance = (data) => {
 
   const serviceInputSum = data.serviceInput?.isInCents
     ? data.serviceInput.value
-    : data.serviceInput;
+    : data.serviceInput.sum;
 
   const serviceOutputSum = data.serviceOutput?.isInCents
     ? data.serviceOutput.value
-    : data.serviceOutput;
+    : data.serviceOutput.sum;
 
   return (
     shiftOpenDataBalanceSum +
@@ -287,7 +287,7 @@ const cashFlowData = (data) => [
             convertKopecksToGrivnas(
               data.serviceInput?.isInCents
                 ? data.serviceInput.value
-                : data.serviceInput,
+                : data.serviceInput.sum,
             ),
           ),
         ],
@@ -304,7 +304,7 @@ const cashFlowData = (data) => [
               convertKopecksToGrivnas(
                 data.serviceOutput?.isInCents
                   ? data.serviceOutput.value
-                  : data.serviceOutput,
+                  : data.serviceOutput.sum,
               ),
             ),
           ),

@@ -67,12 +67,12 @@ const getZReportPaymentsAndTaxes = (data) => {
 const getZReportBody = ({ serviceInput, serviceOutput }) => ({
   SERVICEINPUT: formatToFixedDecimal(
     convertKopecksToGrivnas(
-      serviceInput?.isInCents ? serviceInput.value : serviceInput,
+      serviceInput?.isInCents ? serviceInput.value : serviceInput.sum,
     ),
   ),
   SERVICEOUTPUT: formatToFixedDecimal(
     convertKopecksToGrivnas(
-      serviceOutput?.isInCents ? serviceOutput.value : serviceOutput,
+      serviceOutput?.isInCents ? serviceOutput.value : serviceOutput.sum,
     ),
   ),
 });

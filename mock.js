@@ -420,8 +420,8 @@ export const zReportDataMock = {
       },
     ],
   },
-  serviceInput: 10000,
-  serviceOutput: -20000,
+  serviceInput: { sum: 10000 },
+  serviceOutput: { sum: -20000 },
   cashboxData,
   shiftOpenData: {
     dateTime: "2024-05-24T13:20:05.407Z",

@@ -431,7 +431,7 @@ describe("offline mode", () => {
       shiftOpenData: {
         dateTime: "2024-06-04T10:26:18.293Z",
       },
-      sum: 1000,
+      sum: 100000,
     });
   });
   it("getOpenShiftOfflineModeRequestData", async () => {

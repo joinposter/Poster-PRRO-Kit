@@ -60,20 +60,29 @@ const taxProgramValidation = ({ taxPrograms, taxesConfig, ...rest }) => {
 const extractTax = (sum, taxPercent) =>
   (sum * taxPercent) / (ONE_HUNDRED_PERCENT + taxPercent);
 
-const calculateTurnover = ({ count, price, ...rest }) => {
+const calculateTurnover = ({ count, price, isInCentsAndGrams, ...rest }) => {
+  const isInCentsAndGramsData = isInCentsAndGrams ? { isInCentsAndGrams } : {};
   return {
     turnover: getCalculatedTurnover({ count, price }),
+    ...isInCentsAndGramsData,
     ...rest,
   };
 };
 
-const calculateSourceSum = ({ turnover, discount, ...rest }) => {
+const calculateSourceSum = ({
+  turnover,
+  discount,
+  isInCentsAndGrams,
+  ...rest
+}) => {
+  const isInCentsAndGramsData = isInCentsAndGrams ? { isInCentsAndGrams } : {};
   return {
     turnover,
     sourceSum: getCalculatedSourceSum({
       discount,
       turnover,
     }),
+    ...isInCentsAndGramsData,
     ...rest,
   };
 };
@@ -146,12 +155,21 @@ const summarize = (taxGroups) => (program) => (key, value) =>
 
 const groupByTaxes = (
   acc,
-  { excise, exciseAmount, turnover, sourceSum, VAT, VATAmount, taxesConfig },
+  {
+    excise,
+    exciseAmount,
+    turnover,
+    sourceSum,
+    VAT,
+    VATAmount,
+    taxesConfig,
+    isInCentsAndGrams,
+  },
 ) => {
   const summarizeTaxes = summarize(acc);
   const summarizeExcise = summarizeTaxes(excise);
   const summarizeVAT = summarizeTaxes(VAT);
-
+  const isInCentsAndGramsData = isInCentsAndGrams ? { isInCentsAndGrams } : {};
   if (excise) {
     acc[excise] = {
       sum: Math.round(summarizeExcise("sum", exciseAmount)),
@@ -159,6 +177,7 @@ const groupByTaxes = (
       sourceSum: Math.round(summarizeExcise("sourceSum", sourceSum)),
       program: excise,
       ...taxesConfig.exciseTaxList[excise],
+      ...isInCentsAndGramsData,
       type: 1,
     };
   }
@@ -170,6 +189,7 @@ const groupByTaxes = (
       sourceSum: Math.round(sourceSum - (exciseAmount || 0)),
       program: VAT,
       ...taxesConfig.VATTaxList[VAT],
+      ...isInCentsAndGramsData,
       type: 0,
     };
   }

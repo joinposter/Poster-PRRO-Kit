@@ -17,7 +17,7 @@ import {
   getUIDFields,
   getVersionFields,
 } from "./commonXMLTagGenerator.js";
-import { getData } from "../../../helpers/centsFormat.js";
+import { convertKopecksToGrivnas } from "../../../helpers/centsFormat.js";
 
 const isServiceEntry = (data) => data.type === DOCUMENT_TYPE_SERVICE_ENTRY;
 
@@ -48,7 +48,7 @@ const getTypeFields = (data) =>
   );
 
 const getServiceTransactionTotal = (data) => {
-  return { SUM: formatToFixedDecimal(getData(data.isInCents, data.sum)) };
+  return { SUM: formatToFixedDecimal(convertKopecksToGrivnas(data.sum)) };
 };
 
 const getServiceTransactionDocument = (data) => {

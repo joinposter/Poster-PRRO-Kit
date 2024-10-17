@@ -44,7 +44,8 @@ import { getTaxesData, getTaxPrograms } from "./modules/taxes/index.js";
 import {
   getReceiptTotal,
   getPaymentSum,
-  getData,
+  convertKopecksToGrivnas,
+  convertGramsToKg,
 } from "./helpers/centsFormat.js";
 
 import {
@@ -88,7 +89,8 @@ export {
   getBalanceDiffByRequest,
   getReceiptTotal,
   getPaymentSum,
-  getData,
+  convertKopecksToGrivnas,
+  convertGramsToKg,
   DOCUMENT_TYPE_RECEIPT,
   DOCUMENT_TYPE_RETURN_RECEIPT,
   DOCUMENT_TYPE_SERVICE_ENTRY,

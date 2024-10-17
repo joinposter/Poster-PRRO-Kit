@@ -24,12 +24,8 @@ export const decimalRoundingForCents = (number) => {
   return rounded;
 };
 
-export const cashSumDecimalRounding = (cashSum, isInCents) => {
+export const cashSumDecimalRounding = (cashSum) => {
   const TEN_CENTS = 10;
-  const ONE_TENTH_UAH = 0.1;
-  const MINIMAL_CASH_SUM = isInCents ? TEN_CENTS : ONE_TENTH_UAH;
-  const sum = isInCents
-    ? decimalRoundingForCents(cashSum)
-    : decimalRounding(cashSum);
-  return Math.max(sum, MINIMAL_CASH_SUM);
+  const sum = decimalRoundingForCents(cashSum);
+  return Math.max(sum, TEN_CENTS);
 };

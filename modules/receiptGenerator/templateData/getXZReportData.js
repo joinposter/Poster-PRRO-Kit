@@ -26,7 +26,7 @@ const getTaxData = (taxes, styles) => {
     const table = {
       type: "smartTable",
       extraCssClass: {
-        wrapper: "m-2 mb-2 mt-0 p-2 pt-0 pb-1 bg-light rounded-end",
+        wrapper: "m-2 mb-2 mt-0 p-2 pt-0 pb-1 bg-light rounded-bottom",
         table: "mb-0",
       },
       hideTopBorder: true,
@@ -92,7 +92,7 @@ const xzReportHeaderData = (data, isHtml) =>
         {
           row: [
             "Останній фіскальний чек",
-            getDateTime({ date: data?.lastFiscalDocumentData?.dateTime || "" }),
+            getDateTime({ date: data?.lastFiscalDocumentData?.dateTime }) || "",
           ],
           styles: {
             0: { extraCssClass: "w-50 bg-light pt-0 pb-0" },
@@ -237,11 +237,11 @@ const calcBalance = (data) => {
 
   const serviceInputSum = data.serviceInput?.isInCents
     ? data.serviceInput.value
-    : data.serviceInput.sum || 0;
+    : data.serviceInput?.sum || 0;
 
   const serviceOutputSum = data.serviceOutput?.isInCents
     ? data.serviceOutput.value
-    : data.serviceOutput.sum || 0;
+    : data.serviceOutput?.sum || 0;
 
   return (
     shiftOpenDataBalanceSum +
@@ -287,7 +287,7 @@ const cashFlowData = (data) => [
             convertKopecksToGrivnas(
               data.serviceInput?.isInCents
                 ? data.serviceInput.value
-                : data.serviceInput.sum || 0,
+                : data.serviceInput?.sum || 0,
             ),
           ),
         ],
@@ -304,7 +304,7 @@ const cashFlowData = (data) => [
               convertKopecksToGrivnas(
                 data.serviceOutput?.isInCents
                   ? data.serviceOutput.value
-                  : data.serviceOutput.sum || 0,
+                  : data.serviceOutput?.sum || 0,
               ),
             ),
           ),

@@ -12,12 +12,6 @@ export const roundWithPrecision = (number, precision = 2) => {
   return Math.round(fixed) / pow;
 };
 
-export const decimalRounding = (number) => {
-  const NUMBER_OF_DECIMALS = 10;
-  const rounded = Math.round(number * NUMBER_OF_DECIMALS) / NUMBER_OF_DECIMALS;
-  return rounded;
-};
-
 export const decimalRoundingForCents = (number) => {
   const NUMBER_OF_DECIMALS = 10;
   const rounded = Math.round(number / NUMBER_OF_DECIMALS) * NUMBER_OF_DECIMALS;
@@ -25,7 +19,7 @@ export const decimalRoundingForCents = (number) => {
 };
 
 export const cashSumDecimalRounding = (cashSum) => {
-  const TEN_CENTS = 10;
+  const MINIMAL_CASH_SUM = 10;
   const sum = decimalRoundingForCents(cashSum);
-  return Math.max(sum, TEN_CENTS);
+  return Math.max(sum, MINIMAL_CASH_SUM);
 };

@@ -138,7 +138,7 @@ const xzReportRealizeData = (data) => [
           priceFormat(
             convertKopecksToGrivnas(
               data?.realiz?.sum?.isInCents
-                ? data?.realiz?.sum?.value
+                ? data.realiz.sum.value
                 : data?.realiz?.sum || 0,
             ),
           ),
@@ -187,7 +187,7 @@ const xzReportReturnData = (data) => [
           priceFormat(
             convertKopecksToGrivnas(
               data?.return?.sum?.isInCents
-                ? data?.return?.sum?.value
+                ? data.return.sum.value
                 : data?.return?.sum || 0,
             ),
           ),
@@ -236,12 +236,12 @@ const calcBalance = (data) => {
     : data.shiftOpenData.balance || 0;
 
   const serviceInputSum = data.serviceInput?.isInCents
-    ? data.serviceInput?.value
-    : data.serviceInput?.sum || 0;
+    ? data.serviceInput.value
+    : data.serviceInput.sum || 0;
 
   const serviceOutputSum = data.serviceOutput?.isInCents
-    ? data.serviceOutput?.value
-    : data.serviceOutput?.sum || 0;
+    ? data.serviceOutput.value
+    : data.serviceOutput.sum || 0;
 
   return (
     shiftOpenDataBalanceSum +
@@ -286,8 +286,8 @@ const cashFlowData = (data) => [
           priceFormat(
             convertKopecksToGrivnas(
               data.serviceInput?.isInCents
-                ? data.serviceInput?.value
-                : data.serviceInput?.sum || 0,
+                ? data.serviceInput.value
+                : data.serviceInput.sum || 0,
             ),
           ),
         ],
@@ -303,8 +303,8 @@ const cashFlowData = (data) => [
             Math.abs(
               convertKopecksToGrivnas(
                 data.serviceOutput?.isInCents
-                  ? data.serviceOutput?.value
-                  : data.serviceOutput?.sum || 0,
+                  ? data.serviceOutput.value
+                  : data.serviceOutput.sum || 0,
               ),
             ),
           ),

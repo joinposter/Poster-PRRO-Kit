@@ -28,7 +28,11 @@ export const changeComa = (value) => {
 };
 
 export const priceFormat = (number) => {
-  if (typeof number !== "number" && typeof number !== "string") {
+  if (
+    typeof number !== "number" &&
+    typeof number !== "string" &&
+    Number.isNaN(number)
+  ) {
     return "0,00";
   }
 

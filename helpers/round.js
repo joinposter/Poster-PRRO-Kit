@@ -12,24 +12,14 @@ export const roundWithPrecision = (number, precision = 2) => {
   return Math.round(fixed) / pow;
 };
 
-export const decimalRounding = (number) => {
-  const NUMBER_OF_DECIMALS = 10;
-  const rounded = Math.round(number * NUMBER_OF_DECIMALS) / NUMBER_OF_DECIMALS;
-  return rounded;
-};
-
 export const decimalRoundingForCents = (number) => {
   const NUMBER_OF_DECIMALS = 10;
   const rounded = Math.round(number / NUMBER_OF_DECIMALS) * NUMBER_OF_DECIMALS;
   return rounded;
 };
 
-export const cashSumDecimalRounding = (cashSum, isInCents) => {
-  const TEN_CENTS = 10;
-  const ONE_TENTH_UAH = 0.1;
-  const MINIMAL_CASH_SUM = isInCents ? TEN_CENTS : ONE_TENTH_UAH;
-  const sum = isInCents
-    ? decimalRoundingForCents(cashSum)
-    : decimalRounding(cashSum);
+export const cashSumDecimalRounding = (cashSum) => {
+  const MINIMAL_CASH_SUM = 10;
+  const sum = decimalRoundingForCents(cashSum);
   return Math.max(sum, MINIMAL_CASH_SUM);
 };

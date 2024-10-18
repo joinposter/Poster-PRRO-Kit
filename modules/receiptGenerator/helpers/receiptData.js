@@ -14,7 +14,7 @@ import {
 } from "../../../helpers/common.js";
 import defaultReceiptConfig from "../config/receipt.js";
 import {
-  getData,
+  convertKopecksToGrivnas,
   getReceiptTotal,
   getTaxSum,
 } from "../../../helpers/centsFormat.js";
@@ -34,16 +34,17 @@ const expandedTaxesName = (tax) => {
 };
 
 const getTaxesData = (data) => {
-  const card = data.payments.find(findCardPayment)?.sum;
-  const cash = data.payments.find(findCashPayment)?.sum;
-  const isInCents =
-    data.payments.find(findCardPayment)?.isInCents ||
-    data.payments.find(findCashPayment)?.isInCents;
+  const cardSum = data.payments.find(findCardPayment)?.sum;
+  const cashSum = data.payments.find(findCashPayment)?.sum;
 
   return {
     total: getReceiptTotal(data),
-    card: card ? formatToFixedDecimal(getData(isInCents, card)) : null,
-    cash: cash ? formatToFixedDecimal(getData(isInCents, cash)) : null,
+    card: cardSum
+      ? formatToFixedDecimal(convertKopecksToGrivnas(cardSum))
+      : null,
+    cash: cashSum
+      ? formatToFixedDecimal(convertKopecksToGrivnas(cashSum))
+      : null,
     taxes: [...data.taxes].sort(sortByProgram).map((tax) => ({
       name: expandedTaxesName(tax),
       value: getTaxSum(tax),
@@ -121,7 +122,6 @@ export const prepareDataForPrintReceipt = (data) => ({
     price: product.price,
     taxPrograms: product.taxPrograms,
     discount: product.discount,
-    isInCentsAndGrams: product.isInCentsAndGrams,
   })),
   taxesData: getTaxesData(data),
   roundData: getRoundReceiptData(data),

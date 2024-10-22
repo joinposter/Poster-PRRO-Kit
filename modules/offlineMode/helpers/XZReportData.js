@@ -222,7 +222,7 @@ const realizReturnFieldAcc = (xReportData, operationData) => {
   return {
     payments: Object.values(paymentsMap),
     receiptCount: totalReceiptCount,
-    sum: sumFieldAcc(xReportData.sum || 0, operationData.sum || 0),
+    sum: sumFieldAcc(xReportData, operationData.sum || 0),
     taxes: Object.values(taxesMap),
   };
 };

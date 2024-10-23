@@ -208,6 +208,7 @@ describe("taxes", () => {
         turnover: 98026,
         sourceSum: 93026,
         type: 1,
+        isInCentsAndGrams: true,
       },
       {
         name: "ПДВ 0%",
@@ -217,6 +218,7 @@ describe("taxes", () => {
         turnover: 80000,
         sourceSum: 73333,
         type: 0,
+        isInCentsAndGrams: true,
       },
       {
         name: "ПДВ 7%",
@@ -226,6 +228,7 @@ describe("taxes", () => {
         turnover: 18026,
         sourceSum: 15263,
         type: 0,
+        isInCentsAndGrams: true,
       },
       {
         name: "ПДВ 20%",
@@ -235,6 +238,7 @@ describe("taxes", () => {
         turnover: 2013,
         sourceSum: 1978,
         type: 0,
+        isInCentsAndGrams: true,
       },
     ]);
   });

@@ -1,36 +1,36 @@
 export const receiptRequestData = {
   type: "receipt",
-  total: 950.04,
+  total: 95004,
   payments: [
-    { sum: 100, type: "cash" },
-    { sum: 850.04, type: "card" },
+    { sum: 10000, type: "cash" },
+    { sum: 85004, type: "card" },
   ],
   products: [
     {
       id: 54,
       name: "Сирна паличка",
-      count: 4,
+      count: 4000,
       unit: "шт",
-      price: 200,
-      discount: 30,
+      price: 20000,
+      discount: 3000,
       taxPrograms: "ГД",
     },
     {
       id: 55,
       name: "Морозиво",
-      count: 2,
+      count: 2000,
       unit: "шт",
-      price: 90.13,
-      discount: 20,
+      price: 9013,
+      discount: 2000,
       taxPrograms: "БД",
     },
     {
       id: 56,
       name: "Кава",
-      count: 1,
+      count: 1000,
       unit: "шт",
-      price: 20.13,
-      discount: 0.35,
+      price: 2013,
+      discount: 35,
       taxPrograms: "В",
     },
   ],
@@ -60,10 +60,10 @@ export const receiptRequestData = {
 
 export const receiptRequestDatInCentsAndGrams = {
   type: "receipt",
-  total: { sum: 95004, isInCents: true },
+  total: 95004,
   payments: [
-    { sum: 10000, type: "cash", isInCents: true },
-    { sum: 85004, type: "card", isInCents: true },
+    { sum: 10000, type: "cash" },
+    { sum: 85004, type: "card" },
   ],
   products: [
     {
@@ -74,7 +74,6 @@ export const receiptRequestDatInCentsAndGrams = {
       price: 20000,
       discount: 3000,
       taxPrograms: "ГД",
-      isInCentsAndGrams: true,
     },
     {
       id: 55,
@@ -84,7 +83,6 @@ export const receiptRequestDatInCentsAndGrams = {
       price: 9013,
       discount: 2000,
       taxPrograms: "БД",
-      isInCentsAndGrams: true,
     },
     {
       id: 56,
@@ -94,7 +92,6 @@ export const receiptRequestDatInCentsAndGrams = {
       price: 2013,
       discount: 35,
       taxPrograms: "В",
-      isInCentsAndGrams: true,
     },
   ],
   cashboxData: {
@@ -164,18 +161,18 @@ export const cashboxData = {
 
 export const zReportData = {
   realiz: {
-    sum: 27710.69,
+    sum: 2771069,
     receiptCount: 87,
     payments: [
       {
         payFormCode: 0,
         payFormName: "ГОТІВКА",
-        sum: 8700,
+        sum: 870000,
       },
       {
         payFormCode: 1,
         payFormName: "КАРТКА",
-        sum: 19010.69,
+        sum: 1901069,
       },
     ],
     taxes: [
@@ -184,24 +181,24 @@ export const zReportData = {
         name: "ПДВ 20%",
         program: "Б",
         percent: 20,
-        turnover: 4506.5,
-        sum: 901.5,
+        turnover: 450650,
+        sum: 90150,
       },
       {
         type: 5,
         name: "Акциз 5%",
         program: "Д",
         percent: 5,
-        turnover: 20900.94,
-        sum: 1019.05,
+        turnover: 2090094,
+        sum: 101905,
       },
       {
         type: 4,
         name: "ПДВ 20%",
         program: "Г",
         percent: 20,
-        turnover: 3777.33,
-        sum: 603.22,
+        turnover: 377733,
+        sum: 60322,
       },
     ],
   },

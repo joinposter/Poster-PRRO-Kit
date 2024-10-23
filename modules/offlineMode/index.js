@@ -19,7 +19,10 @@ import {
 } from "./helpers/XZReportData.js";
 import getDFSFiscalLink from "../dfs/index.js";
 import { getDateTime } from "../../helpers/common.js";
-import { getData, getReceiptTotal } from "../../helpers/centsFormat.js";
+import {
+  convertKopecksToGrivnas,
+  getReceiptTotal,
+} from "../../helpers/centsFormat.js";
 
 const getReceiptOfflineModeRequestData = async (data) => {
   if (
@@ -87,7 +90,7 @@ const getTransactionOfflineModeRequestData = async (data) => {
   const fiscalLink = getDFSFiscalLink({
     fiscalId,
     cashbox: data.cashboxData.cashbox,
-    sum: getData(data.isInCents, data.sum),
+    sum: convertKopecksToGrivnas(data.sum),
     date: getDateTime({ date: dateTime, format: "dateDfsLink" }),
     time: getDateTime({ date: dateTime, format: "timeDfsLink" }),
     previousDocumentHash: data.cashboxData.offlineSessionData.lastDocumentHash,
@@ -246,14 +249,12 @@ const mergeOperationsAndXReport = async ({
     ...operationsXReport,
     realiz: realizReturnFieldAcc(xReport.realiz, operationsXReport.realiz),
     return: realizReturnFieldAcc(xReport.return, operationsXReport.return),
-    serviceInput: sumFieldAcc(
-      xReport.serviceInput,
-      operationsXReport.serviceInput,
-    ),
-    serviceOutput: sumFieldAcc(
-      xReport.serviceOutput,
-      operationsXReport.serviceOutput,
-    ),
+    serviceInput: {
+      sum: sumFieldAcc(xReport.serviceInput, operationsXReport.serviceInput),
+    },
+    serviceOutput: {
+      sum: sumFieldAcc(xReport.serviceOutput, operationsXReport.serviceOutput),
+    },
     shiftOpenData: xReport.shiftOpenData,
   };
 };

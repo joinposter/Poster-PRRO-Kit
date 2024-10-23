@@ -38,13 +38,12 @@ import {
   rowsToMapper,
 } from "./commonXMLTagGenerator.js";
 import {
+  convertKopecksToGrivnas,
+  convertGramsToKg,
   getPaymentSum,
-  getProductCount,
-  getProductPrice,
   getReceiptTotal,
   getTaxSum,
   getTaxTurnover,
-  getTotalDiscount,
 } from "../../../helpers/centsFormat.js";
 
 const getPaymentDetails = (type) => {
@@ -128,7 +127,7 @@ const paymentMapper = (payment, index) => {
       ? formatToFixedDecimal(
           getPaymentSum({
             ...payment,
-            sum: cashSumDecimalRounding(payment.sum, payment.isInCents),
+            sum: cashSumDecimalRounding(payment.sum),
           }),
         )
       : formatToFixedDecimal(getPaymentSum(payment));
@@ -154,14 +153,11 @@ const productMapper = (product, index) => {
     uktzed,
     name: NAME,
     unit: UNITNM,
-    isInCentsAndGrams,
   } = product;
 
   const LETTERS = taxPrograms?.length ? { LETTERS: taxPrograms } : {};
-  const PRICE = formatToFixedDecimal(
-    getProductPrice({ isInCentsAndGrams, price }),
-  );
-  const AMOUNT = getProductCount({ isInCentsAndGrams, count });
+  const PRICE = formatToFixedDecimal(convertKopecksToGrivnas(price));
+  const AMOUNT = convertGramsToKg(count);
   const COST = formatToFixedDecimal(getProductSum(product));
   const BARCODEBLOCK = getBarcodeBlock(product);
   const UKTZED = uktzed ? { UKTZED: uktzed } : {};
@@ -243,12 +239,8 @@ const getReturnReceiptFields = (orderData) => {
 };
 
 const getTotal = (orderData) => {
-  const isInCents = !!orderData.total?.isInCents;
   const total = getReceiptTotal(orderData);
-  const discountTotal = getTotalDiscount(
-    isInCents,
-    getDiscountTotal(orderData.products),
-  );
+  const discountTotal = getDiscountTotal(orderData.products);
   const DISCOUNTSUM = discountTotal
     ? { DISCOUNTSUM: formatToFixedDecimal(discountTotal) }
     : {};

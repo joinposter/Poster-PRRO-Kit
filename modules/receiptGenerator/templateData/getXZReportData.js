@@ -8,10 +8,10 @@ import { getDateTime, sortByProgram } from "../../../helpers/common.js";
 import { priceFormat } from "../helpers/receipt.js";
 import { findCashPaymentData } from "../helpers/receiptData.js";
 import {
-  getData,
   getTaxSum,
   getTaxTurnover,
   getPaymentSum,
+  convertKopecksToGrivnas,
 } from "../../../helpers/centsFormat.js";
 
 const getTaxData = (taxes, styles) => {
@@ -26,7 +26,7 @@ const getTaxData = (taxes, styles) => {
     const table = {
       type: "smartTable",
       extraCssClass: {
-        wrapper: "m-2 mb-2 mt-0 p-2 pt-0 pb-1 bg-light rounded-end",
+        wrapper: "m-2 mb-2 mt-0 p-2 pt-0 pb-1 bg-light rounded-bottom",
         table: "mb-0",
       },
       hideTopBorder: true,
@@ -92,7 +92,7 @@ const xzReportHeaderData = (data, isHtml) =>
         {
           row: [
             "Останній фіскальний чек",
-            getDateTime({ date: data?.lastFiscalDocumentData?.dateTime || "" }),
+            getDateTime({ date: data?.lastFiscalDocumentData?.dateTime }) || "",
           ],
           styles: {
             0: { extraCssClass: "w-50 bg-light pt-0 pb-0" },
@@ -136,11 +136,10 @@ const xzReportRealizeData = (data) => [
         row: [
           "Загальний обіг",
           priceFormat(
-            getData(
-              data?.realiz?.sum?.isInCents,
+            convertKopecksToGrivnas(
               data?.realiz?.sum?.isInCents
-                ? data?.realiz?.sum?.value
-                : data?.realiz?.sum,
+                ? data.realiz.sum.value
+                : data?.realiz?.sum || 0,
             ),
           ),
         ],
@@ -186,11 +185,10 @@ const xzReportReturnData = (data) => [
         row: [
           "Загальний обіг",
           priceFormat(
-            getData(
-              data?.return?.sum?.isInCents,
+            convertKopecksToGrivnas(
               data?.return?.sum?.isInCents
-                ? data?.return?.sum?.value
-                : data?.return?.sum,
+                ? data.return.sum.value
+                : data?.return?.sum || 0,
             ),
           ),
         ],
@@ -225,52 +223,33 @@ const xzReportReturnData = (data) => [
 ];
 
 const calcBalance = (data) => {
-  const CENTS_IN_UAH = 100;
   const realizData = data.realiz;
   const returnData = data.return;
   const cashPaymentData = realizData?.payments.find(findCashPaymentData);
   const cashRefundData = returnData?.payments.find(findCashPaymentData);
 
-  const isInCents =
-    data.shiftOpenData.balance?.isInCents ||
-    cashPaymentData?.isInCents ||
-    cashRefundData?.isInCents ||
-    data.serviceInput?.isInCents ||
-    data.serviceOutput?.isInCents;
-
   const cashPaymentsSum = cashPaymentData?.sum || 0;
   const cashRefundsSum = cashRefundData?.sum || 0;
-  const balanceInCents = data.shiftOpenData.balance?.isInCents
-    ? data.shiftOpenData.balance.value
-    : (data.shiftOpenData.balance || 0) * CENTS_IN_UAH;
-  const cashPaymentsSumInCents = cashPaymentData?.isInCents
-    ? cashPaymentsSum
-    : cashPaymentsSum * CENTS_IN_UAH;
-  const serviceInputInCents = data.serviceInput?.isInCents
-    ? data.serviceInput.value
-    : data.serviceInput * CENTS_IN_UAH;
-  const serviceOutputInCents = data.serviceOutput?.isInCents
-    ? data.serviceOutput.value
-    : data.serviceOutput * CENTS_IN_UAH;
-  const cashRefundsSumInCents = cashRefundData?.isInCents
-    ? cashRefundsSum
-    : cashRefundsSum * CENTS_IN_UAH;
 
-  const result = isInCents
-    ? getData(
-        true,
-        balanceInCents +
-          cashPaymentsSumInCents +
-          serviceInputInCents +
-          serviceOutputInCents -
-          cashRefundsSumInCents,
-      )
-    : (data.shiftOpenData.balance || 0) +
-      cashPaymentsSum +
-      data.serviceInput +
-      data.serviceOutput -
-      cashRefundsSum;
-  return result;
+  const shiftOpenDataBalanceSum = data.shiftOpenData.balance?.isInCents
+    ? data.shiftOpenData.balance.value
+    : data.shiftOpenData.balance || 0;
+
+  const serviceInputSum = data.serviceInput?.isInCents
+    ? data.serviceInput.value
+    : data.serviceInput?.sum || 0;
+
+  const serviceOutputSum = data.serviceOutput?.isInCents
+    ? data.serviceOutput.value
+    : data.serviceOutput?.sum || 0;
+
+  return (
+    shiftOpenDataBalanceSum +
+    cashPaymentsSum +
+    serviceInputSum +
+    serviceOutputSum -
+    cashRefundsSum
+  );
 };
 
 const cashFlowData = (data) => [
@@ -289,8 +268,7 @@ const cashFlowData = (data) => [
         row: [
           "Початковий залишок",
           priceFormat(
-            getData(
-              data.shiftOpenData.balance?.isInCents,
+            convertKopecksToGrivnas(
               data.shiftOpenData.balance?.isInCents
                 ? data.shiftOpenData.balance.value
                 : data.shiftOpenData.balance,
@@ -306,11 +284,10 @@ const cashFlowData = (data) => [
         row: [
           "Службове внесення",
           priceFormat(
-            getData(
-              data.serviceInput?.isInCents,
+            convertKopecksToGrivnas(
               data.serviceInput?.isInCents
                 ? data.serviceInput.value
-                : data.serviceInput,
+                : data.serviceInput?.sum || 0,
             ),
           ),
         ],
@@ -324,11 +301,10 @@ const cashFlowData = (data) => [
           "Службове вилучення",
           priceFormat(
             Math.abs(
-              getData(
-                data.serviceOutput?.isInCents,
+              convertKopecksToGrivnas(
                 data.serviceOutput?.isInCents
                   ? data.serviceOutput.value
-                  : data.serviceOutput,
+                  : data.serviceOutput?.sum || 0,
               ),
             ),
           ),
@@ -339,7 +315,10 @@ const cashFlowData = (data) => [
         },
       },
       {
-        row: ["Кінцевий залишок", priceFormat(calcBalance(data))],
+        row: [
+          "Кінцевий залишок",
+          priceFormat(convertKopecksToGrivnas(calcBalance(data))),
+        ],
         styles: {
           0: { extraCssClass: "w-50 pt-0 pb-0" },
           1: { extraCssClass: "text-end pt-0 pb-0" },

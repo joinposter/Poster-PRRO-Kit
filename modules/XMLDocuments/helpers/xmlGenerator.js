@@ -5,9 +5,8 @@ import { v4 as uuidv4 } from "uuid";
 import { PAYMENT_TYPE_CARD, PAYMENT_TYPE_CASH } from "../const/fiscal.js";
 import { roundWithPrecision } from "../../../helpers/round.js";
 import {
-  getProductCount,
-  getProductDiscount,
-  getProductPrice,
+  convertKopecksToGrivnas,
+  convertGramsToKg,
 } from "../../../helpers/centsFormat.js";
 
 export const getFiscalNumberControlCode = (string) => {
@@ -41,21 +40,17 @@ export const fromBase64ToBuffer = (data) => Buffer.from(data, "base64");
 const accumulateDiscount = (acc, item) => acc + item.discount;
 
 export const getDiscountTotal = (products) =>
-  products.reduce(accumulateDiscount, 0);
+  convertKopecksToGrivnas(products.reduce(accumulateDiscount, 0));
 
-export const getDiscount = (product) => {
-  const { discount, isInCentsAndGrams } = product;
-  return getProductDiscount({ isInCentsAndGrams, discount });
-};
+export const getDiscount = (product) =>
+  convertKopecksToGrivnas(product.discount);
 
 export const findCashPayment = (payment) => payment.type === PAYMENT_TYPE_CASH;
 
 export const findCardPayment = (payment) => payment.type === PAYMENT_TYPE_CARD;
 
-export const getProductSum = ({ price, count, isInCentsAndGrams }) => {
-  const sum =
-    getProductCount({ isInCentsAndGrams, count }) *
-    getProductPrice({ isInCentsAndGrams, price });
+export const getProductSum = ({ price, count }) => {
+  const sum = convertGramsToKg(count) * convertKopecksToGrivnas(price);
   return roundWithPrecision(sum);
 };
 

@@ -55,9 +55,12 @@ export const getProductSum = ({ price, count }) => {
 };
 
 const fillUid = (request) => {
-  const uid = uuidv4();
+  const { uid } = request;
 
-  return { ...request, uid };
+  if (!uid) {
+    return { ...request, uid: uuidv4() };
+  }
+  return request;
 };
 
 const fillDateTimeIfEmpty = (request) => {

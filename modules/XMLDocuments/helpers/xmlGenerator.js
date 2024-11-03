@@ -54,26 +54,6 @@ export const getProductSum = ({ price, count }) => {
   return roundWithPrecision(sum);
 };
 
-const fillUid = (request) => {
-  const { uid } = request;
-
-  if (!uid) {
-    return { ...request, uid: uuidv4() };
-  }
-  return request;
-};
-
-const fillDateTimeIfEmpty = (request) => {
-  const { dateTime } = request;
-
-  if (!dateTime) {
-    return { ...request, dateTime: new Date() };
-  }
-  return request;
-};
-
-export const expandDocumentData = pipe(fillUid, fillDateTimeIfEmpty);
-
 export const hasProductMarking = ({ marking }) =>
   Array.isArray(marking) && marking.length;
 

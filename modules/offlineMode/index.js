@@ -11,7 +11,6 @@ import {
 } from "../../const/types.js";
 import { getTaxesData } from "../taxes/index.js";
 import { getDocument, getDocumentHash } from "../XMLDocuments/index.js";
-import { expandDocumentData } from "./helpers/offline.js";
 import {
   createXZReportData,
   sumFieldAcc,
@@ -35,17 +34,15 @@ const getReceiptOfflineModeRequestData = async (data) => {
   const { taxesConfig, cashboxData, ...rest } = data;
   const taxes = getTaxesData(taxesConfig)(rest?.products);
   const XML = getDocument({
-    ...expandDocumentData({
-      ...rest,
-      cashboxData: {
-        ...cashboxData,
-        isOffline: true,
-      },
-    }),
+    ...rest,
+    cashboxData: {
+      ...cashboxData,
+      isOffline: true,
+    },
     taxes,
   });
   const documentHash = await getDocumentHash(XML);
-  const { dateTime } = expandDocumentData(data);
+  const { dateTime } = data;
   const fiscalId = XML?.CHECK?.CHECKHEAD?.ORDERTAXNUM;
   const fiscalLink = getDFSFiscalLink({
     fiscalId,
@@ -55,13 +52,10 @@ const getReceiptOfflineModeRequestData = async (data) => {
     time: getDateTime({ date: dateTime, format: "timeDfsLink" }),
     previousDocumentHash: cashboxData.offlineSessionData.lastDocumentHash,
   });
-  const uid = XML?.CHECK?.CHECKHEAD?.UID;
 
   return {
     fiscalId,
     fiscalLink,
-    uid,
-    dateTime,
     taxes,
     documentHash,
     cashboxData: {
@@ -78,13 +72,11 @@ const getTransactionOfflineModeRequestData = async (data) => {
   )
     return "Invalid data type";
 
-  const XML = getDocument(
-    expandDocumentData({
-      ...data,
-      cashboxData: { ...data.cashboxData, isOffline: true },
-    }),
-  );
-  const { dateTime } = expandDocumentData(data);
+  const XML = getDocument({
+    ...data,
+    cashboxData: { ...data.cashboxData, isOffline: true },
+  });
+  const { dateTime } = data;
   const documentHash = await getDocumentHash(XML);
   const fiscalId = XML?.CHECK?.CHECKHEAD?.ORDERTAXNUM;
   const fiscalLink = getDFSFiscalLink({
@@ -95,14 +87,12 @@ const getTransactionOfflineModeRequestData = async (data) => {
     time: getDateTime({ date: dateTime, format: "timeDfsLink" }),
     previousDocumentHash: data.cashboxData.offlineSessionData.lastDocumentHash,
   });
-  const uid = XML?.CHECK?.CHECKHEAD?.UID;
+
   return {
     ...data,
     cashboxData: { ...data.cashboxData, isOffline: true },
     fiscalId,
     fiscalLink,
-    uid,
-    dateTime: expandDocumentData(data).dateTime,
     documentHash,
   };
 };
@@ -110,19 +100,14 @@ const getTransactionOfflineModeRequestData = async (data) => {
 const getOpenShiftOfflineModeRequestData = async (data) => {
   if (data?.type !== DOCUMENT_TYPE_SHIFT_OPEN) return "Invalid data type";
 
-  const XML = getDocument(
-    expandDocumentData({
-      ...data,
-      cashboxData: { ...data.cashboxData, isOffline: true },
-    }),
-  );
+  const XML = getDocument({
+    ...data,
+    cashboxData: { ...data.cashboxData, isOffline: true },
+  });
   const documentHash = await getDocumentHash(XML);
-  const uid = XML?.CHECK?.CHECKHEAD?.UID;
   return {
     ...data,
     cashboxData: { ...data.cashboxData, isOffline: true },
-    uid,
-    dateTime: expandDocumentData(data).dateTime,
     documentHash,
   };
 };
@@ -130,19 +115,14 @@ const getOpenShiftOfflineModeRequestData = async (data) => {
 const getCloseShiftOfflineModeRequestData = async (data) => {
   if (data?.type !== DOCUMENT_TYPE_SHIFT_CLOSE) return "Invalid data type";
 
-  const XML = getDocument(
-    expandDocumentData({
-      ...data,
-      cashboxData: { ...data.cashboxData, isOffline: true },
-    }),
-  );
+  const XML = getDocument({
+    ...data,
+    cashboxData: { ...data.cashboxData, isOffline: true },
+  });
   const documentHash = await getDocumentHash(XML);
-  const uid = XML?.CHECK?.CHECKHEAD?.UID;
   return {
     ...data,
     cashboxData: { ...data.cashboxData, isOffline: true },
-    uid,
-    dateTime: expandDocumentData(data).dateTime,
     documentHash,
   };
 };
@@ -150,11 +130,11 @@ const getCloseShiftOfflineModeRequestData = async (data) => {
 const getZReportOfflineModeRequestData = async (data) => {
   if (data?.type !== DOCUMENT_TYPE_Z_REPORT) return "Invalid data type";
 
-  const reportData = expandDocumentData({
+  const reportData = {
     ...data.reportData,
     type: data.type,
     cashboxData: { ...data.cashboxData, isOffline: true },
-  });
+  };
 
   const XML = getDocument(reportData);
   const documentHash = await getDocumentHash(XML);
@@ -169,18 +149,13 @@ const getZReportOfflineModeRequestData = async (data) => {
 const getStartOfflineModeRequestData = async (data) => {
   if (data?.type !== DOCUMENT_TYPE_OFFLINE_START) return "Invalid data type";
 
-  const XML = getDocument(
-    expandDocumentData({
-      ...data,
-      cashboxData: { ...data.cashboxData, isOffline: true },
-    }),
-  );
+  const XML = getDocument({
+    ...data,
+    cashboxData: { ...data.cashboxData, isOffline: true },
+  });
   const documentHash = await getDocumentHash(XML);
-  const uid = XML?.CHECK?.CHECKHEAD?.UID;
   return {
     ...data,
-    uid,
-    dateTime: expandDocumentData(data).dateTime,
     documentHash,
     cashboxData: { ...data.cashboxData, isOffline: true },
   };
@@ -189,18 +164,13 @@ const getStartOfflineModeRequestData = async (data) => {
 const getFinishOfflineModeRequestData = async (data) => {
   if (data?.type !== DOCUMENT_TYPE_OFFLINE_FINISH) return "Invalid data type";
 
-  const XML = getDocument(
-    expandDocumentData({
-      ...data,
-      cashboxData: { ...data.cashboxData, isOffline: true },
-    }),
-  );
+  const XML = getDocument({
+    ...data,
+    cashboxData: { ...data.cashboxData, isOffline: true },
+  });
   const documentHash = await getDocumentHash(XML);
-  const uid = XML?.CHECK?.CHECKHEAD?.UID;
   return {
     ...data,
-    uid,
-    dateTime: expandDocumentData(data).dateTime,
     cashboxData: { ...data.cashboxData, isOffline: true },
     documentHash,
   };

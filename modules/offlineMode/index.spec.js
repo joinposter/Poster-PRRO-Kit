@@ -24,6 +24,7 @@ describe("offline mode", () => {
       await getReceiptOfflineModeRequestData({
         type: "receipt",
         dateTime: "2024-06-04T12:26:18.293Z",
+        uid: "11111111-1111-1111-1111-111111111111",
         cashboxData: {
           cashbox: "4000438533",
           tin: 44657555,
@@ -200,6 +201,7 @@ describe("offline mode", () => {
       await getReceiptOfflineModeRequestData({
         type: "receipt",
         dateTime: "2024-06-04T12:26:18.293Z",
+        uid: "11111111-1111-1111-1111-111111111111",
         cashboxData: {
           cashbox: "4000438533",
           tin: 44657555,
@@ -377,6 +379,7 @@ describe("offline mode", () => {
       await getTransactionOfflineModeRequestData({
         type: "serviceEntry",
         dateTime: "2024-06-04T12:26:18.293Z",
+        uid: "11111111-1111-1111-1111-111111111111",
         cashboxData: {
           cashbox: "4000438533",
           tin: 44657555,
@@ -439,6 +442,7 @@ describe("offline mode", () => {
       await getOpenShiftOfflineModeRequestData({
         type: "shiftOpen",
         dateTime: "2024-06-04T12:26:18.293Z",
+        uid: "11111111-1111-1111-1111-111111111111",
         cashboxData: {
           cashbox: "4000438533",
           tin: 44657555,
@@ -496,6 +500,7 @@ describe("offline mode", () => {
       await getCloseShiftOfflineModeRequestData({
         type: "shiftClose",
         dateTime: "2024-06-04T12:26:18.293Z",
+        uid: "11111111-1111-1111-1111-111111111111",
         cashboxData: {
           cashbox: "4000438533",
           tin: 44657555,
@@ -809,6 +814,7 @@ describe("offline mode", () => {
       await getZReportOfflineModeRequestData({
         type: "ZReport",
         dateTime: "2024-06-04T12:26:18.293Z",
+        uid: "11111111-1111-1111-1111-111111111111",
         cashboxData: {
           cashbox: "4000438533",
           tin: 44657555,
@@ -991,6 +997,7 @@ describe("offline mode", () => {
       await getStartOfflineModeRequestData({
         type: "offlineStart",
         dateTime: "2024-06-04T12:26:18.293Z",
+        uid: "11111111-1111-1111-1111-111111111111",
         cashboxData: {
           cashbox: "4000438533",
           tin: 44657555,
@@ -1049,6 +1056,7 @@ describe("offline mode", () => {
       await getFinishOfflineModeRequestData({
         type: "offlineFinish",
         dateTime: "2024-06-04T12:26:18.293Z",
+        uid: "11111111-1111-1111-1111-111111111111",
         cashboxData: {
           cashbox: "4000438533",
           tin: 44657555,

@@ -75,16 +75,17 @@ const getReceiptType = (type) => {
 
 const getFooterData = ({
   fiscalId,
+  isOffline,
   dateTime,
-  cashboxData: { isOffline, cashbox },
+  cashboxData,
   docType,
   software,
   dFSReceiptLink,
 }) => ({
   fiscalId,
   dateTime: getDateTime({ date: dateTime }),
-  cashbox,
-  isOffline,
+  cashbox: cashboxData.cashbox,
+  isOffline: typeof isOffline === "boolean" ? isOffline : cashboxData.isOffline,
   docType,
   software,
   dFSReceiptLink,

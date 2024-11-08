@@ -8,7 +8,7 @@ const updateTransactionData = (data) => ({
   footerData: {
     docType: "СЛУЖБОВИЙ ЧЕК",
     software: "Poster POS",
-    isOffline: data?.cashboxData?.isOffline,
+    isOffline: data?.isOffline,
   },
 });
 

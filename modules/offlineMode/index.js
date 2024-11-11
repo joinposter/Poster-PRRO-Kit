@@ -56,6 +56,7 @@ const getReceiptOfflineModeRequestData = async (data) => {
   return {
     fiscalId,
     fiscalLink,
+    isOffline: true,
     taxes,
     documentHash,
     cashboxData: {
@@ -93,6 +94,7 @@ const getTransactionOfflineModeRequestData = async (data) => {
     cashboxData: { ...data.cashboxData, isOffline: true },
     fiscalId,
     fiscalLink,
+    isOffline: true,
     documentHash,
   };
 };
@@ -142,6 +144,7 @@ const getZReportOfflineModeRequestData = async (data) => {
   return {
     ...reportData,
     fiscalId,
+    isOffline: true,
     documentHash,
   };
 };

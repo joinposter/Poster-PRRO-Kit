@@ -344,10 +344,7 @@ const getXZReportData = (data, isHtml) => [
             ? "ФІСКАЛЬНИЙ ДОКУМЕНТ"
             : "СЛУЖБОВИЙ ДОКУМЕНТ",
         software: "Poster POS",
-        isOffline:
-          typeof data?.isOffline === "boolean"
-            ? data?.isOffline
-            : data?.cashboxData?.isOffline,
+        isOffline: data?.isOffline,
       },
     },
     isHtml,

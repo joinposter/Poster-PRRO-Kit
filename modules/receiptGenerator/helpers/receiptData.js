@@ -29,9 +29,10 @@ export const findCashPayment = (payment) => payment.type === PAYMENT_TYPE_CASH;
 
 export const findCardPayment = (payment) => payment.type === PAYMENT_TYPE_CARD;
 
-const expandedTaxesName = (tax) => {
-  return `${tax.name} ${tax.program} ${tax.percent}%`;
-};
+const expandedTaxesName = (tax) =>
+  tax.percent === null
+    ? `Без ПДВ ${tax.program}`
+    : `${tax.name} ${tax.program} ${tax.percent}%`;
 
 const getTaxesData = (data) => {
   const cardSum = data.payments.find(findCardPayment)?.sum;

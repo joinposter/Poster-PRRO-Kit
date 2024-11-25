@@ -1,7 +1,5 @@
-import { pipe } from "ramda";
 import { Buffer } from "buffer";
 import { crc32 } from "crc";
-import { v4 as uuidv4 } from "uuid";
 import { PAYMENT_TYPE_CARD, PAYMENT_TYPE_CASH } from "../const/fiscal.js";
 import { roundWithPrecision } from "../../../helpers/round.js";
 import {

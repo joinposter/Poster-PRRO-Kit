@@ -45,6 +45,10 @@ import {
   getTaxSum,
   getTaxTurnover,
 } from "../../../helpers/centsFormat.js";
+import {
+  convertSstDateTimeToISO,
+  getDateTime,
+} from "../../../helpers/common.js";
 
 const getPaymentDetails = (type) => {
   const paymentType = {
@@ -103,6 +107,10 @@ const paySysMapper = (sstData, index) => {
     NAME: sstData.paymentSystem || sstData.paymentSystemName,
     ACQUIRENM: sstData.merchant || sstData.merchantId,
     ACQUIRETRANSID: sstData.rrn,
+    POSTRANSDATE: getDateTime({
+      date: convertSstDateTimeToISO(sstData.date, sstData.time),
+      format: "DDMMYYYYHHMMSS",
+    }),
     DEVICEID: sstData.terminalId || sstData.terminal,
     EPZDETAILS: sstData.pan || sstData.cardNumber,
     AUTHCD: sstData.authCode,

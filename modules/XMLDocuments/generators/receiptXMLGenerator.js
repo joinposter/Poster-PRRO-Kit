@@ -45,6 +45,10 @@ import {
   getTaxSum,
   getTaxTurnover,
 } from "../../../helpers/centsFormat.js";
+import {
+  convertSstDateTimeToISO,
+  getDateTime,
+} from "../../../helpers/common.js";
 
 const getPaymentDetails = (type) => {
   const paymentType = {
@@ -96,6 +100,30 @@ const exciseLabelMapper = (exciseLabel, index) => {
 
 const sumField = (sstData) =>
   sstData?.amount || sstData?.sum ? { SUM: sstData.amount || sstData.sum } : {};
+
+const getHeadCommentField = ({ sstData, documentFiscalId, type, cashbox }) => {
+  const rnoData =
+    documentFiscalId && isReturnReceipt({ type })
+      ? `RNO=${documentFiscalId}`
+      : "";
+
+  const tsData = sstData
+    ? `TS=${getDateTime({ date: convertSstDateTimeToISO(sstData.date, sstData.time), format: "YYYYMMDDHHMMSS" })}`
+    : "";
+
+  // Якщо це чек повернення, то потрібно вказати
+  // FN - фіскальний номер каси продажу, якщо це один і той самий номер, то піставити, чи вказувати
+  // іншу, якщо продаж відбувся на іншій касі. Поки що немає інформації, якщо продаж відбувся на
+  // іншій касі, тому отримання fnData через по іншому полю поки закоментован.
+  // const fnData = isReturnReceipt({ type }) && receiptFn  `FN=${receiptFn}` : "";
+  const fnData = isReturnReceipt({ type }) ? `FN=${cashbox}` : "";
+
+  return tsData.length || rnoData.length || fnData.length
+    ? {
+        COMMENT: `${rnoData} ${fnData} ${tsData}`,
+      }
+    : {};
+};
 
 const paySysMapper = (sstData, index) => {
   return {
@@ -218,6 +246,7 @@ const getReceiptHeader = (operationData) => {
     ...getCashboxFields(cashboxData),
     ...getReturnReceiptFields(operationData),
     ...getCashierFields(operationData),
+    ...getHeadCommentField(operationData),
     ...getVersionFields(),
     ...getOfflineFields({ operationData, operationSum }),
     ...getTestingModeFields(cashboxData),

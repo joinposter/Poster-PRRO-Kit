@@ -17,6 +17,8 @@ import {
   formatToFixedDecimal,
 } from "../../../helpers/round.js";
 import {
+  filterProducts,
+  filterTaxesByVAT,
   getDiscount,
   getDiscountTotal,
   getProductSum,
@@ -155,7 +157,7 @@ const productMapper = (product, index) => {
     unit: UNITNM,
   } = product;
 
-  const LETTERS = taxPrograms?.length ? { LETTERS: taxPrograms } : {};
+  const LETTERS = taxPrograms ? { LETTERS: taxPrograms } : {};
   const PRICE = formatToFixedDecimal(convertKopecksToGrivnas(price));
   const AMOUNT = convertGramsToKg(count);
   const COST = formatToFixedDecimal(getProductSum(product));
@@ -182,10 +184,8 @@ const productMapper = (product, index) => {
 
 const taxesMapper = (tax, index) => {
   const { type: TYPE, name: NAME, program: LETTER, percent } = tax;
-
   const PRC = formatToFixedDecimal(percent);
   const TURNOVER = formatToFixedDecimal(getTaxTurnover(tax));
-
   const SUM = formatToFixedDecimal(getTaxSum(tax));
   // const SOURCESUM = formatToFixedDecimal(getTaxSourceSum(tax));
 
@@ -268,13 +268,16 @@ const mixinSstDataToPayments = (payments, sstData) => {
 };
 
 const getReceiptDocument = (data) => {
-  const { products, payments, taxes, sstData } = data;
+  const { products, payments, taxes, sstData, cashboxData } = data;
+  const { VATTaxList } = cashboxData;
+  const filteredTaxes = filterTaxesByVAT(taxes, VATTaxList);
+  const filteredProducts = filterProducts(products, VATTaxList);
   const updatedPayments = mixinSstDataToPayments(payments, sstData);
   const CHECKHEAD = getReceiptHeader(data);
   const CHECKTOTAL = getTotal(data);
   const CHECKPAY = rowsToMapper(updatedPayments, paymentMapper);
-  const CHECKTAX = rowsToMapper(taxes, taxesMapper);
-  const CHECKBODY = rowsToMapper(products, productMapper);
+  const CHECKTAX = rowsToMapper(filteredTaxes, taxesMapper);
+  const CHECKBODY = rowsToMapper(filteredProducts, productMapper);
 
   return {
     CHECK: {

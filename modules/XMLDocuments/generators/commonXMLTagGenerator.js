@@ -50,7 +50,7 @@ const getDoctype = (doctype, subtype) => {
 const getRowNum = (index = 0) => ({ ROWNUM: index + 1 });
 
 const rowsToMapper = (rows, Mapper) => ({
-  ROW: rows.map(Mapper),
+  ROW: rows.map(Mapper).filter(Boolean),
 });
 
 export const getUIDFields = (operationData) => {

@@ -45,10 +45,6 @@ import {
   getTaxSum,
   getTaxTurnover,
 } from "../../../helpers/centsFormat.js";
-import {
-  convertSstDateTimeToISO,
-  getDateTime,
-} from "../../../helpers/common.js";
 
 const getPaymentDetails = (type) => {
   const paymentType = {
@@ -101,11 +97,7 @@ const exciseLabelMapper = (exciseLabel, index) => {
 const sumField = (sstData) =>
   sstData?.amount || sstData?.sum ? { SUM: sstData.amount || sstData.sum } : {};
 
-const getPosTransDateField = (sstData) => {
-  const dateTime = getDateTime({
-    date: convertSstDateTimeToISO(sstData.date, sstData.time),
-    format: "DDMMYYYYHHMMSS",
-  });
+const getPosTransDateField = ({ dateTime }) => {
   return dateTime ? { POSTRANSDATE: dateTime } : {};
 };
 

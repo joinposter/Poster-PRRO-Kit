@@ -6,16 +6,14 @@ export const formatToFixedDecimal = (sum) =>
 export const formatNumber = (num, format) =>
   num.toString().padStart(format.length, "0");
 
-export const convertSstDateTimeToISO = (date, time) => {
+export const combineSstDateTime = (date, time) => {
   if (!date || !time) return null;
   const [day, month, year] = date.split(".").map(Number);
   const [hours, minutes, seconds] = time.split(":").map(Number);
 
-  const isoDate = new Date(
-    Date.UTC(year, month - 1, day, hours, minutes, seconds),
-  );
+  const dateTime = new Date(year, month - 1, day, hours, minutes, seconds);
 
-  return isoDate.toISOString();
+  return dateTime.toISOString();
 };
 
 export const getDateTime = ({ date, format }) => {

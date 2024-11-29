@@ -87,9 +87,9 @@ const filterProduct = (product, VATTaxList) => {
   };
 };
 
-export const filterTaxesByVAT = (taxes, VATTaxList) =>
+export const updateTaxesWithValidVAT = (taxes, VATTaxList) =>
   taxes.filter((tax) => isTaxValid(tax, VATTaxList));
 
-export const filterProducts = (products, VATTaxList) => {
+export const updateProductsWithValidTaxes = (products, VATTaxList) => {
   return products.map((product) => filterProduct(product, VATTaxList));
 };

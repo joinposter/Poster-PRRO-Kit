@@ -17,13 +17,13 @@ import {
   formatToFixedDecimal,
 } from "../../../helpers/round.js";
 import {
-  filterProducts,
-  filterTaxesByVAT,
   getDiscount,
   getDiscountTotal,
   getProductSum,
   hasProductBarcode,
   hasProductMarking,
+  updateProductsWithValidTaxes,
+  updateTaxesWithValidVAT,
 } from "../helpers/xmlGenerator.js";
 import {
   getCashboxFields,
@@ -270,14 +270,14 @@ const mixinSstDataToPayments = (payments, sstData) => {
 const getReceiptDocument = (data) => {
   const { products, payments, taxes, sstData, cashboxData } = data;
   const { VATTaxList } = cashboxData;
-  const filteredTaxes = filterTaxesByVAT(taxes, VATTaxList);
-  const filteredProducts = filterProducts(products, VATTaxList);
+  const updatedTaxes = updateTaxesWithValidVAT(taxes, VATTaxList);
+  const updatedProducts = updateProductsWithValidTaxes(products, VATTaxList);
   const updatedPayments = mixinSstDataToPayments(payments, sstData);
   const CHECKHEAD = getReceiptHeader(data);
   const CHECKTOTAL = getTotal(data);
   const CHECKPAY = rowsToMapper(updatedPayments, paymentMapper);
-  const CHECKTAX = rowsToMapper(filteredTaxes, taxesMapper);
-  const CHECKBODY = rowsToMapper(filteredProducts, productMapper);
+  const CHECKTAX = rowsToMapper(updatedTaxes, taxesMapper);
+  const CHECKBODY = rowsToMapper(updatedProducts, productMapper);
 
   return {
     CHECK: {

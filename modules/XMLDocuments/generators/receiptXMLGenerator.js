@@ -99,12 +99,17 @@ const exciseLabelMapper = (exciseLabel, index) => {
 const sumField = (sstData) =>
   sstData?.amount || sstData?.sum ? { SUM: sstData.amount || sstData.sum } : {};
 
+const getPosTransDateField = ({ dateTime }) => {
+  return dateTime ? { POSTRANSDATE: dateTime } : {};
+};
+
 const paySysMapper = (sstData, index) => {
   return {
     $: getRowNum(index),
     NAME: sstData.paymentSystem || sstData.paymentSystemName,
     ACQUIRENM: sstData.merchant || sstData.merchantId,
     ACQUIRETRANSID: sstData.rrn,
+    ...getPosTransDateField(sstData),
     DEVICEID: sstData.terminalId || sstData.terminal,
     EPZDETAILS: sstData.pan || sstData.cardNumber,
     AUTHCD: sstData.authCode,

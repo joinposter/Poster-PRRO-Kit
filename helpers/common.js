@@ -6,6 +6,16 @@ export const formatToFixedDecimal = (sum) =>
 export const formatNumber = (num, format) =>
   num.toString().padStart(format.length, "0");
 
+export const combineSstDateTime = (date, time) => {
+  if (!date || !time) return null;
+  const [day, month, year] = date.split(".").map(Number);
+  const [hours, minutes, seconds] = time.split(":").map(Number);
+
+  const dateTime = new Date(year, month - 1, day, hours, minutes, seconds);
+
+  return dateTime.toISOString();
+};
+
 export const getDateTime = ({ date, format }) => {
   if (!Date.parse(date)) return null;
   const localISOTime = new Date(date);
@@ -27,6 +37,10 @@ export const getDateTime = ({ date, format }) => {
   }
   if (format === "timeDfsLink") {
     return `${hours}${minutes}${seconds}`;
+  }
+
+  if (format === "DDMMYYYYHHMMSS") {
+    return `${day}${month}${year}${hours}${minutes}${seconds}`;
   }
 
   return `${day}.${month}.${year} ${hours}:${minutes}:${seconds}`;

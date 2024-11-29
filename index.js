@@ -17,7 +17,7 @@ import {
   mergeOperationsAndXReport,
 } from "./modules/offlineMode/index.js";
 import getDFSFiscalLink from "./modules/dfs/index.js";
-import { getDateTime } from "./helpers/common.js";
+import { getDateTime, combineSstDateTime } from "./helpers/common.js";
 import { roundWithPrecision, cashSumDecimalRounding } from "./helpers/round.js";
 import { getBalanceDiffByRequest } from "./helpers/balance.js";
 import {
@@ -84,6 +84,7 @@ export {
   getTaxesData,
   getTaxPrograms,
   getDateTime,
+  combineSstDateTime,
   roundWithPrecision,
   cashSumDecimalRounding,
   getBalanceDiffByRequest,

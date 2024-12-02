@@ -57,3 +57,39 @@ export const hasProductMarking = ({ marking }) =>
 
 export const hasProductBarcode = ({ barcodes }) =>
   Array.isArray(barcodes) && barcodes.length;
+
+const isTaxValid = (tax, VATTaxList) => {
+  const vatTax = VATTaxList[tax.program];
+  return !(vatTax && vatTax.percent === null);
+};
+
+const isVATProgramValid = (letter, VATTaxList) => {
+  const vatTax = VATTaxList[letter];
+  return vatTax?.percent !== null;
+};
+
+const filterTaxPrograms = (taxPrograms, VATTaxList) => {
+  if (!taxPrograms) return taxPrograms;
+  return taxPrograms
+    .split("")
+    .filter((letter) => isVATProgramValid(letter, VATTaxList))
+    .join("");
+};
+
+const filterProduct = (product, VATTaxList) => {
+  const filteredTaxPrograms = filterTaxPrograms(
+    product.taxPrograms,
+    VATTaxList,
+  );
+  return {
+    ...product,
+    taxPrograms: filteredTaxPrograms,
+  };
+};
+
+export const updateTaxesWithValidVAT = (taxes, VATTaxList) =>
+  taxes.filter((tax) => isTaxValid(tax, VATTaxList));
+
+export const updateProductsWithValidTaxes = (products, VATTaxList) => {
+  return products.map((product) => filterProduct(product, VATTaxList));
+};

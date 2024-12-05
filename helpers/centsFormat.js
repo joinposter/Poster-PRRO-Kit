@@ -1,9 +1,6 @@
 export const CENTS_IN_UAH = 100;
 export const GRAMS_IN_KG = 1000;
-export const getReceiptTotal = (data) =>
-  data.total?.isInCents
-    ? data.total.sum / CENTS_IN_UAH
-    : data.total / CENTS_IN_UAH;
+export const getReceiptTotal = (data) => data.total / CENTS_IN_UAH;
 
 export const getProductCount = (product) => product.count / GRAMS_IN_KG;
 

@@ -35,6 +35,7 @@ describe("offline mode", () => {
           cashboxLocalNumber: "123",
           isTestingMode: true,
           isOffline: true,
+          VATTaxList: mockCustomTaxes,
           nextDocumentNumber: 2828,
           offlineSessionData: {
             id: "23649865",
@@ -105,6 +106,7 @@ describe("offline mode", () => {
         isOffline: true,
         isTestingMode: true,
         nextDocumentNumber: 2828,
+        VATTaxList: mockCustomTaxes,
         offlineSessionData: {
           id: "23649865",
           seed: "135969449201653",
@@ -214,6 +216,7 @@ describe("offline mode", () => {
           isTestingMode: true,
           isOffline: true,
           nextDocumentNumber: 2828,
+          VATTaxList: mockCustomTaxes,
           offlineSessionData: {
             id: "23649865",
             seed: "135969449201653",
@@ -283,6 +286,7 @@ describe("offline mode", () => {
         isOffline: true,
         isTestingMode: true,
         nextDocumentNumber: 2828,
+        VATTaxList: mockCustomTaxes,
         offlineSessionData: {
           id: "23649865",
           seed: "135969449201653",

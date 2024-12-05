@@ -68,10 +68,7 @@ const createCardPaymentsData = (data) =>
 
 const getReceiptCount = (data) => data.length;
 
-const accumulateTotal = (acc, item) =>
-  roundWithPrecision(
-    acc + (item.total?.isInCents ? item.total.sum : item.total),
-  );
+const accumulateTotal = (acc, item) => roundWithPrecision(acc + item.total);
 
 const getTotal = (data) => data.reduce(accumulateTotal, 0);
 

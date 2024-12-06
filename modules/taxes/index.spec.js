@@ -176,7 +176,6 @@ describe("taxes", () => {
           price: 20000,
           discount: 3000,
           taxPrograms: "ГД",
-          isInCentsAndGrams: true,
         },
         {
           id: 55,
@@ -186,7 +185,6 @@ describe("taxes", () => {
           price: 9013,
           discount: 2000,
           taxPrograms: "БД",
-          isInCentsAndGrams: true,
         },
         {
           id: 56,
@@ -196,7 +194,6 @@ describe("taxes", () => {
           price: 2013,
           discount: 35,
           taxPrograms: "В",
-          isInCentsAndGrams: true,
         },
       ]),
     ).toEqual([
@@ -208,7 +205,6 @@ describe("taxes", () => {
         turnover: 98026,
         sourceSum: 93026,
         type: 1,
-        isInCentsAndGrams: true,
       },
       {
         name: "ПДВ 0%",
@@ -218,7 +214,6 @@ describe("taxes", () => {
         turnover: 80000,
         sourceSum: 73333,
         type: 0,
-        isInCentsAndGrams: true,
       },
       {
         name: "ПДВ 7%",
@@ -228,7 +223,6 @@ describe("taxes", () => {
         turnover: 18026,
         sourceSum: 15263,
         type: 0,
-        isInCentsAndGrams: true,
       },
       {
         name: "ПДВ 20%",
@@ -238,7 +232,6 @@ describe("taxes", () => {
         turnover: 2013,
         sourceSum: 1978,
         type: 0,
-        isInCentsAndGrams: true,
       },
     ]);
   });

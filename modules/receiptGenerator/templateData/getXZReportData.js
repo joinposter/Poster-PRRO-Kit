@@ -135,13 +135,7 @@ const xzReportRealizeData = (data) => [
       {
         row: [
           "Загальний обіг",
-          priceFormat(
-            convertKopecksToGrivnas(
-              data?.realiz?.sum?.isInCents
-                ? data.realiz.sum.value
-                : data?.realiz?.sum || 0,
-            ),
-          ),
+          priceFormat(convertKopecksToGrivnas(data?.realiz?.sum || 0)),
         ],
         styles: {
           1: { extraCssClass: "text-end" },
@@ -184,13 +178,7 @@ const xzReportReturnData = (data) => [
       {
         row: [
           "Загальний обіг",
-          priceFormat(
-            convertKopecksToGrivnas(
-              data?.return?.sum?.isInCents
-                ? data.return.sum.value
-                : data?.return?.sum || 0,
-            ),
-          ),
+          priceFormat(convertKopecksToGrivnas(data?.return?.sum || 0)),
         ],
         styles: {
           0: { extraCssClass: "w-50 pt-0 pb-0" },
@@ -231,17 +219,11 @@ const calcBalance = (data) => {
   const cashPaymentsSum = cashPaymentData?.sum || 0;
   const cashRefundsSum = cashRefundData?.sum || 0;
 
-  const shiftOpenDataBalanceSum = data.shiftOpenData.balance?.isInCents
-    ? data.shiftOpenData.balance.value
-    : data.shiftOpenData.balance || 0;
+  const shiftOpenDataBalanceSum = data.shiftOpenData.balance || 0;
 
-  const serviceInputSum = data.serviceInput?.isInCents
-    ? data.serviceInput.value
-    : data.serviceInput?.sum || 0;
+  const serviceInputSum = data.serviceInput?.sum || 0;
 
-  const serviceOutputSum = data.serviceOutput?.isInCents
-    ? data.serviceOutput.value
-    : data.serviceOutput?.sum || 0;
+  const serviceOutputSum = data.serviceOutput?.sum || 0;
 
   return (
     shiftOpenDataBalanceSum +
@@ -267,13 +249,7 @@ const cashFlowData = (data) => [
       {
         row: [
           "Початковий залишок",
-          priceFormat(
-            convertKopecksToGrivnas(
-              data.shiftOpenData.balance?.isInCents
-                ? data.shiftOpenData.balance.value
-                : data.shiftOpenData.balance,
-            ),
-          ),
+          priceFormat(convertKopecksToGrivnas(data.shiftOpenData.balance)),
         ],
         styles: {
           0: { extraCssClass: "w-50 pt-0 pb-0" },
@@ -283,13 +259,7 @@ const cashFlowData = (data) => [
       {
         row: [
           "Службове внесення",
-          priceFormat(
-            convertKopecksToGrivnas(
-              data.serviceInput?.isInCents
-                ? data.serviceInput.value
-                : data.serviceInput?.sum || 0,
-            ),
-          ),
+          priceFormat(convertKopecksToGrivnas(data.serviceInput?.sum || 0)),
         ],
         styles: {
           0: { extraCssClass: "w-50 pt-0 pb-0" },
@@ -300,13 +270,7 @@ const cashFlowData = (data) => [
         row: [
           "Службове вилучення",
           priceFormat(
-            Math.abs(
-              convertKopecksToGrivnas(
-                data.serviceOutput?.isInCents
-                  ? data.serviceOutput.value
-                  : data.serviceOutput?.sum || 0,
-              ),
-            ),
+            Math.abs(convertKopecksToGrivnas(data.serviceOutput?.sum || 0)),
           ),
         ],
         styles: {

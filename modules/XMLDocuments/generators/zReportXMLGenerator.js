@@ -53,7 +53,7 @@ const getZReportPaymentsAndTaxes = (data) => {
   const TAXES = sortedTaxes.length
     ? { TAXES: rowsToMapper(sortedTaxes, taxesMapper) }
     : {};
-  const currentSum = convertKopecksToGrivnas(sum?.isInCents ? sum?.value : sum);
+  const currentSum = convertKopecksToGrivnas(sum);
   const SUM = formatToFixedDecimal(currentSum);
 
   return {
@@ -65,12 +65,8 @@ const getZReportPaymentsAndTaxes = (data) => {
 };
 
 const getZReportBody = ({ serviceInput, serviceOutput }) => {
-  const serviceInputData = serviceInput?.isInCents
-    ? serviceInput?.value
-    : serviceInput?.sum || 0;
-  const serviceOutputData = serviceOutput?.isInCents
-    ? serviceOutput?.value
-    : serviceOutput?.sum || 0;
+  const serviceInputData = serviceInput?.sum || 0;
+  const serviceOutputData = serviceOutput?.sum || 0;
 
   return {
     SERVICEINPUT: formatToFixedDecimal(

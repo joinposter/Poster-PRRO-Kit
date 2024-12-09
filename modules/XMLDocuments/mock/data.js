@@ -1,3 +1,5 @@
+import { mockCustomTaxes } from "../../taxes/mock/taxes.js";
+
 export const receiptRequestData = {
   type: "receipt",
   total: 95004,
@@ -45,6 +47,8 @@ export const receiptRequestData = {
     isOffline: true,
     isTestingMode: true,
     nextDocumentNumber: 2834,
+    VATTaxList: mockCustomTaxes.VATTaxList,
+    exciseTaxList: mockCustomTaxes.exciseTaxList,
     offlineSessionData: {
       id: "23649865",
       seed: "135969449201653",
@@ -105,6 +109,8 @@ export const receiptRequestDatInCentsAndGrams = {
     isOffline: true,
     isTestingMode: true,
     nextDocumentNumber: 2834,
+    VATTaxList: mockCustomTaxes.VATTaxList,
+    exciseTaxList: mockCustomTaxes.exciseTaxList,
     offlineSessionData: {
       id: "23649865",
       seed: "135969449201653",

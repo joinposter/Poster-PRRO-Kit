@@ -106,12 +106,15 @@ export const isPaymentByCashMultipleOf10 = (payments) =>
     ),
   );
 
+const productPriceInCents = ({ price }) => Math.round(price * CENTS_IN_UAH);
+const productCountInGrams = ({ count }) => Math.round(count * GRAMS_IN_KG);
+
 const getTotalByProducts = ({ products }) =>
   products?.reduce(
     (acc, product) =>
       acc +
       Math.round(
-        (product.price * CENTS_IN_UAH * (product.count * GRAMS_IN_KG)) /
+        (productPriceInCents(product) * productCountInGrams(product)) /
           GRAMS_IN_KG,
       ) +
       Math.round(product.discount * CENTS_IN_UAH || 0),

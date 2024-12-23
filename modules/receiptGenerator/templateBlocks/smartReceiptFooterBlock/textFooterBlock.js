@@ -1,4 +1,8 @@
-import { getCashboxStatus, getControlSum } from "../../helpers/receiptData.js";
+import {
+  getCashboxStatus,
+  getControlSum,
+  isFiscalReceiptReturnType,
+} from "../../helpers/receiptData.js";
 
 const textFooterBlock = (data) =>
   [
@@ -6,7 +10,7 @@ const textFooterBlock = (data) =>
     data.fiscalId
       ? {
           type: "text",
-          value: data.fiscalId.toString(),
+          value: `${isFiscalReceiptReturnType(data.type) ? "" : "Чек №"} ${data.fiscalId.toString()}`,
           align: "center",
         }
       : null,
@@ -14,8 +18,8 @@ const textFooterBlock = (data) =>
       ? { type: "text", value: data.dateTime, align: "center" }
       : null,
     { type: "text", value: getCashboxStatus(data), align: "center" },
-    getControlSum(data)
-      ? { type: "text", value: getControlSum(data), align: "center" }
+    getControlSum(data.footerData)
+      ? { type: "text", value: getControlSum(data.footerData), align: "center" }
       : null,
     data?.cashboxData?.cashbox
       ? {

@@ -9,8 +9,6 @@ const getSstData = ({
   paymentSystemName,
   authCode,
   rrn,
-  cashier,
-  holder,
 }) => [
   {
     type: "smartTable",
@@ -38,18 +36,6 @@ const getSstData = ({
           }
         : null,
       { row: ["RRN", rrn], styles: { 0: { extraCssClass: "text-secondary" } } },
-      cashier
-        ? {
-            row: ["КАСИР", cashier],
-            styles: { 0: { extraCssClass: "text-secondary" } },
-          }
-        : null,
-      holder
-        ? {
-            row: ["ДЕРЖАТЕЛЬ ЕПЗ", holder],
-            styles: { 0: { extraCssClass: "text-secondary" } },
-          }
-        : null,
     ].filter(Boolean),
   },
 ];

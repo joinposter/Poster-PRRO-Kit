@@ -33,8 +33,8 @@ const getFiscalReceiptData = (data, isHtml) =>
     ...headerServiceData(data),
     operationType(data),
     ...productsData(data),
-    ...summaryData(data),
     ...sstData(data),
+    ...summaryData(data),
     ...footerServiceData(data),
     ...getSmartReceiptFooterBlock(data, isHtml),
   ].filter(Boolean);

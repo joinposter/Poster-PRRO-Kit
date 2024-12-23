@@ -6,6 +6,7 @@ const updateTransactionData = (data) => ({
   ...data,
   dateTime: getDateTime({ date: data.dateTime }),
   footerData: {
+    ...data.footerData,
     docType: "СЛУЖБОВИЙ ЧЕК",
     software: "Poster POS",
     isOffline: data?.isOffline,

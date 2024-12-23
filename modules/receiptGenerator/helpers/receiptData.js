@@ -65,7 +65,13 @@ const getRoundReceiptData = (data) => {
       name: isReturnType ? "До повернення" : "До сплати",
       value: formatToFixedDecimal(total),
     },
-  ];
+    !isReturnType && !!data.payments.find(findCashPayment)
+      ? {
+          name: "Решта",
+          value: formatToFixedDecimal(0),
+        }
+      : null,
+  ].filter(Boolean);
 };
 
 const getReceiptType = (type) => {
@@ -76,9 +82,8 @@ const getReceiptType = (type) => {
 
 const getFooterData = ({
   fiscalId,
-  isOffline,
   dateTime,
-  cashboxData: { cashbox },
+  cashboxData: { cashbox, isOffline },
   docType,
   software,
   dFSReceiptLink,
@@ -102,8 +107,6 @@ const getSstData = ({ sstData, type }) => {
     cardNumber: sstData?.pan,
     authCode: sstData?.authCode,
     rrn: sstData?.rrn,
-    cashier: ".............",
-    holder: ".............",
   };
 };
 
@@ -140,8 +143,8 @@ export const prepareDataForPrintReceipt = (data) => ({
   receiptConfig: data.receiptConfig || defaultReceiptConfig,
 });
 
-export const getCashboxStatus = ({ footerData: { isOffline } }) =>
-  isOffline ? "ОФЛАЙН" : "ОНЛАЙН";
+export const getCashboxStatus = (data) =>
+  data.footerData.isOffline ? "ОФЛАЙН" : "ОНЛАЙН";
 
 export const getControlSum = ({ isOffline, fiscalId }) => {
   if (isOffline && fiscalId) {

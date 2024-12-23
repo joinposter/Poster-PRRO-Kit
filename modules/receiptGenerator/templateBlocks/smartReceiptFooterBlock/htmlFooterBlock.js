@@ -1,6 +1,10 @@
 import qrcode from "qrcode-generator";
 import PosterLogo from "../../../../i/public/Poster.js";
-import { getCashboxStatus, getControlSum } from "../../helpers/receiptData.js";
+import {
+  getCashboxStatus,
+  getControlSum,
+  isFiscalReceiptReturnType,
+} from "../../helpers/receiptData.js";
 import { DEFAULT_QR_MARGIN, DEFAULT_QR_SIZE } from "../../const/receipt.js";
 
 const generateSvgQrCode = (data) => {
@@ -22,7 +26,7 @@ const htmlFooterBlock = (data) => [
       data.fiscalId
         ? {
             type: "footer-text",
-            value: data.fiscalId.toString(),
+            value: `${isFiscalReceiptReturnType(data.type) ? "" : "Чек №"}  ${data.fiscalId.toString()}`,
             align: "center",
           }
         : null,
@@ -30,8 +34,12 @@ const htmlFooterBlock = (data) => [
         ? { type: "footer-text", value: data.dateTime, align: "center" }
         : null,
       { type: "footer-text", value: getCashboxStatus(data), align: "center" },
-      getControlSum(data)
-        ? { type: "footer", value: getControlSum(data), align: "center" }
+      getControlSum(data.footerData)
+        ? {
+            type: "footer-text",
+            value: getControlSum(data.footerData),
+            align: "center",
+          }
         : null,
       data?.cashboxData?.cashbox
         ? {

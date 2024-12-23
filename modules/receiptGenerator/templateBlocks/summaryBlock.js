@@ -17,13 +17,18 @@ const getSummaryBlock = ({ taxesData, roundData, currency }) => [
 const taxesBlock = (data, currency) =>
   [
     {
-      name: "Готівкою",
+      name: "Готівка",
       value: `${priceFormat(data.cash)} ${currency}`,
       hidden: !data.cash,
     },
     {
-      name: "Карткою",
+      name: "Безготівка",
       value: `${priceFormat(data.card)} ${currency}`,
+      hidden: !data.card,
+    },
+    {
+      name: "    Картка",
+      value: " ",
       hidden: !data.card,
     },
     { type: "ruler" },

@@ -33,9 +33,6 @@ const htmlFooterBlock = (data) => [
             align: "center",
           }
         : null,
-      getControlSum(data)
-        ? { type: "footer-text", value: getControlSum(data), align: "center" }
-        : null,
       data.footerData
         ? {
             type: "footer-text",
@@ -44,7 +41,7 @@ const htmlFooterBlock = (data) => [
           }
         : null,
       getControlSum(data)
-        ? { type: "footer", value: getControlSum(data), align: "center" }
+        ? { type: "footer-text", value: getControlSum(data), align: "center" }
         : null,
       data?.cashboxData?.cashbox
         ? {

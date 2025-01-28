@@ -46,6 +46,8 @@ import {
   getReceiptTotal,
   getTaxSum,
   getTaxTurnover,
+  getTaxSourceSum,
+  getTaxTurnoverDiscount,
 } from "../../../helpers/centsFormat.js";
 
 const getPaymentDetails = (type) => {
@@ -191,8 +193,9 @@ const taxesMapper = (tax, index) => {
   const { type: TYPE, name: NAME, program: LETTER, percent } = tax;
   const PRC = formatToFixedDecimal(percent);
   const TURNOVER = formatToFixedDecimal(getTaxTurnover(tax));
+  const TURNOVERDISCOUNT = formatToFixedDecimal(getTaxTurnoverDiscount(tax));
   const SUM = formatToFixedDecimal(getTaxSum(tax));
-  // const SOURCESUM = formatToFixedDecimal(getTaxSourceSum(tax));
+  const SOURCESUM = formatToFixedDecimal(getTaxSourceSum(tax));
 
   return {
     $: getRowNum(index),
@@ -201,8 +204,8 @@ const taxesMapper = (tax, index) => {
     LETTER,
     PRC,
     TURNOVER,
-    // SOURCESUM є не обов'язковим полем і ми вирішили його поки що не додавати
-    // SOURCESUM,
+    TURNOVERDISCOUNT,
+    SOURCESUM,
     SUM,
   };
 };

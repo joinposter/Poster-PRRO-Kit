@@ -9,9 +9,9 @@ import { priceFormat } from "../helpers/receipt.js";
 import { findCashPaymentData } from "../helpers/receiptData.js";
 import {
   getTaxSum,
-  getTaxTurnover,
   getPaymentSum,
   convertKopecksToGrivnas,
+  getTaxTurnoverDiscount,
 } from "../../../helpers/centsFormat.js";
 
 const getTaxData = (taxes, styles) => {
@@ -35,12 +35,12 @@ const getTaxData = (taxes, styles) => {
         {
           row: [
             "Обіг без податку",
-            priceFormat(getTaxTurnover(tax) - getTaxSum(tax)),
+            priceFormat(getTaxTurnoverDiscount(tax) - getTaxSum(tax)),
           ],
           styles,
         },
         {
-          row: ["Обіг за податком", priceFormat(getTaxTurnover(tax))],
+          row: ["Обіг за податком", priceFormat(getTaxTurnoverDiscount(tax))],
           styles,
         },
       ],

@@ -11,12 +11,17 @@ export const getProductDiscount = (product) => product.discount / CENTS_IN_UAH;
 export const getCalculatedTurnover = (product) =>
   Math.round((product.count * product.price) / GRAMS_IN_KG);
 
-export const getCalculatedSourceSum = (product) =>
-  product.discount ? product.turnover - product.discount : product.turnover;
+export const getCalculatedTurnoverDiscount = (product) =>
+  product.turnover - product.discount;
+
+// Дефолтне значення sourceSum є turnoverDiscount, далі для VAT воно буде перерозраховано
+export const getCalculatedSourceSum = (product) => product.turnoverDiscount;
 
 export const getPaymentSum = (payment) => payment.sum / CENTS_IN_UAH;
 
 export const getTaxTurnover = (tax) => tax.turnover / CENTS_IN_UAH;
+export const getTaxTurnoverDiscount = (tax) =>
+  tax.turnoverDiscount / CENTS_IN_UAH;
 
 export const getTaxSum = (tax) => tax.sum / CENTS_IN_UAH;
 

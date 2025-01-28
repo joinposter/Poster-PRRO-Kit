@@ -3,8 +3,10 @@ import { formatToFixedDecimal } from "../../../helpers/round.js";
 import {
   convertKopecksToGrivnas,
   getPaymentSum,
+  getTaxSourceSum,
   getTaxSum,
   getTaxTurnover,
+  getTaxTurnoverDiscount,
 } from "../../../helpers/centsFormat.js";
 import { sortByProgram, sortByPayFormCode } from "../../../helpers/common.js";
 
@@ -27,7 +29,8 @@ const taxesMapper = (tax, index) => {
   const PRC = formatToFixedDecimal(percent);
   const TURNOVER = formatToFixedDecimal(getTaxTurnover(tax));
   const SUM = formatToFixedDecimal(getTaxSum(tax));
-  // const SOURCESUM = formatToFixedDecimal(getTaxSourceSum(tax));
+  const TURNOVERDISCOUNT = formatToFixedDecimal(getTaxTurnoverDiscount(tax));
+  const SOURCESUM = formatToFixedDecimal(getTaxSourceSum(tax));
 
   return {
     $: getRowNum(index),
@@ -36,8 +39,8 @@ const taxesMapper = (tax, index) => {
     LETTER,
     PRC,
     TURNOVER,
-    // SOURCESUM є не обов'язковим полем і ми вирішили його поки що не додавати
-    // SOURCESUM,
+    TURNOVERDISCOUNT,
+    SOURCESUM,
     SUM,
   };
 };

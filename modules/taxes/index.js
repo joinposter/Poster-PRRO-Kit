@@ -11,6 +11,7 @@ import { showError } from "./helpers/taxes.js";
 import {
   getCalculatedSourceSum,
   getCalculatedTurnover,
+  getCalculatedTurnoverDiscount,
 } from "../../helpers/centsFormat.js";
 
 export const getTaxPrograms = (data) => {
@@ -62,18 +63,26 @@ const extractTax = (sum, taxPercent) =>
 
 const calculateTurnover = ({ count, price, ...rest }) => {
   return {
+    count,
+    price,
     turnover: getCalculatedTurnover({ count, price }),
     ...rest,
   };
 };
 
-const calculateSourceSum = ({ turnover, discount, ...rest }) => {
+const calculateTurnoverDiscount = ({ turnover, discount, ...rest }) => {
   return {
     turnover,
-    sourceSum: getCalculatedSourceSum({
-      discount,
-      turnover,
-    }),
+    discount,
+    turnoverDiscount: getCalculatedTurnoverDiscount({ turnover, discount }),
+    ...rest,
+  };
+};
+
+const calculateSourceSum = ({ turnoverDiscount, ...rest }) => {
+  return {
+    turnoverDiscount,
+    sourceSum: getCalculatedSourceSum({ turnoverDiscount }),
     ...rest,
   };
 };
@@ -114,23 +123,22 @@ const extractTaxByName = (taxName, taxList) => (item) => {
     return item;
   }
 
-  const { sourceSum, turnover, ...rest } = item;
+  const { sourceSum, ...rest } = item;
   const program = item[taxName];
   const { percent } = taxList[program];
-  const calcSum = sourceSum || turnover;
 
-  // Це обов'язково потрібно для розрахунку ПДВ, коли ми разраховуємо акциз в нас ще нема exciseAmount,
-  // і тому використовується цілий turnover. Це вказує на те що порядок розрахунку важливий. З початку
+  // Це обов'язково потрібно для розрахунку ПДВ, коли ми розраховуємо акциз в нас ще нема exciseAmount,
+  // і тому використовується дефолтне sourceSum (turnoverDiscount). Далі для VAT буде перерозраховано
+  // це значення як: sourceSum - exciseAmount. Це вказує на те що порядок розрахунку важливий. З початку
   // розраховуємо акциз, а потім ПДВ.
   const calcSumWithoutExcise = item.exciseAmount
-    ? calcSum - item.exciseAmount
-    : calcSum;
+    ? sourceSum - item.exciseAmount
+    : sourceSum;
 
   return {
     ...rest,
     [taxName]: program,
     [`${taxName}Amount`]: extractTax(calcSumWithoutExcise, percent),
-    turnover,
     sourceSum,
   };
 };
@@ -146,7 +154,16 @@ const summarize = (taxGroups) => (program) => (key, value) =>
 
 const groupByTaxes = (
   acc,
-  { excise, exciseAmount, turnover, sourceSum, VAT, VATAmount, taxesConfig },
+  {
+    excise,
+    exciseAmount,
+    turnover,
+    turnoverDiscount,
+    sourceSum,
+    VAT,
+    VATAmount,
+    taxesConfig,
+  },
 ) => {
   const summarizeTaxes = summarize(acc);
   const summarizeExcise = summarizeTaxes(excise);
@@ -155,6 +172,9 @@ const groupByTaxes = (
     acc[excise] = {
       sum: Math.round(summarizeExcise("sum", exciseAmount)),
       turnover: Math.round(summarizeExcise("turnover", turnover)),
+      turnoverDiscount: Math.round(
+        summarizeExcise("turnoverDiscount", turnoverDiscount),
+      ),
       sourceSum: Math.round(summarizeExcise("sourceSum", sourceSum)),
       program: excise,
       ...taxesConfig.exciseTaxList[excise],
@@ -166,6 +186,9 @@ const groupByTaxes = (
     acc[VAT] = {
       sum: Math.round(summarizeVAT("sum", VATAmount)),
       turnover: Math.round(summarizeVAT("turnover", turnover)),
+      turnoverDiscount: Math.round(
+        summarizeVAT("turnoverDiscount", turnoverDiscount),
+      ),
       sourceSum: Math.round(sourceSum - (exciseAmount || 0)),
       program: VAT,
       ...taxesConfig.VATTaxList[VAT],
@@ -186,6 +209,7 @@ export const calcTaxesForProducts = (products) =>
     pipe(
       taxProgramValidation,
       calculateTurnover,
+      calculateTurnoverDiscount,
       calculateSourceSum,
       extractExciseProgram,
       extractVATProgram,

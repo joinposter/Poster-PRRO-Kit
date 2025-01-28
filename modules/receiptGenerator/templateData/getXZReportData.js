@@ -11,7 +11,7 @@ import {
   getTaxSum,
   getPaymentSum,
   convertKopecksToGrivnas,
-  getTaxTurnoverDiscount,
+  getTaxSourceSum,
 } from "../../../helpers/centsFormat.js";
 
 const getTaxData = (taxes, styles) => {
@@ -35,12 +35,12 @@ const getTaxData = (taxes, styles) => {
         {
           row: [
             "Обіг без податку",
-            priceFormat(getTaxTurnoverDiscount(tax) - getTaxSum(tax)),
+            priceFormat(getTaxSourceSum(tax) - getTaxSum(tax)),
           ],
           styles,
         },
         {
-          row: ["Обіг за податком", priceFormat(getTaxTurnoverDiscount(tax))],
+          row: ["Обіг за податком", priceFormat(getTaxSourceSum(tax))],
           styles,
         },
       ],

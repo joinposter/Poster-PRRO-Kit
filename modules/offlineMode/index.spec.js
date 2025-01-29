@@ -169,6 +169,7 @@ describe("offline mode", () => {
           sourceSum: 93026,
           sum: 4430,
           turnover: 98026,
+          turnoverDiscount: 93026,
           type: 1,
         },
         {
@@ -178,6 +179,7 @@ describe("offline mode", () => {
           sourceSum: 73333,
           sum: 0,
           turnover: 80000,
+          turnoverDiscount: 77000,
           type: 0,
         },
         {
@@ -187,6 +189,7 @@ describe("offline mode", () => {
           sourceSum: 15263,
           sum: 999,
           turnover: 18026,
+          turnoverDiscount: 16026,
           type: 0,
         },
         {
@@ -196,6 +199,7 @@ describe("offline mode", () => {
           sourceSum: 1978,
           sum: 330,
           turnover: 2013,
+          turnoverDiscount: 1978,
           type: 0,
         },
       ],
@@ -351,6 +355,7 @@ describe("offline mode", () => {
           sourceSum: 93026,
           sum: 4430,
           turnover: 98026,
+          turnoverDiscount: 93026,
           type: 1,
         },
         {
@@ -360,6 +365,7 @@ describe("offline mode", () => {
           sourceSum: 73333,
           sum: 0,
           turnover: 80000,
+          turnoverDiscount: 77000,
           type: 0,
         },
         {
@@ -369,6 +375,7 @@ describe("offline mode", () => {
           sourceSum: 15263,
           sum: 999,
           turnover: 18026,
+          turnoverDiscount: 16026,
           type: 0,
         },
         {
@@ -378,6 +385,7 @@ describe("offline mode", () => {
           sourceSum: 1978,
           sum: 330,
           turnover: 2013,
+          turnoverDiscount: 1978,
           type: 0,
         },
       ],

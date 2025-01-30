@@ -12,7 +12,12 @@ import {
   getPaymentSum,
   convertKopecksToGrivnas,
   getTaxSourceSum,
+  getTaxTurnover,
 } from "../../../helpers/centsFormat.js";
+import {
+  addVersionInArray,
+  V2,
+} from "../../hook/turnoverDiscountSupporting.js";
 
 const getTaxData = (taxes, styles) => {
   if (!taxes) return [];
@@ -35,12 +40,19 @@ const getTaxData = (taxes, styles) => {
         {
           row: [
             "Обіг без податку",
-            priceFormat(getTaxSourceSum(tax) - getTaxSum(tax)),
+            tax.version === V2
+              ? priceFormat(getTaxSourceSum(tax) - getTaxSum(tax))
+              : priceFormat(getTaxTurnover(tax) - getTaxSum(tax)),
           ],
           styles,
         },
         {
-          row: ["Обіг за податком", priceFormat(getTaxSourceSum(tax))],
+          row: [
+            "Обіг за податком",
+            tax.version === V2
+              ? priceFormat(getTaxSourceSum(tax))
+              : priceFormat(getTaxTurnover(tax)),
+          ],
           styles,
         },
       ],
@@ -157,10 +169,13 @@ const xzReportRealizeData = (data) => [
       },
     ].filter(Boolean),
   },
-  ...getTaxData(data?.realiz?.taxes, {
-    0: { extraCssClass: "w-50 bg-light pt-0 pb-0" },
-    1: { extraCssClass: "text-end bg-light pt-0 pb-0" },
-  }),
+  ...getTaxData(
+    addVersionInArray(data?.shiftOpenData?.version, data?.realiz?.taxes),
+    {
+      0: { extraCssClass: "w-50 bg-light pt-0 pb-0" },
+      1: { extraCssClass: "text-end bg-light pt-0 pb-0" },
+    },
+  ),
 ];
 
 const xzReportReturnData = (data) => [
@@ -204,10 +219,13 @@ const xzReportReturnData = (data) => [
       },
     ].filter(Boolean),
   },
-  ...getTaxData(data?.return?.taxes, {
-    0: { extraCssClass: "w-50 bg-light pt-0 pb-0" },
-    1: { extraCssClass: "text-end bg-light pt-0 pb-0" },
-  }),
+  ...getTaxData(
+    addVersionInArray(data?.shiftOpenData?.version, data?.return?.taxes),
+    {
+      0: { extraCssClass: "w-50 bg-light pt-0 pb-0" },
+      1: { extraCssClass: "text-end bg-light pt-0 pb-0" },
+    },
+  ),
 ];
 
 const calcBalance = (data) => {

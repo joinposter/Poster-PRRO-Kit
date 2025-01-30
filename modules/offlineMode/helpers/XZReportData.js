@@ -172,6 +172,7 @@ const aggregateTaxes = (arr) =>
       acc[tax.program].sourceSum += tax.sourceSum || 0;
       acc[tax.program].sum += tax.sum || 0;
       acc[tax.program].turnover += tax.turnover || 0;
+      acc[tax.program].turnoverDiscount += tax.turnoverDiscount || 0;
     } else {
       acc[tax.program] = tax;
     }

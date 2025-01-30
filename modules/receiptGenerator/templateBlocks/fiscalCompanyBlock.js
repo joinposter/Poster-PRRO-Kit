@@ -1,3 +1,5 @@
+import { isLLC } from "../../XMLDocuments/helpers/xmlGenerator.js";
+
 const getFiscalCompanyData = ({
   name,
   pointName,
@@ -6,9 +8,13 @@ const getFiscalCompanyData = ({
   tin,
   ipn,
   cashier,
-}) =>
-  [
-    name ? { type: "text", value: name, align: "center", bold: true } : null,
+}) => {
+  const actualName = isLLC(tin) ? name : `ФОП ${name}`;
+
+  return [
+    name
+      ? { type: "text", value: actualName, align: "center", bold: true }
+      : null,
     pointName
       ? {
           type: "text",
@@ -35,5 +41,6 @@ const getFiscalCompanyData = ({
         }
       : null,
   ].filter(Boolean);
+};
 
 export default getFiscalCompanyData;

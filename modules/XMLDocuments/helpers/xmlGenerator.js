@@ -6,6 +6,7 @@ import {
   convertKopecksToGrivnas,
   convertGramsToKg,
 } from "../../../helpers/centsFormat.js";
+import LLC from "../const/regExp.js";
 
 export const getFiscalNumberControlCode = (string) => {
   const HEX_RADIX = 16;
@@ -93,3 +94,5 @@ export const updateTaxesWithValidVAT = (taxes, VATTaxList) =>
 export const updateProductsWithValidTaxes = (products, VATTaxList) => {
   return products.map((product) => filterProduct(product, VATTaxList));
 };
+
+export const isLLC = (ipn) => LLC.test(ipn);

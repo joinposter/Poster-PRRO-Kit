@@ -40,7 +40,11 @@ import {
   buildXMLDocument,
 } from "./modules/XMLDocuments/index.js";
 
-import { getTaxesData, getTaxPrograms } from "./modules/taxes/index.js";
+import {
+  getTaxesData,
+  getTaxPrograms,
+  taxProgramValidation,
+} from "./modules/taxes/index.js";
 import {
   getReceiptTotal,
   getPaymentSum,
@@ -81,6 +85,7 @@ export {
   getDocument,
   getDocumentHash,
   buildXMLDocument,
+  taxProgramValidation,
   getTaxesData,
   getTaxPrograms,
   getDateTime,

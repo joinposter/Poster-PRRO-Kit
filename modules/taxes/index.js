@@ -185,7 +185,9 @@ const groupByTaxes = (
       turnoverDiscount: Math.round(
         summarizeVAT("turnoverDiscount", turnoverDiscount),
       ),
-      sourceSum: Math.round(sourceSum - (exciseAmount || 0)),
+      sourceSum: Math.round(
+        summarizeVAT("sourceSum", sourceSum - (exciseAmount || 0)),
+      ),
       program: VAT,
       ...taxesConfig.VATTaxList[VAT],
       type: 0,

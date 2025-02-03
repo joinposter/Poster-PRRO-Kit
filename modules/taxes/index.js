@@ -1,13 +1,13 @@
 import { pipe } from "../../helpers/functional.js";
 import { defaultExciseTaxList, defaultVATTaxList } from "./config/taxes.js";
 import {
-  ERROR_IN_TAX_PROGRAM,
   MULTIPLE_APPLICATION_OF_VAT,
   EXCISE as EXCISE_KEY,
   VAT as VAT_KEY,
   ONE_HUNDRED_PERCENT,
+  INVALID_TAX_PROGRAM,
 } from "./const/taxes.js";
-import { showError } from "./helpers/taxes.js";
+
 import {
   getCalculatedSourceSum,
   getCalculatedTurnover,
@@ -23,7 +23,7 @@ export const getTaxPrograms = (data) => {
 
 const createTaxProgramRegex = (program) => new RegExp(`[${program}]`, "g");
 
-const taxProgramValidation = ({ taxPrograms, taxesConfig, ...rest }) => {
+export const taxProgramValidation = ({ taxPrograms, taxesConfig, ...rest }) => {
   const { VATTaxList, exciseTaxList } = taxesConfig;
   const excisePrograms = Object.keys(exciseTaxList).join("");
   const VATPrograms = Object.keys(VATTaxList).join("");
@@ -34,24 +34,20 @@ const taxProgramValidation = ({ taxPrograms, taxesConfig, ...rest }) => {
   );
 
   if (!reProgramValidator.test(taxPrograms)) {
-    console.error(
-      showError(ERROR_IN_TAX_PROGRAM, taxPrograms, {
-        ...rest,
-        taxPrograms,
-      }),
-    );
+    return {
+      code: INVALID_TAX_PROGRAM,
+      data: { ...rest, taxPrograms },
+    };
   }
 
   if (
     createTaxProgramRegex(VATPrograms).test(taxPrograms) &&
     taxPrograms.match(createTaxProgramRegex(VATPrograms)).length > 1
   ) {
-    console.error(
-      showError(MULTIPLE_APPLICATION_OF_VAT, taxPrograms, {
-        ...rest,
-        taxPrograms,
-      }),
-    );
+    return {
+      code: MULTIPLE_APPLICATION_OF_VAT,
+      data: { ...rest, taxPrograms },
+    };
   }
 
   return { ...rest, taxPrograms, taxesConfig };
@@ -207,7 +203,6 @@ const addTaxesValue = (products, taxesConfig) =>
 export const calcTaxesForProducts = (products) =>
   products.map(
     pipe(
-      taxProgramValidation,
       calculateTurnover,
       calculateTurnoverDiscount,
       calculateSourceSum,

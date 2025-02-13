@@ -11,6 +11,7 @@ import {
   DOCUMENT_TYPE_SERVICE_ENTRY,
   DOCUMENT_TYPE_SHIFT_CLOSE,
   DOCUMENT_TYPE_SHIFT_OPEN,
+  DOCUMENT_TYPE_STORNO,
   DOCUMENT_TYPE_Z_REPORT,
 } from "./const/request.js";
 import { fromBase64ToBuffer, sha256 } from "./helpers/xmlGenerator.js";
@@ -21,6 +22,7 @@ import getOfflineFinishDocument from "./generators/offlineFinishXMLGenerator.js"
 import getZReportDocument from "./generators/zReportXMLGenerator.js";
 import getShiftCloseDocument from "./generators/shiftCloseXMLGenerator.js";
 import getShiftOpenDocument from "./generators/shiftOpenXMLGenerator.js";
+import getStornoDocument from "./generators/stornoXMLGenerator.js";
 
 const builder = new xml2js.Builder({ xmldec: { encoding: XML_ENCODING } });
 
@@ -47,6 +49,7 @@ const getDocument = (request) => {
     [DOCUMENT_TYPE_OFFLINE_FINISH]: getOfflineFinishDocument,
     [DOCUMENT_TYPE_Z_REPORT]: getZReportDocument,
     [DOCUMENT_TYPE_SHIFT_CLOSE]: getShiftCloseDocument,
+    [DOCUMENT_TYPE_STORNO]: getStornoDocument,
   };
 
   return documentsGetterMap[requestType]

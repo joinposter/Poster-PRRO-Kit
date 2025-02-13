@@ -8,6 +8,7 @@ export const DOC_SUBTYPE_SELL = 0;
 export const DOC_SUBTYPE_RETURN_SELL = 1;
 export const DOC_SUBTYPE_SERVICE_ENTRY = 2;
 export const DOC_SUBTYPE_SERVICE_DELIVERY = 4;
+export const DOC_SUBTYPE_STORNO = 5;
 
 export const PAYMENT_CODE_CASH = 0;
 export const PAYMENT_CODE_CARD = 1;

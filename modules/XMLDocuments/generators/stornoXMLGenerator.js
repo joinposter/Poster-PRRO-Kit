@@ -34,7 +34,7 @@ const getTypeFields = () => getDoctype(DOC_TYPE_PRODUCT, DOC_SUBTYPE_STORNO);
 
 const getStornoDocumentNumberField = (data) => {
   return {
-    ORDERSTORNUM: data.fiscalIdForStorno,
+    ORDERSTORNUM: data.documentFiscalId,
   };
 };
 

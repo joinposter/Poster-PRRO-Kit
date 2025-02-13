@@ -22,7 +22,7 @@ const taxesBlock = (data, currency) =>
       hidden: !data.cash,
     },
     {
-      name: "Безготівка",
+      name: "Безготівкова",
       value: `${priceFormat(data.card)} ${currency}`,
       hidden: !data.card,
     },

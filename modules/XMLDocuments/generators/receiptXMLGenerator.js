@@ -49,10 +49,6 @@ import {
   getTaxSourceSum,
   getTaxTurnoverDiscount,
 } from "../../../helpers/centsFormat.js";
-import {
-  addVersionInArray,
-  getVersion2SpecificFields,
-} from "../../hook/turnoverDiscountSupporting.js";
 
 const getPaymentDetails = (type) => {
   const paymentType = {
@@ -194,7 +190,7 @@ const productMapper = (product, index) => {
 };
 
 const taxesMapper = (tax, index) => {
-  const { type: TYPE, name: NAME, program: LETTER, percent, version } = tax;
+  const { type: TYPE, name: NAME, program: LETTER, percent } = tax;
   const PRC = formatToFixedDecimal(percent);
   const TURNOVER = formatToFixedDecimal(getTaxTurnover(tax));
   const TURNOVERDISCOUNT = formatToFixedDecimal(getTaxTurnoverDiscount(tax));
@@ -208,7 +204,8 @@ const taxesMapper = (tax, index) => {
     LETTER,
     PRC,
     TURNOVER,
-    ...getVersion2SpecificFields(version, { TURNOVERDISCOUNT, SOURCESUM }),
+    TURNOVERDISCOUNT,
+    SOURCESUM,
     SUM,
   };
 };
@@ -279,18 +276,16 @@ const mixinSstDataToPayments = (payments, sstData) => {
 };
 
 const getReceiptDocument = (data) => {
-  const { products, payments, taxes, sstData, cashboxData, version } = data;
+  const { products, payments, taxes, sstData, cashboxData } = data;
   const { VATTaxList } = cashboxData;
   const updatedTaxes = updateTaxesWithValidVAT(taxes, VATTaxList);
   const updatedProducts = updateProductsWithValidTaxes(products, VATTaxList);
   const updatedPayments = mixinSstDataToPayments(payments, sstData);
 
-  const taxesWithVersion = addVersionInArray(version, updatedTaxes);
-
   const CHECKHEAD = getReceiptHeader(data);
   const CHECKTOTAL = getTotal(data);
   const CHECKPAY = rowsToMapper(updatedPayments, paymentMapper);
-  const CHECKTAX = rowsToMapper(taxesWithVersion, taxesMapper);
+  const CHECKTAX = rowsToMapper(updatedTaxes, taxesMapper);
   const CHECKBODY = rowsToMapper(updatedProducts, productMapper);
 
   return {

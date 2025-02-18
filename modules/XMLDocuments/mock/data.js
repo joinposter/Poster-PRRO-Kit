@@ -124,28 +124,6 @@ export const receiptRequestDatInCentsAndGrams = {
   uid: "11111111-1111-1111-1111-111111111111",
 };
 
-export const operationData = {
-  cashboxData: {
-    cashbox: "4000438533",
-    tin: 44657555,
-    name: "ТОВ ТЕСТ ПРРО",
-    pointName: "кафе Ромашка",
-    pointAddress: "Дніпропетровська область, м. Дніпро, вул. Шевченка, 1",
-    cashboxLocalNumber: "123",
-    isOffline: true,
-    isTestingMode: true,
-    offlineSessionData: {
-      id: 23649865,
-      seed: 135969449201653,
-      nextOfflineDocumentNumber: 1,
-      lastDocumentHash:
-        "685df9bd624bde3dfb25c40c1d80583e60fe1d6ec6f4932343d79abb1aecab40",
-    },
-    nextDocumentNumber: 1,
-  },
-  cashier: "Шевченко Т.Г.",
-};
-
 export const cashboxData = {
   tin: 44657555,
   name: "ТОВ ТЕСТ ПРРО",
@@ -188,7 +166,9 @@ export const zReportData = {
         program: "Б",
         percent: 20,
         turnover: 450650,
-        sum: 90150,
+        turnoverDiscount: 450650,
+        sourceSum: 375542,
+        sum: 75108,
       },
       {
         type: 5,
@@ -196,15 +176,19 @@ export const zReportData = {
         program: "Д",
         percent: 5,
         turnover: 2090094,
-        sum: 101905,
+        turnoverDiscount: 2090094,
+        sourceSum: 1990566,
+        sum: 99528,
       },
       {
         type: 4,
         name: "ПДВ 20%",
         program: "Г",
         percent: 20,
-        turnover: 377733,
-        sum: 60322,
+        turnover: 230325,
+        turnoverDiscount: 230325,
+        sourceSum: 191938,
+        sum: 38388,
       },
     ],
   },

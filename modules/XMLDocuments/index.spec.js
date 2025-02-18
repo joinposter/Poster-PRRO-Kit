@@ -89,6 +89,8 @@ describe("XMLDocuments", () => {
             "      <LETTER>Д</LETTER>\n" +
             "      <PRC>5.00</PRC>\n" +
             "      <TURNOVER>980.26</TURNOVER>\n" +
+            "      <TURNOVERDISCOUNT>930.26</TURNOVERDISCOUNT>\n" +
+            "      <SOURCESUM>930.26</SOURCESUM>\n" +
             "      <SUM>44.30</SUM>\n" +
             "    </ROW>\n" +
             '    <ROW ROWNUM="2">\n' +
@@ -97,6 +99,8 @@ describe("XMLDocuments", () => {
             "      <LETTER>Г</LETTER>\n" +
             "      <PRC>0.00</PRC>\n" +
             "      <TURNOVER>800.00</TURNOVER>\n" +
+            "      <TURNOVERDISCOUNT>770.00</TURNOVERDISCOUNT>\n" +
+            "      <SOURCESUM>733.33</SOURCESUM>\n" +
             "      <SUM>0.00</SUM>\n" +
             "    </ROW>\n" +
             '    <ROW ROWNUM="3">\n' +
@@ -105,6 +109,8 @@ describe("XMLDocuments", () => {
             "      <LETTER>Б</LETTER>\n" +
             "      <PRC>7.00</PRC>\n" +
             "      <TURNOVER>180.26</TURNOVER>\n" +
+            "      <TURNOVERDISCOUNT>160.26</TURNOVERDISCOUNT>\n" +
+            "      <SOURCESUM>152.63</SOURCESUM>\n" +
             "      <SUM>9.99</SUM>\n" +
             "    </ROW>\n" +
             '    <ROW ROWNUM="4">\n' +
@@ -113,6 +119,8 @@ describe("XMLDocuments", () => {
             "      <LETTER>В</LETTER>\n" +
             "      <PRC>20.00</PRC>\n" +
             "      <TURNOVER>20.13</TURNOVER>\n" +
+            "      <TURNOVERDISCOUNT>19.78</TURNOVERDISCOUNT>\n" +
+            "      <SOURCESUM>19.78</SOURCESUM>\n" +
             "      <SUM>3.30</SUM>\n" +
             "    </ROW>\n" +
             "  </CHECKTAX>\n" +
@@ -212,6 +220,8 @@ describe("XMLDocuments", () => {
             "      <LETTER>Д</LETTER>\n" +
             "      <PRC>5.00</PRC>\n" +
             "      <TURNOVER>980.26</TURNOVER>\n" +
+            "      <TURNOVERDISCOUNT>930.26</TURNOVERDISCOUNT>\n" +
+            "      <SOURCESUM>930.26</SOURCESUM>\n" +
             "      <SUM>44.30</SUM>\n" +
             "    </ROW>\n" +
             '    <ROW ROWNUM="2">\n' +
@@ -220,6 +230,8 @@ describe("XMLDocuments", () => {
             "      <LETTER>Г</LETTER>\n" +
             "      <PRC>0.00</PRC>\n" +
             "      <TURNOVER>800.00</TURNOVER>\n" +
+            "      <TURNOVERDISCOUNT>770.00</TURNOVERDISCOUNT>\n" +
+            "      <SOURCESUM>733.33</SOURCESUM>\n" +
             "      <SUM>0.00</SUM>\n" +
             "    </ROW>\n" +
             '    <ROW ROWNUM="3">\n' +
@@ -228,6 +240,8 @@ describe("XMLDocuments", () => {
             "      <LETTER>Б</LETTER>\n" +
             "      <PRC>7.00</PRC>\n" +
             "      <TURNOVER>180.26</TURNOVER>\n" +
+            "      <TURNOVERDISCOUNT>160.26</TURNOVERDISCOUNT>\n" +
+            "      <SOURCESUM>152.63</SOURCESUM>\n" +
             "      <SUM>9.99</SUM>\n" +
             "    </ROW>\n" +
             '    <ROW ROWNUM="4">\n' +
@@ -236,6 +250,8 @@ describe("XMLDocuments", () => {
             "      <LETTER>В</LETTER>\n" +
             "      <PRC>20.00</PRC>\n" +
             "      <TURNOVER>20.13</TURNOVER>\n" +
+            "      <TURNOVERDISCOUNT>19.78</TURNOVERDISCOUNT>\n" +
+            "      <SOURCESUM>19.78</SOURCESUM>\n" +
             "      <SUM>3.30</SUM>\n" +
             "    </ROW>\n" +
             "  </CHECKTAX>\n" +
@@ -388,15 +404,19 @@ describe("XMLDocuments", () => {
             "        <LETTER>Б</LETTER>\n" +
             "        <PRC>20.00</PRC>\n" +
             "        <TURNOVER>4506.50</TURNOVER>\n" +
-            "        <SUM>901.50</SUM>\n" +
+            "        <TURNOVERDISCOUNT>4506.50</TURNOVERDISCOUNT>\n" +
+            "        <SOURCESUM>3755.42</SOURCESUM>\n" +
+            "        <SUM>751.08</SUM>\n" +
             "      </ROW>\n" +
             '      <ROW ROWNUM="2">\n' +
             "        <TYPE>4</TYPE>\n" +
             "        <NAME>ПДВ 20%</NAME>\n" +
             "        <LETTER>Г</LETTER>\n" +
             "        <PRC>20.00</PRC>\n" +
-            "        <TURNOVER>3777.33</TURNOVER>\n" +
-            "        <SUM>603.22</SUM>\n" +
+            "        <TURNOVER>2303.25</TURNOVER>\n" +
+            "        <TURNOVERDISCOUNT>2303.25</TURNOVERDISCOUNT>\n" +
+            "        <SOURCESUM>1919.38</SOURCESUM>\n" +
+            "        <SUM>383.88</SUM>\n" +
             "      </ROW>\n" +
             '      <ROW ROWNUM="3">\n' +
             "        <TYPE>5</TYPE>\n" +
@@ -404,7 +424,9 @@ describe("XMLDocuments", () => {
             "        <LETTER>Д</LETTER>\n" +
             "        <PRC>5.00</PRC>\n" +
             "        <TURNOVER>20900.94</TURNOVER>\n" +
-            "        <SUM>1019.05</SUM>\n" +
+            "        <TURNOVERDISCOUNT>20900.94</TURNOVERDISCOUNT>\n" +
+            "        <SOURCESUM>19905.66</SOURCESUM>\n" +
+            "        <SUM>995.28</SUM>\n" +
             "      </ROW>\n" +
             "    </TAXES>\n" +
             "  </ZREPREALIZ>\n" +

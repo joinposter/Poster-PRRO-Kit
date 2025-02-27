@@ -1,4 +1,5 @@
 import {
+  getCashboxInfo,
   getCashboxStatus,
   getControlSum,
   isFiscalReceiptReturnType,
@@ -24,7 +25,7 @@ const textFooterBlock = (data) =>
     data?.cashboxData?.cashbox
       ? {
           type: "text",
-          value: data.cashboxData.cashbox.toString(),
+          value: getCashboxInfo(data),
           align: "center",
         }
       : null,

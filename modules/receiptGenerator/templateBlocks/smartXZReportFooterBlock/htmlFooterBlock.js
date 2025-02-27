@@ -1,5 +1,9 @@
 import PosterLogo from "../../../../i/public/Poster.js";
-import { getCashboxStatus, getControlSum } from "../../helpers/receiptData.js";
+import {
+  getCashboxInfo,
+  getCashboxStatus,
+  getControlSum,
+} from "../../helpers/receiptData.js";
 
 const htmlFooterBlock = (data) => [
   { type: "ruler" },
@@ -23,7 +27,7 @@ const htmlFooterBlock = (data) => [
       data?.cashboxData?.cashbox
         ? {
             type: "footer-text",
-            value: data.cashboxData.cashbox.toString(),
+            value: getCashboxInfo(data),
             align: "center",
           }
         : null,

@@ -1,4 +1,8 @@
-import { getCashboxStatus, getControlSum } from "../../helpers/receiptData.js";
+import {
+  getCashboxInfo,
+  getCashboxStatus,
+  getControlSum,
+} from "../../helpers/receiptData.js";
 
 const textFooterBlock = (data) =>
   [
@@ -20,7 +24,7 @@ const textFooterBlock = (data) =>
     data?.cashboxData?.cashbox
       ? {
           type: "text",
-          value: data.cashboxData.cashbox.toString(),
+          value: getCashboxInfo(data),
           align: "center",
         }
       : null,

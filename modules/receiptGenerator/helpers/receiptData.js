@@ -146,6 +146,8 @@ export const prepareDataForPrintReceipt = (data) => ({
 export const getCashboxStatus = (data) =>
   data.footerData.isOffline ? "ОФЛАЙН" : "ОНЛАЙН";
 
+export const getCashboxInfo = (data) => `ФН ПРРО ${data.cashboxData.cashbox}`;
+
 export const getControlSum = ({ isOffline, fiscalId }) => {
   if (isOffline && fiscalId) {
     return fiscalId?.toString()?.split(".")?.pop();

@@ -1,6 +1,10 @@
 import qrcode from "qrcode-generator";
 import PosterLogo from "../../../../i/public/Poster.js";
-import { getControlSum, getCashboxStatus } from "../../helpers/receiptData.js";
+import {
+  getControlSum,
+  getCashboxStatus,
+  getCashboxInfo,
+} from "../../helpers/receiptData.js";
 import { DEFAULT_QR_MARGIN, DEFAULT_QR_SIZE } from "../../const/receipt.js";
 
 const generateSvgQrCode = (data) => {
@@ -46,7 +50,7 @@ const htmlFooterBlock = (data) => [
       data?.cashboxData?.cashbox
         ? {
             type: "footer-text",
-            value: data.cashboxData.cashbox.toString(),
+            value: getCashboxInfo(data),
             align: "center",
           }
         : null,

@@ -19,7 +19,7 @@ const renderFooter = (item) => {
   return `
     <div class="d-flex justify-content-center mt-2">
         ${qrLinesHtml}
-        <div class="d-flex flex-column ms-5">
+        <div class="d-flex flex-column ms-4">
             ${textLinesHtml}
         </div>
     </div>

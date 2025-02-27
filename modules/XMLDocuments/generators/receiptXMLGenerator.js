@@ -278,7 +278,8 @@ const mixinSstDataToPayments = (payments, sstData) => {
 };
 
 const getReceiptDocument = (data) => {
-  const { products, payments, taxes, sstData, cashboxData, deleteEmptyTags } = data;
+  const { products, payments, taxes, sstData, cashboxData, deleteEmptyTags } =
+    data;
   const { VATTaxList } = cashboxData;
   const updatedTaxes = updateTaxesWithValidVAT(taxes, VATTaxList);
   const updatedProducts = updateProductsWithValidTaxes(products, VATTaxList);
@@ -288,9 +289,10 @@ const getReceiptDocument = (data) => {
   const CHECKTOTAL = getTotal(data);
   const CHECKPAY = rowsToMapper(updatedPayments, paymentMapper);
   const CHECKBODY = rowsToMapper(updatedProducts, productMapper);
-  const CHECKTAX = deleteEmptyTags && updatedTaxes.length === 0
-    ? {}
-    : { CHECKTAX: rowsToMapper(updatedTaxes, taxesMapper) };
+  const CHECKTAX =
+    deleteEmptyTags && updatedTaxes.length === 0
+      ? {}
+      : { CHECKTAX: rowsToMapper(updatedTaxes, taxesMapper) };
 
   return {
     CHECK: {

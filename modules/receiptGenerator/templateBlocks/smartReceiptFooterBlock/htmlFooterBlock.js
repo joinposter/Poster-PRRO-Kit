@@ -1,6 +1,7 @@
 import qrcode from "qrcode-generator";
 import PosterLogo from "../../../../i/public/Poster.js";
 import {
+  getCashboxInfo,
   getCashboxStatus,
   getControlSum,
   isFiscalReceiptReturnType,
@@ -44,7 +45,7 @@ const htmlFooterBlock = (data) => [
       data?.cashboxData?.cashbox
         ? {
             type: "footer-text",
-            value: data.cashboxData.cashbox.toString(),
+            value: getCashboxInfo(data),
             align: "center",
           }
         : null,

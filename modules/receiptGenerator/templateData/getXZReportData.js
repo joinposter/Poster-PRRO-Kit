@@ -13,6 +13,10 @@ import {
   convertKopecksToGrivnas,
   getTaxSourceSum,
 } from "../../../helpers/centsFormat.js";
+import {
+  PAYMENT_CODE_CARD,
+  PAYMENT_CODE_CASH,
+} from "../../XMLDocuments/const/fiscal.js";
 
 const getTaxData = (taxes, styles) => {
   if (!taxes) return [];
@@ -59,13 +63,25 @@ const getTitle = ({ type, cashboxData }, isHtml) => {
 const fiscalCompanyData = ({ cashboxData, cashier }) =>
   getFiscalCompanyData({ ...cashboxData, cashier });
 
-const getPayment = (payment, styles) =>
-  payment
-    ? {
-        row: [payment.payFormName, priceFormat(getPaymentSum(payment))],
-        styles,
-      }
-    : null;
+const hasCashPayment = (payments) =>
+  payments.some((p) => p.payFormCode === PAYMENT_CODE_CASH);
+
+const getCashPaymentSum = (payments) =>
+  priceFormat(
+    getPaymentSum(
+      payments.find((p) => p.payFormCode === PAYMENT_CODE_CASH) || { sum: 0 },
+    ),
+  );
+
+const hasCardPayment = (payments) =>
+  payments.some((p) => p.payFormCode === PAYMENT_CODE_CARD);
+
+const getCardPaymentSum = (payments) =>
+  priceFormat(
+    getPaymentSum(
+      payments.find((p) => p.payFormCode === PAYMENT_CODE_CARD) || { sum: 0 },
+    ),
+  );
 
 const xzReportHeaderData = (data, isHtml) =>
   [
@@ -142,12 +158,38 @@ const xzReportRealizeData = (data) => [
         },
       },
       ...(data?.realiz?.payments
-        ? data.realiz.payments.map((p) =>
-            getPayment(p, {
-              0: { extraCssClass: "w-50 pt-0 pb-0" },
-              1: { extraCssClass: "text-end pt-0 pb-0" },
-            }),
-          )
+        ? [
+            hasCashPayment(data?.realiz?.payments)
+              ? {
+                  row: ["Готівка", getCashPaymentSum(data?.realiz?.payments)],
+                  styles: {
+                    0: { extraCssClass: "w-50 pt-0 pb-0" },
+                    1: { extraCssClass: "text-end pt-0 pb-0" },
+                  },
+                }
+              : null,
+            hasCardPayment(data?.realiz?.payments)
+              ? {
+                  row: [
+                    "Безготівкова",
+                    getCardPaymentSum(data?.realiz?.payments),
+                  ],
+                  styles: {
+                    0: { extraCssClass: "w-50 pt-0 pb-0" },
+                    1: { extraCssClass: "text-end pt-0 pb-0" },
+                  },
+                }
+              : null,
+            hasCardPayment(data?.realiz?.payments)
+              ? {
+                  row: ["Картка", " "],
+                  styles: {
+                    0: { extraCssClass: "pt-0 pb-0" },
+                    1: { extraCssClass: "pt-0 pb-0" },
+                  },
+                }
+              : null,
+          ]
         : [null]),
       {
         row: ["Кількість чеків", data?.realiz?.receiptCount || "0"],
@@ -186,14 +228,38 @@ const xzReportReturnData = (data) => [
         },
       },
       ...(data?.return?.payments
-        ? data.return.payments
-            .map((p) =>
-              getPayment(p, {
-                0: { extraCssClass: "w-50 pt-0 pb-0" },
-                1: { extraCssClass: "text-end pt-0 pb-0" },
-              }),
-            )
-            .filter(Boolean)
+        ? [
+            hasCashPayment(data?.return?.payments)
+              ? {
+                  row: ["Готівка", getCashPaymentSum(data?.return?.payments)],
+                  styles: {
+                    0: { extraCssClass: "w-50 pt-0 pb-0" },
+                    1: { extraCssClass: "text-end pt-0 pb-0" },
+                  },
+                }
+              : null,
+            hasCardPayment(data?.return?.payments)
+              ? {
+                  row: [
+                    "Безготівкова",
+                    getCardPaymentSum(data?.return?.payments),
+                  ],
+                  styles: {
+                    0: { extraCssClass: "w-50 pt-0 pb-0" },
+                    1: { extraCssClass: "text-end pt-0 pb-0" },
+                  },
+                }
+              : null,
+            hasCardPayment(data?.return?.payments)
+              ? {
+                  row: ["Картка", " "],
+                  styles: {
+                    0: { extraCssClass: "pt-0 pb-0" },
+                    1: { extraCssClass: "pt-0 pb-0" },
+                  },
+                }
+              : null,
+          ]
         : [null]),
       {
         row: ["Кількість чеків", data?.return?.receiptCount || "0"],

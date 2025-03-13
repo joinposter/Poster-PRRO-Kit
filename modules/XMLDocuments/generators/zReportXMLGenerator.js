@@ -9,6 +9,7 @@ import {
   getTaxTurnoverDiscount,
 } from "../../../helpers/centsFormat.js";
 import { sortByProgram, sortByPayFormCode } from "../../../helpers/common.js";
+import { addVersionInEntities } from "../helpers/xmlGenerator.js";
 
 const paymentMapper = (payment, index) => {
   const PAYFORMCD = payment.payFormCode;
@@ -49,15 +50,18 @@ const getZReportPaymentsAndTaxes = (data) => {
   if (!data) {
     return null;
   }
-  const { sum, receiptCount: ORDERSCNT, payments, taxes } = data;
+  const { sum, receiptCount: ORDERSCNT, payments, taxes, version } = data;
 
   const sortedPayments = [...payments].sort(sortByPayFormCode);
-  const sortedTaxes = [...taxes].sort(sortByProgram);
-  const PAYFORMS = rowsToMapper(sortedPayments, paymentMapper);
+  const paymentsWithVersion = addVersionInEntities(sortedPayments, version);
+  const PAYFORMS = rowsToMapper(paymentsWithVersion, paymentMapper);
 
-  const TAXES = sortedTaxes.length
-    ? { TAXES: rowsToMapper(sortedTaxes, taxesMapper) }
+  const sortedTaxes = [...taxes].sort(sortByProgram);
+  const taxesWithVersion = addVersionInEntities(sortedTaxes, version);
+  const TAXES = taxesWithVersion.length
+    ? { TAXES: rowsToMapper(taxesWithVersion, taxesMapper) }
     : {};
+
   const currentSum = convertKopecksToGrivnas(sum);
   const SUM = formatToFixedDecimal(currentSum);
 
@@ -69,7 +73,7 @@ const getZReportPaymentsAndTaxes = (data) => {
   };
 };
 
-const getZReportBody = ({ serviceInput, serviceOutput }) => {
+const getZReportBody = ({ serviceInput, serviceOutput, version }) => {
   const serviceInputData = serviceInput?.sum || 0;
   const serviceOutputData = serviceOutput?.sum || 0;
 
@@ -84,18 +88,25 @@ const getZReportBody = ({ serviceInput, serviceOutput }) => {
 };
 
 const getZReportDocument = (data) => {
-  const ZREPHEAD = getHeader(data);
-  const zRepRealiz = data.realiz
+  const { version = 0, ...rest } = data;
+  const ZREPHEAD = getHeader(rest);
+  const zRepRealiz = rest.realiz
     ? {
-        ZREPREALIZ: getZReportPaymentsAndTaxes(data.realiz),
+        ZREPREALIZ: getZReportPaymentsAndTaxes({
+          ...rest.realiz,
+          version,
+        }),
       }
     : {};
-  const zRepReturn = data.return
+  const zRepReturn = rest.return
     ? {
-        ZREPRETURN: getZReportPaymentsAndTaxes(data.return),
+        ZREPRETURN: getZReportPaymentsAndTaxes({
+          ...rest.return,
+          version,
+        }),
       }
     : {};
-  const ZREPBODY = getZReportBody(data);
+  const ZREPBODY = getZReportBody({ ...rest, version });
 
   return {
     ZREP: {

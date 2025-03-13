@@ -431,8 +431,8 @@ describe("XMLDocuments", () => {
             "    </TAXES>\n" +
             "  </ZREPREALIZ>\n" +
             "  <ZREPBODY>\n" +
-            "    <SERVICEINPUT>0.00</SERVICEINPUT>\n" +
-            "    <SERVICEOUTPUT>0.00</SERVICEOUTPUT>\n" +
+            "    <SERVICEINPUT>10.00</SERVICEINPUT>\n" +
+            "    <SERVICEOUTPUT>20.00</SERVICEOUTPUT>\n" +
             "  </ZREPBODY>\n" +
             "</ZREP>",
         );

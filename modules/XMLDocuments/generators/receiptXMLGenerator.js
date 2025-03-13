@@ -17,6 +17,7 @@ import {
   formatToFixedDecimal,
 } from "../../../helpers/round.js";
 import {
+  addVersionInEntities,
   getDiscount,
   getDiscountTotal,
   getProductSum,
@@ -278,21 +279,42 @@ const mixinSstDataToPayments = (payments, sstData) => {
 };
 
 const getReceiptDocument = (data) => {
-  const { products, payments, taxes, sstData, cashboxData, deleteEmptyTags } =
-    data;
+  const {
+    products,
+    payments,
+    taxes,
+    sstData,
+    cashboxData,
+    deleteEmptyTags,
+    version = 0,
+  } = data;
   const { VATTaxList } = cashboxData;
   const updatedTaxes = updateTaxesWithValidVAT(taxes, VATTaxList);
-  const updatedProducts = updateProductsWithValidTaxes(products, VATTaxList);
-  const updatedPayments = mixinSstDataToPayments(payments, sstData);
+  const taxesWithVersion = addVersionInEntities(updatedTaxes, version);
+
+  const productsWithTaxPrograms = updateProductsWithValidTaxes(
+    products,
+    VATTaxList,
+  );
+  const productsWithVersion = addVersionInEntities(
+    productsWithTaxPrograms,
+    version,
+  );
+
+  const paymentsWithSstData = mixinSstDataToPayments(payments, sstData);
+  const paymentsWithVersion = addVersionInEntities(
+    paymentsWithSstData,
+    version,
+  );
 
   const CHECKHEAD = getReceiptHeader(data);
   const CHECKTOTAL = getTotal(data);
-  const CHECKPAY = rowsToMapper(updatedPayments, paymentMapper);
-  const CHECKBODY = rowsToMapper(updatedProducts, productMapper);
+  const CHECKPAY = rowsToMapper(paymentsWithVersion, paymentMapper);
+  const CHECKBODY = rowsToMapper(productsWithVersion, productMapper);
   const CHECKTAX =
-    deleteEmptyTags && updatedTaxes.length === 0
+    deleteEmptyTags && taxesWithVersion.length === 0
       ? {}
-      : { CHECKTAX: rowsToMapper(updatedTaxes, taxesMapper) };
+      : { CHECKTAX: rowsToMapper(taxesWithVersion, taxesMapper) };
 
   return {
     CHECK: {

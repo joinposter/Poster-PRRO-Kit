@@ -193,8 +193,8 @@ export const zReportData = {
     ],
   },
   return: null,
-  serviceInput: 0,
-  serviceOutput: 0,
+  serviceInput: { sum: 1000 },
+  serviceOutput: { sum: 2000 },
   dateTime: "2024-04-18T15:16:17",
   uid: "11111111-1111-1111-1111-111111111111",
   cashboxData: {

@@ -91,6 +91,9 @@ const filterProduct = (product, VATTaxList) => {
 export const updateTaxesWithValidVAT = (taxes, VATTaxList) =>
   taxes.filter((tax) => isTaxValid(tax, VATTaxList));
 
+export const addVersionInEntities = (entities, version) =>
+  entities.map((entity) => ({ ...entity, version }));
+
 export const updateProductsWithValidTaxes = (products, VATTaxList) => {
   return products.map((product) => filterProduct(product, VATTaxList));
 };

@@ -144,12 +144,15 @@ const paymentMapper = (payment, index) => {
 
   const PAYSYSBLOCK = getPaySysBlock(payment);
 
+  // eslint-disable-next-line no-magic-numbers
+  const PROVIDEDBLOCK = payment.version >= 3 ? {} : { PROVIDED: SUM };
+
   return {
     $: getRowNum(index),
     PAYFORMCD,
     PAYFORMNM,
     SUM,
-    PROVIDED: SUM,
+    ...PROVIDEDBLOCK,
     ...PAYSYSBLOCK,
   };
 };

@@ -28,7 +28,7 @@ const getFiscalCompanyData = ({
       : null,
     {
       type: "text",
-      value: ipn ? `ПН ${ipn.toString()}` : `ІД ${tin.toString()}`,
+      value: ipn ? `ПН ${ipn}` : `ІД ${tin}`,
       align: "center",
       bold: false,
     },

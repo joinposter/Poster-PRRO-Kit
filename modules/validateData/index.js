@@ -64,11 +64,15 @@ export const createValidator =
       let currentErrors = {};
       if (rules) {
         currentErrors = checkValue(value, currentPath, rules);
-        return { ...acc, ...currentErrors };
       }
 
       if (Array.isArray(value)) {
-        currentErrors = checkArrayOfValues(value, currentPath, validationRules);
+        const nestedErrors = checkArrayOfValues(
+          value,
+          currentPath,
+          validationRules,
+        );
+        currentErrors = { ...currentErrors, ...nestedErrors };
       } else if (typeof value === "object" && value !== null) {
         currentErrors = checkObjectOfValues(
           value,

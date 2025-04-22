@@ -218,4 +218,35 @@ describe("validation", () => {
       });
     });
   });
+
+  it("should return error when was cash payment is 0", () => {
+    const data = {
+      payments: [
+        { sum: 0.36, type: "card" },
+        { sum: 0, type: "cash" },
+      ], // Сума дорівнює 0
+      products: [
+        {
+          count: 1,
+          id: 39,
+          name: "Шоколад (Супер акція 1 коп.)",
+          price: 0.32,
+        },
+        { count: 1, discount: -69.96, id: 39, name: "Шоколад", price: 70 },
+      ],
+    };
+
+    const validationRules = {
+      "": [isReceiptTotalValid],
+      payments: [isPaymentByCashMultipleOf10],
+      "payments[].sum": [isNotZero],
+    };
+
+    const result = createValidator(validationRules)(data);
+
+    expect(result.valid).toBe(false);
+    expect(result.errors).toEqual({
+      "payments[1].sum": ["Invalid value for payments[1].sum"],
+    });
+  });
 });

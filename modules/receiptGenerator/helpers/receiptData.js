@@ -20,7 +20,7 @@ import {
 } from "../../../helpers/centsFormat.js";
 
 const getProductUktzed = (name) =>
-  name.includes("#") ? `${name.split("#")[0]}#` : null;
+  name.includes("#") ? `${name.split("#")[0]}` : null;
 
 const getProductName = (name) =>
   name.includes("#") ? name.split("#")[1] : name;

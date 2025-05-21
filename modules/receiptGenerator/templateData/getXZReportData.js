@@ -186,7 +186,7 @@ const xzReportRealizeData = (data) => [
                   },
                 }
               : null,
-            hasCashPayment(data?.realiz?.payments)
+            getCashPaymentCount(data?.realiz?.payments)
               ? {
                   row: [
                     "Кількість чеків",
@@ -219,7 +219,7 @@ const xzReportRealizeData = (data) => [
                   },
                 }
               : null,
-            hasCardPayment(data?.realiz?.payments)
+            getCardPaymentCount(data?.realiz?.payments)
               ? {
                   row: [
                     "Кількість чеків",

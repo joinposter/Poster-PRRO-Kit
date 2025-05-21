@@ -12,6 +12,7 @@ import {
   getPaymentSum,
   convertKopecksToGrivnas,
   getTaxSourceSum,
+  getPaymentReceiptCount,
 } from "../../../helpers/centsFormat.js";
 import {
   PAYMENT_CODE_CARD,
@@ -73,6 +74,11 @@ const getCashPaymentSum = (payments) =>
     ),
   );
 
+const getCashPaymentCount = (payments) =>
+  getPaymentReceiptCount(
+    payments.find((p) => p.payFormCode === PAYMENT_CODE_CASH),
+  );
+
 const hasCardPayment = (payments) =>
   payments.some((p) => p.payFormCode === PAYMENT_CODE_CARD);
 
@@ -81,6 +87,11 @@ const getCardPaymentSum = (payments) =>
     getPaymentSum(
       payments.find((p) => p.payFormCode === PAYMENT_CODE_CARD) || { sum: 0 },
     ),
+  );
+
+const getCardPaymentCount = (payments) =>
+  getPaymentReceiptCount(
+    payments.find((p) => p.payFormCode === PAYMENT_CODE_CARD),
   );
 
 const xzReportHeaderData = (data, isHtml) =>
@@ -157,11 +168,30 @@ const xzReportRealizeData = (data) => [
           1: { extraCssClass: "text-end" },
         },
       },
+      {
+        row: ["Кількість чеків", data?.realiz?.receiptCount || "0"],
+        styles: {
+          0: { extraCssClass: "w-50 pt-0 pb-0" },
+          1: { extraCssClass: "text-end pt-0 pb-0" },
+        },
+      },
       ...(data?.realiz?.payments
         ? [
             hasCashPayment(data?.realiz?.payments)
               ? {
                   row: ["Готівка", getCashPaymentSum(data?.realiz?.payments)],
+                  styles: {
+                    0: { extraCssClass: "w-50 pt-0 pb-0" },
+                    1: { extraCssClass: "text-end pt-0 pb-0" },
+                  },
+                }
+              : null,
+            hasCashPayment(data?.realiz?.payments)
+              ? {
+                  row: [
+                    "Кількість чеків",
+                    getCashPaymentCount(data?.realiz?.payments),
+                  ],
                   styles: {
                     0: { extraCssClass: "w-50 pt-0 pb-0" },
                     1: { extraCssClass: "text-end pt-0 pb-0" },
@@ -189,14 +219,20 @@ const xzReportRealizeData = (data) => [
                   },
                 }
               : null,
+            hasCardPayment(data?.realiz?.payments)
+              ? {
+                  row: [
+                    "Кількість чеків",
+                    getCardPaymentCount(data?.realiz?.payments),
+                  ],
+                  styles: {
+                    0: { extraCssClass: "w-50 pt-0 pb-0" },
+                    1: { extraCssClass: "text-end pt-0 pb-0" },
+                  },
+                }
+              : null,
           ]
         : [null]),
-      {
-        row: ["Кількість чеків", data?.realiz?.receiptCount || "0"],
-        styles: {
-          1: { extraCssClass: "text-end" },
-        },
-      },
     ].filter(Boolean),
   },
   ...getTaxData(data?.realiz?.taxes, {

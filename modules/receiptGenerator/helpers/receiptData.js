@@ -83,7 +83,8 @@ const getReceiptType = (type) => {
 const getFooterData = ({
   fiscalId,
   dateTime,
-  cashboxData: { cashbox, isOffline },
+  cashboxData: { cashbox },
+  isOffline,
   docType,
   software,
   dFSReceiptLink,
@@ -145,7 +146,6 @@ export const prepareDataForPrintReceipt = (data) => ({
 
 export const getCashboxStatus = (data) =>
   data.footerData.isOffline ? "ОФЛАЙН" : "ОНЛАЙН";
-
 export const getCashboxInfo = (data) => `ФН ПРРО ${data.cashboxData.cashbox}`;
 
 export const getControlSum = ({ isOffline, fiscalId }) => {

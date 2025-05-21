@@ -83,7 +83,8 @@ const getReceiptType = (type) => {
 const getFooterData = ({
   fiscalId,
   dateTime,
-  cashboxData: { cashbox, isOffline },
+  cashboxData: { cashbox },
+  isOffline,
   docType,
   software,
   dFSReceiptLink,

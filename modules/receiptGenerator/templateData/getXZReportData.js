@@ -189,7 +189,7 @@ const xzReportRealizeData = (data) => [
             getCashPaymentCount(data?.realiz?.payments)
               ? {
                   row: [
-                    "Кількість чеків",
+                    "Кількість оплат",
                     getCashPaymentCount(data?.realiz?.payments),
                   ],
                   styles: {
@@ -222,7 +222,7 @@ const xzReportRealizeData = (data) => [
             getCardPaymentCount(data?.realiz?.payments)
               ? {
                   row: [
-                    "Кількість чеків",
+                    "Кількість оплат",
                     getCardPaymentCount(data?.realiz?.payments),
                   ],
                   styles: {

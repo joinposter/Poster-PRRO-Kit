@@ -19,6 +19,8 @@ export const getCalculatedSourceSum = (product) => product.turnoverDiscount;
 
 export const getPaymentSum = (payment) => payment.sum / CENTS_IN_UAH;
 
+export const getPaymentReceiptCount = (payment) => payment?.receiptCount;
+
 export const getTaxTurnover = (tax) => tax.turnover / CENTS_IN_UAH;
 export const getTaxTurnoverDiscount = (tax) =>
   tax.turnoverDiscount / CENTS_IN_UAH;

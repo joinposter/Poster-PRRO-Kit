@@ -152,10 +152,8 @@ describe("receiptGenerator", () => {
       generateTextFiscalReceipt({
         ...fiscalReceiptDataMock,
         fiscalId: "31619581.2.2634",
-        cashboxData: {
-          ...cashboxData,
-          isOffline: true,
-        },
+        isOffline: true,
+        cashboxData,
         receiptConfig: defaultReceiptConfig,
       }),
     ).toEqual(expectedReceipt);

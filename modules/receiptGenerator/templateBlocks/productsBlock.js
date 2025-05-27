@@ -31,7 +31,7 @@ const createProductRow = (product) => ({
 });
 
 const createDiscountRow = (product) =>
-  product.discount > 0
+  product.discount
     ? {
         row: [
           "Знижка",

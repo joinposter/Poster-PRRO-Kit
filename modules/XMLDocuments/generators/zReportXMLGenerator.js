@@ -73,7 +73,7 @@ const getZReportPaymentsAndTaxes = (data) => {
   };
 };
 
-const getZReportBody = ({ serviceInput, serviceOutput, version }) => {
+const getZReportBody = ({ serviceInput, serviceOutput }) => {
   const serviceInputData = serviceInput?.sum || 0;
   const serviceOutputData = serviceOutput?.sum || 0;
 

@@ -110,16 +110,16 @@ describe("validation", () => {
   describe("payments and products validator", () => {
     it("should validate total by payments and products correctly", () => {
       const data = {
-        payments: [{ sum: 0.1, type: "cash" }],
+        payments: [{ sum: 10, type: "cash" }],
         products: [
           {
-            count: 1,
-            discount: 0.08,
+            count: 1000,
+            discount: -8,
             id: 39,
             name: "Шоколад (Супер акція 1 коп.)",
-            price: 0.01,
+            price: 1,
           },
-          { count: 1, discount: -69.99, id: 39, name: "Шоколад", price: 70 },
+          { count: 1000, discount: 6999, id: 39, name: "Шоколад", price: 7000 },
         ],
       };
 
@@ -137,15 +137,15 @@ describe("validation", () => {
 
     it("should return valid when was card payment and all rulles done", () => {
       const data = {
-        payments: [{ sum: 0.25, type: "card" }], // Не кратний 10
+        payments: [{ sum: 25, type: "card" }], // Не кратний 10
         products: [
           {
-            count: 1,
+            count: 1000,
             id: 39,
             name: "Шоколад (Супер акція 1 коп.)",
-            price: 0.21,
+            price: 21,
           },
-          { count: 1, discount: -69.96, id: 39, name: "Шоколад", price: 70 },
+          { count: 1000, discount: 6996, id: 39, name: "Шоколад", price: 7000 },
         ],
       };
 
@@ -163,15 +163,15 @@ describe("validation", () => {
 
     it("should return error when cash payment is not multiple of 10", () => {
       const data = {
-        payments: [{ sum: 0.25, type: "cash" }], // Не кратний 10
+        payments: [{ sum: 25, type: "cash" }], // Не кратний 10
         products: [
           {
-            count: 1,
+            count: 1000,
             id: 39,
             name: "Шоколад (Супер акція 1 коп.)",
-            price: 0.21,
+            price: 21,
           },
-          { count: 1, discount: -69.96, id: 39, name: "Шоколад", price: 70 },
+          { count: 1000, discount: 6996, id: 39, name: "Шоколад", price: 7000 },
         ],
       };
 
@@ -191,16 +191,16 @@ describe("validation", () => {
 
     it("should return error when total of products does not match total payments", () => {
       const data = {
-        payments: [{ sum: 50, type: "cash" }], // Загальна сума не збігається
+        payments: [{ sum: 5000, type: "cash" }], // Загальна сума не збігається
         products: [
           {
-            count: 1,
-            discount: 0.08,
+            count: 1000,
+            discount: -8,
             id: 39,
             name: "Шоколад (Супер акція 1 коп.)",
-            price: 0.01,
+            price: 1,
           },
-          { count: 1, discount: -69.99, id: 39, name: "Шоколад", price: 70 },
+          { count: 1000, discount: 6999, id: 39, name: "Шоколад", price: 7000 },
         ],
       };
 
@@ -222,17 +222,17 @@ describe("validation", () => {
   it("should return error when was cash payment is 0", () => {
     const data = {
       payments: [
-        { sum: 0.36, type: "card" },
+        { sum: 36, type: "card" },
         { sum: 0, type: "cash" },
       ], // Сума дорівнює 0
       products: [
         {
-          count: 1,
+          count: 1000,
           id: 39,
           name: "Шоколад (Супер акція 1 коп.)",
-          price: 0.32,
+          price: 32,
         },
-        { count: 1, discount: -69.96, id: 39, name: "Шоколад", price: 70 },
+        { count: 1000, discount: 6996, id: 39, name: "Шоколад", price: 7000 },
       ],
     };
 

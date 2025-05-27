@@ -49,6 +49,7 @@ import {
   getTaxTurnover,
   getTaxSourceSum,
   getTaxTurnoverDiscount,
+  getReceiptRound,
 } from "../../../helpers/centsFormat.js";
 
 const getPaymentDetails = (type) => {
@@ -254,6 +255,7 @@ const getReturnReceiptFields = (orderData) => {
 
 const getTotal = (orderData) => {
   const total = getReceiptTotal(orderData);
+  const receiptRound = getReceiptRound(orderData);
   const discountTotal = getDiscountTotal(orderData.products);
   const DISCOUNTSUM = discountTotal
     ? { DISCOUNTSUM: formatToFixedDecimal(discountTotal) }
@@ -268,8 +270,18 @@ const getTotal = (orderData) => {
   //     ...DISCOUNTSUM,
   //   };
   // }
+  const negativeMultiplier = -1;
+  const RECEIPTROUND = receiptRound
+    ? {
+        SUM: formatToFixedDecimal(total),
+        RNDSUM: formatToFixedDecimal(negativeMultiplier * receiptRound),
+        NORNDSUM: formatToFixedDecimal(total - receiptRound),
+      }
+    : {};
+
   return {
     SUM: formatToFixedDecimal(total),
+    ...RECEIPTROUND,
     ...DISCOUNTSUM,
   };
 };

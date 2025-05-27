@@ -20,6 +20,7 @@ import getDFSFiscalLink from "../dfs/index.js";
 import { getDateTime } from "../../helpers/common.js";
 import {
   convertKopecksToGrivnas,
+  getReceiptRound,
   getReceiptTotal,
 } from "../../helpers/centsFormat.js";
 
@@ -48,6 +49,7 @@ const getReceiptOfflineModeRequestData = async (data) => {
     fiscalId,
     cashbox: cashboxData.cashbox,
     sum: getReceiptTotal(data),
+    receiptRound: getReceiptRound(data),
     date: getDateTime({ date: dateTime, format: "dateDfsLink" }),
     time: getDateTime({ date: dateTime, format: "timeDfsLink" }),
     previousDocumentHash: cashboxData.offlineSessionData.lastDocumentHash,

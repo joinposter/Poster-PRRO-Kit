@@ -110,7 +110,7 @@ export const isPaymentByCashMultipleOf10 = (payments) =>
     ),
   );
 
-const getReceiptRound = ({ receiptRound }) => receiptRound || 0;
+const getRoundSum = ({ roundSum }) => roundSum || 0;
 
 const getTotalByProducts = ({ products }) =>
   products?.reduce(
@@ -127,7 +127,7 @@ const getTotalByPayments = ({ payments }) =>
 
 export const isReceiptTotalValid = (receiptData) => {
   const sumByProducts =
-    getTotalByProducts(receiptData) + getReceiptRound(receiptData);
+    getTotalByProducts(receiptData) + getRoundSum(receiptData);
   const totalByPayments = getTotalByPayments(receiptData);
   return equals(sumByProducts, totalByPayments);
 };

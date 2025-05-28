@@ -1,4 +1,4 @@
-import { CENTS_IN_UAH, GRAMS_IN_KG } from "../../helpers/centsFormat.js";
+import { GRAMS_IN_KG } from "../../helpers/centsFormat.js";
 import { PAYMENT_TYPE_CASH } from "../../const/types.js";
 
 const getRules = (validationRules, path) => {
@@ -105,34 +105,29 @@ export const isPaymentByCashMultipleOf10 = (payments) =>
   isMultiplesOf10(
     Math.round(
       payments.find((p) => p.type === PAYMENT_TYPE_CASH)
-        ? payments.find((p) => p.type === PAYMENT_TYPE_CASH).sum * CENTS_IN_UAH
+        ? payments.find((p) => p.type === PAYMENT_TYPE_CASH).sum
         : 0,
     ),
   );
 
-const productPriceInCents = ({ price }) => Math.round(price * CENTS_IN_UAH);
-const productCountInGrams = ({ count }) => Math.round(count * GRAMS_IN_KG);
+const getRoundSum = ({ roundSum }) => roundSum || 0;
 
 const getTotalByProducts = ({ products }) =>
   products?.reduce(
     (acc, product) =>
       acc +
       Math.round(
-        (productPriceInCents(product) * productCountInGrams(product)) /
-          GRAMS_IN_KG,
-      ) +
-      Math.round(product.discount * CENTS_IN_UAH || 0),
+        (product.price * product.count) / GRAMS_IN_KG - (product.discount || 0),
+      ),
     0,
   );
 
 const getTotalByPayments = ({ payments }) =>
-  payments?.reduce(
-    (acc, payment) => acc + Math.round(payment.sum * CENTS_IN_UAH),
-    0,
-  );
+  payments?.reduce((acc, payment) => acc + payment.sum, 0);
 
 export const isReceiptTotalValid = (receiptData) => {
-  const totalByProducts = getTotalByProducts(receiptData);
+  const sumByProducts =
+    getTotalByProducts(receiptData) + getRoundSum(receiptData);
   const totalByPayments = getTotalByPayments(receiptData);
-  return equals(totalByProducts, totalByPayments);
+  return equals(sumByProducts, totalByPayments);
 };

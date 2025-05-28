@@ -15,6 +15,7 @@ import {
 import defaultReceiptConfig from "../config/receipt.js";
 import {
   convertKopecksToGrivnas,
+  getRoundSum,
   getReceiptTotal,
   getTaxSum,
 } from "../../../helpers/centsFormat.js";
@@ -39,7 +40,7 @@ const getTaxesData = (data) => {
   const cashSum = data.payments.find(findCashPayment)?.sum;
 
   return {
-    total: getReceiptTotal(data),
+    total: getReceiptTotal(data) - getRoundSum(data),
     card: cardSum
       ? formatToFixedDecimal(convertKopecksToGrivnas(cardSum))
       : null,
@@ -60,7 +61,15 @@ export const isFiscalReceiptReturnType = (type) =>
 const getRoundReceiptData = (data) => {
   const isReturnType = isFiscalReceiptReturnType(data.type);
   const total = getReceiptTotal(data);
+  const roundSum = getRoundSum(data);
+  const roundSumField = roundSum
+    ? {
+        name: "Заокруглення",
+        value: formatToFixedDecimal(getRoundSum(data)),
+      }
+    : null;
   return [
+    roundSumField,
     {
       name: isReturnType ? "До повернення" : "До сплати",
       value: formatToFixedDecimal(total),

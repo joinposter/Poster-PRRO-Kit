@@ -167,7 +167,6 @@ const productMapper = (product, index) => {
     uktzed,
     name: NAME,
     unit,
-    deleteEmptyTags,
   } = product;
 
   const LETTERS = taxPrograms ? { LETTERS: taxPrograms } : {};
@@ -176,7 +175,7 @@ const productMapper = (product, index) => {
   const COST = formatToFixedDecimal(getProductSum(product));
   const BARCODEBLOCK = getBarcodeBlock(product);
   const UKTZED = uktzed ? { UKTZED: uktzed } : {};
-  const UNITNM = !unit && deleteEmptyTags ? {} : { UNITNM: unit };
+  const UNITNM = !unit ? {} : { UNITNM: unit };
   const DISCOUNTBLOCK = getDiscountBlock(product);
   const EXCISELABELSBLOCK = getExciseLabelsBlock(product);
 
@@ -294,15 +293,7 @@ const mixinSstDataToPayments = (payments, sstData) => {
 };
 
 const getReceiptDocument = (data) => {
-  const {
-    products,
-    payments,
-    taxes,
-    sstData,
-    cashboxData,
-    deleteEmptyTags,
-    version = 0,
-  } = data;
+  const { products, payments, taxes, sstData, cashboxData, version = 0 } = data;
   const { VATTaxList } = cashboxData;
   const updatedTaxes = updateTaxesWithValidVAT(taxes, VATTaxList);
   const taxesWithVersion = addVersionInEntities(updatedTaxes, version);
@@ -327,7 +318,7 @@ const getReceiptDocument = (data) => {
   const CHECKPAY = rowsToMapper(paymentsWithVersion, paymentMapper);
   const CHECKBODY = rowsToMapper(productsWithVersion, productMapper);
   const CHECKTAX =
-    deleteEmptyTags && taxesWithVersion.length === 0
+    taxesWithVersion.length === 0
       ? {}
       : { CHECKTAX: rowsToMapper(taxesWithVersion, taxesMapper) };
 

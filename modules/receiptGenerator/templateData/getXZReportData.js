@@ -168,70 +168,77 @@ const xzReportRealizeData = (data) => [
           1: { extraCssClass: "text-end" },
         },
       },
-      {
-        row: ["Кількість чеків", data?.realiz?.receiptCount || "0"],
-        styles: {
-          0: { extraCssClass: "w-50 pt-0 pb-0" },
-          1: { extraCssClass: "text-end pt-0 pb-0" },
-        },
-      },
       ...(data?.realiz?.payments
         ? [
-            hasCashPayment(data?.realiz?.payments)
-              ? {
-                  row: ["Готівка", getCashPaymentSum(data?.realiz?.payments)],
-                  styles: {
-                    0: { extraCssClass: "w-50 pt-0 pb-0" },
-                    1: { extraCssClass: "text-end pt-0 pb-0" },
-                  },
-                }
-              : null,
-            getCashPaymentCount(data?.realiz?.payments)
-              ? {
-                  row: [
-                    "Кількість оплат",
-                    getCashPaymentCount(data?.realiz?.payments),
-                  ],
-                  styles: {
-                    0: { extraCssClass: "w-50 pt-0 pb-0" },
-                    1: { extraCssClass: "text-end pt-0 pb-0" },
-                  },
-                }
-              : null,
-            hasCardPayment(data?.realiz?.payments)
-              ? {
-                  row: [
-                    "Безготівкова",
-                    getCardPaymentSum(data?.realiz?.payments),
-                  ],
-                  styles: {
-                    0: { extraCssClass: "w-50 pt-0 pb-0" },
-                    1: { extraCssClass: "text-end pt-0 pb-0" },
-                  },
-                }
-              : null,
-            hasCardPayment(data?.realiz?.payments)
-              ? {
-                  row: ["Картка", " "],
-                  styles: {
-                    0: { extraCssClass: "pt-0 pb-0" },
-                    1: { extraCssClass: "pt-0 pb-0" },
-                  },
-                }
-              : null,
-            getCardPaymentCount(data?.realiz?.payments)
-              ? {
-                  row: [
-                    "Кількість оплат",
-                    getCardPaymentCount(data?.realiz?.payments),
-                  ],
-                  styles: {
-                    0: { extraCssClass: "w-50 pt-0 pb-0" },
-                    1: { extraCssClass: "text-end pt-0 pb-0" },
-                  },
-                }
-              : null,
-          ]
+          hasCashPayment(data?.realiz?.payments)
+            ? {
+              row: ["Готівка", getCashPaymentSum(data?.realiz?.payments)],
+              styles: {
+                0: { extraCssClass: "w-50 pt-0 pb-0" },
+                1: { extraCssClass: "text-end pt-0 pb-0" },
+              },
+            }
+            : null,
+          hasCardPayment(data?.realiz?.payments)
+            ? {
+              row: [
+                "Безготівкова",
+                getCardPaymentSum(data?.realiz?.payments),
+              ],
+              styles: {
+                0: { extraCssClass: "w-50 pt-0 pb-0" },
+                1: { extraCssClass: "text-end pt-0 pb-0" },
+              },
+            }
+            : null,
+          hasCardPayment(data?.realiz?.payments)
+            ? {
+              row: ["Картка", " "],
+              styles: {
+                0: { extraCssClass: "pt-0 pb-0" },
+                1: { extraCssClass: "pt-0 pb-0" },
+              },
+            }
+            : null,
+          {
+            row: ["", ""],
+            styles: {
+              0: { extraCssClass: "pt-3 pb-0" },
+              1: { extraCssClass: "pt-3 pb-0" },
+            },
+          },
+          {
+            row: ["Кількість чеків", data?.realiz?.receiptCount || "0"],
+            styles: {
+              0: { extraCssClass: "w-50 pt-0 pb-0" },
+              1: { extraCssClass: "text-end pt-0 pb-0" },
+            },
+          },
+          getCashPaymentCount(data?.realiz?.payments)
+            ? {
+              row: [
+                "Кількість оплат",
+                getCashPaymentCount(data?.realiz?.payments),
+              ],
+              styles: {
+                0: { extraCssClass: "w-50 pt-0 pb-0" },
+                1: { extraCssClass: "text-end pt-0 pb-0" },
+              },
+            }
+            : null,
+          getCardPaymentCount(data?.realiz?.payments)
+            ? {
+              row: [
+                "Кількість оплат",
+                getCardPaymentCount(data?.realiz?.payments),
+              ],
+              styles: {
+                0: { extraCssClass: "w-50 pt-0 pb-0" },
+                1: { extraCssClass: "text-end pt-0 pb-0" },
+              },
+            }
+            : null,
+        ]
         : [null]),
     ].filter(Boolean),
   },

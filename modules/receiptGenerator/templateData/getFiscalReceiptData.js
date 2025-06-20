@@ -25,7 +25,9 @@ const summaryData = (data) =>
     currency: data.receiptConfig?.currency || defaultReceiptConfig.currency,
   });
 
-const sstData = (data) => (data.sstData ? getSstData(data.sstData) : []);
+const sstData = (data) => {
+  return data.sstData ? getSstData(data.sstData) : [];
+};
 
 const getFiscalReceiptData = (data, isHtml) =>
   [

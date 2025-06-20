@@ -9,6 +9,10 @@ import {
   isNonEmptyObject,
   isPaymentByCashMultipleOf10,
   isReceiptTotalValid,
+  optionalObject,
+  isString,
+  optionalMatch,
+  isOptionalString,
 } from "./index.js";
 
 describe("validation", () => {
@@ -214,39 +218,255 @@ describe("validation", () => {
 
       expect(result.valid).toBe(false);
       expect(result.errors).toEqual({
-        "": ["Invalid input data"],
+        "": ["Invalid value for input data"],
+      });
+    });
+
+    it("should return error when was cash payment is 0", () => {
+      const data = {
+        payments: [
+          { sum: 36, type: "card" },
+          { sum: 0, type: "cash" },
+        ],
+        products: [
+          {
+            count: 1000,
+            id: 39,
+            name: "Шоколад (Супер акція 1 коп.)",
+            price: 32,
+          },
+          { count: 1000, discount: 6996, id: 39, name: "Шоколад", price: 7000 },
+        ],
+      };
+
+      const validationRules = {
+        "": [isReceiptTotalValid],
+        payments: [isPaymentByCashMultipleOf10],
+        "payments[].sum": [isNotZero],
+      };
+
+      const result = createValidator(validationRules)(data);
+
+      expect(result.valid).toBe(false);
+      expect(result.errors).toEqual({
+        "payments[1].sum": ["Invalid value for payments[1].sum"],
       });
     });
   });
 
-  it("should return error when was cash payment is 0", () => {
-    const data = {
-      payments: [
-        { sum: 36, type: "card" },
-        { sum: 0, type: "cash" },
-      ], // Сума дорівнює 0
-      products: [
-        {
-          count: 1000,
-          id: 39,
-          name: "Шоколад (Супер акція 1 коп.)",
-          price: 32,
+  describe("sstData validator", () => {
+    it("should return valid if sstData is undefined", () => {
+      const data = {
+        payments: [
+          { sum: 36, type: "card" },
+          { sum: 0, type: "cash" },
+        ], // Сума дорівнює 0
+        products: [
+          {
+            count: 1000,
+            id: 39,
+            name: "Шоколад (Супер акція 1 коп.)",
+            price: 32,
+          },
+          { count: 1000, discount: 6996, id: 39, name: "Шоколад", price: 7000 },
+        ],
+      };
+      const validSumField = /^\d+(\.\d{2})$/;
+      const validationRules = {
+        sstData: [
+          optionalObject({
+            paymentSystem: [isString],
+            rrn: [isString],
+            merchant: [isString],
+            terminalId: [isString],
+            cardNumber: [isString],
+            authCode: [isString],
+            sum: [optionalMatch(validSumField)],
+          }),
+        ],
+      };
+
+      const result = createValidator(validationRules)(data);
+
+      expect(result.valid).toBe(true);
+    });
+
+    it("should return valid if sstData is valid", () => {
+      const data = {
+        sstData: {
+          bankAcquirer: "ПриватБанк",
+          sum: "1.68",
+          authCode: "159345",
+          paymentSystem: "VISA",
+          paymentSystemName: "VISA",
+          merchant: "S1260S6Y",
+          merchantId: "ПриватБанк",
+          rrn: "083998389823",
+          rrnExt: "414815005125",
+          terminalId: "S1260S6Y",
+          cardNumber: "4422********6333",
         },
-        { count: 1000, discount: 6996, id: 39, name: "Шоколад", price: 7000 },
-      ],
-    };
+      };
+      const validSumField = /^\d+(\.\d{2})$/;
+      const validationRules = {
+        sstData: [
+          optionalObject({
+            paymentSystem: [isString],
+            rrn: [isString],
+            merchant: [isString],
+            terminalId: [isString],
+            cardNumber: [isString],
+            authCode: [isString],
+            sum: [optionalMatch(validSumField)],
+          }),
+        ],
+      };
 
-    const validationRules = {
-      "": [isReceiptTotalValid],
-      payments: [isPaymentByCashMultipleOf10],
-      "payments[].sum": [isNotZero],
-    };
+      const result = createValidator(validationRules)(data);
 
-    const result = createValidator(validationRules)(data);
+      expect(result.valid).toBe(true);
+    });
 
-    expect(result.valid).toBe(false);
-    expect(result.errors).toEqual({
-      "payments[1].sum": ["Invalid value for payments[1].sum"],
+    it("should return valid if sstData sum is undefined", () => {
+      const data = {
+        sstData: {
+          bankAcquirer: "ПриватБанк",
+          authCode: "159345",
+          paymentSystem: "VISA",
+          paymentSystemName: "VISA",
+          merchant: "S1260S6Y",
+          merchantId: "ПриватБанк",
+          rrn: "083998389823",
+          rrnExt: "414815005125",
+          terminalId: "S1260S6Y",
+          cardNumber: "4422********6333",
+        },
+      };
+      const validSumField = /^\d+(\.\d{2})$/;
+      const validationRules = {
+        sstData: [
+          optionalObject({
+            paymentSystem: [isString],
+            rrn: [isString],
+            merchant: [isString],
+            terminalId: [isString],
+            cardNumber: [isString],
+            authCode: [isString],
+            sum: [optionalMatch(validSumField)],
+          }),
+        ],
+      };
+
+      const result = createValidator(validationRules)(data);
+
+      expect(result.valid).toBe(true);
+    });
+
+    it("should return invalid if sstData sum is number", () => {
+      const data = {
+        sstData: {
+          bankAcquirer: "ПриватБанк",
+          sum: 1.68,
+          authCode: "159345",
+          paymentSystem: "VISA",
+          paymentSystemName: "VISA",
+          merchant: "S1260S6Y",
+          merchantId: "ПриватБанк",
+          rrn: "083998389823",
+          rrnExt: "414815005125",
+          terminalId: "S1260S6Y",
+          cardNumber: "4422********6333",
+        },
+      };
+      const validSumField = /^\d+(\.\d{2})$/;
+      const validationRules = {
+        sstData: [
+          optionalObject({
+            paymentSystem: [isString],
+            rrn: [isString],
+            merchant: [isString],
+            terminalId: [isString],
+            cardNumber: [isString],
+            authCode: [isString],
+            sum: [isOptionalString, optionalMatch(validSumField)],
+          }),
+        ],
+      };
+
+      const result = createValidator(validationRules)(data);
+      expect(result.valid).toBe(false);
+      expect(result.errors).toEqual({
+        "sstData.sum": ["Invalid value for sum"],
+      });
+    });
+
+    it("should return invalid if sstData sum has incorrect format", () => {
+      const data = {
+        sstData: {
+          bankAcquirer: "ПриватБанк",
+          sum: "168",
+          authCode: "159345",
+          paymentSystem: "VISA",
+          paymentSystemName: "VISA",
+          merchant: "S1260S6Y",
+          merchantId: "ПриватБанк",
+          rrn: "083998389823",
+          rrnExt: "414815005125",
+          terminalId: "S1260S6Y",
+          cardNumber: "4422********6333",
+        },
+      };
+      const validSumField = /^\d+(\.\d{2})$/;
+      const validationRules = {
+        sstData: [
+          optionalObject({
+            paymentSystem: [isString],
+            rrn: [isString],
+            merchant: [isString],
+            terminalId: [isString],
+            cardNumber: [isString],
+            authCode: [isString],
+            sum: [isOptionalString, optionalMatch(validSumField)],
+          }),
+        ],
+      };
+
+      const result = createValidator(validationRules)(data);
+      expect(result.valid).toBe(false);
+      expect(result.errors).toEqual({
+        "sstData.sum": ["Invalid value for sum"],
+      });
+    });
+
+    it("should return invalid if sstData exists but required fields are undefined", () => {
+      const data = {
+        sstData: {},
+      };
+      const validSumField = /^\d+(\.\d{2})$/;
+      const validationRules = {
+        sstData: [
+          optionalObject({
+            authCode: [isString],
+            paymentSystem: [isString],
+            rrn: [isString],
+            merchant: [isString],
+            terminalId: [isString],
+            cardNumber: [isString],
+            sum: [isOptionalString, optionalMatch(validSumField)],
+          }),
+        ],
+      };
+
+      const result = createValidator(validationRules)(data);
+      expect(result.valid).toBe(false);
+      expect(result.errors).toEqual({
+        "sstData.authCode": ["Invalid value for authCode"],
+        "sstData.paymentSystem": ["Invalid value for paymentSystem"],
+        "sstData.rrn": ["Invalid value for rrn"],
+        "sstData.merchant": ["Invalid value for merchant"],
+        "sstData.terminalId": ["Invalid value for terminalId"],
+        "sstData.cardNumber": ["Invalid value for cardNumber"],
+      });
     });
   });
 });

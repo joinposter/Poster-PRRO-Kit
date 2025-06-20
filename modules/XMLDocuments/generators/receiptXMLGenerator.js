@@ -100,14 +100,34 @@ const exciseLabelMapper = (exciseLabel, index) => {
   };
 };
 
-const sumField = (sstData) =>
-  sstData?.amount || sstData?.sum ? { SUM: sstData.amount || sstData.sum } : {};
-
-const getPosTransDateField = ({ dateTime }) => {
-  return dateTime ? { POSTRANSDATE: dateTime } : {};
+const sumField = (sstData) => {
+  // eslint-disable-next-line no-magic-numbers
+  if (sstData.requestVersion >= 4) {
+    return sstData.sum ? { SUM: sstData.sum } : {};
+  }
+  return sstData.amount || sstData.sum
+    ? { SUM: sstData.amount || sstData.sum }
+    : {};
 };
 
-const paySysMapper = (sstData, index) => {
+const getPosTransDateField = ({ dateTime }) =>
+  dateTime ? { POSTRANSDATE: dateTime } : {};
+
+const paySysMapper = (requestVersion) => (sstData, index) => {
+  // eslint-disable-next-line no-magic-numbers
+  if (requestVersion >= 4) {
+    return {
+      $: getRowNum(index),
+      NAME: sstData.paymentSystem,
+      ACQUIRENM: sstData.merchant,
+      ACQUIRETRANSID: sstData.rrn,
+      ...getPosTransDateField(sstData),
+      DEVICEID: sstData.terminalId,
+      EPZDETAILS: sstData.cardNumber,
+      AUTHCD: sstData.authCode,
+      ...sumField(sstData),
+    };
+  }
   return {
     $: getRowNum(index),
     NAME: sstData.paymentSystem || sstData.paymentSystemName,
@@ -128,7 +148,7 @@ const getPaySysBlock = (payment) => {
   const sstData = Array.isArray(payment.sstData)
     ? payment.sstData
     : [payment.sstData];
-  return { PAYSYS: rowsToMapper(sstData, paySysMapper) };
+  return { PAYSYS: rowsToMapper(sstData, paySysMapper(payment.version)) };
 };
 
 const paymentMapper = (payment, index) => {

@@ -74,7 +74,7 @@ const runValidators = (validators, value, rootData, path) => {
     /** res = { valid, errors } */
     if (res?.valid === false) {
       collectedErrors = Object.entries(res.errors || {}).map(([key, msgs]) => [
-        addDomenPrefix(path, key),
+        addDomainPrefix(path, key),
         msgs[0],
       ]);
       return true;
@@ -106,15 +106,10 @@ const makeMsg = (p) => `Invalid value for ${p || "input data"}`;
 /**
  * Додаємо префікс parent до дочірнього ключа, якщо потрібно.
  *
- * @example qualifyKey('sstData', 'sum')        → 'sstData.sum'
- *          qualifyKey('sstData', 'sstData.sum')→ 'sstData.sum' (без змін)
+ * @example addDomainPrefix('sstData', 'sum')        → 'sstData.sum'
+ *          addDomainPrefix('sstData', 'sstData.sum')→ 'sstData.sum' (без змін)
  */
-const addDomenPrefix = (parent, child) => {
-  if (!parent || child === "" || child.startsWith(parent)) {
-    return child;
-  }
-  return `${parent}.${child}`;
-};
+const addDomainPrefix = (parent, child) => `${parent}.${child}`;
 
 /**
  * expandPath: Рекурсивний парсер шляху.

@@ -105,7 +105,7 @@ const sumField = (sstData) => {
   if (sstData.requestVersion >= 4) {
     return sstData.sum ? { SUM: sstData.sum } : {};
   }
-  return sstData?.amount || sstData?.sum
+  return sstData.amount || sstData.sum
     ? { SUM: sstData.amount || sstData.sum }
     : {};
 };
@@ -113,9 +113,9 @@ const sumField = (sstData) => {
 const getPosTransDateField = ({ dateTime }) =>
   dateTime ? { POSTRANSDATE: dateTime } : {};
 
-const paySysMapper = (sstData, index) => {
+const paySysMapper = (requestVersion) => (sstData, index) => {
   // eslint-disable-next-line no-magic-numbers
-  if (sstData.requestVersion >= 4) {
+  if (requestVersion >= 4) {
     return {
       $: getRowNum(index),
       NAME: sstData.paymentSystem,
@@ -146,12 +146,9 @@ const getPaySysBlock = (payment) => {
     return {};
   }
   const sstData = Array.isArray(payment.sstData)
-    ? payment.sstData.map((data) => ({
-        ...data,
-        requestVersion: payment.version,
-      }))
-    : [{ ...payment.sstData, requestVersion: payment.version }];
-  return { PAYSYS: rowsToMapper(sstData, paySysMapper) };
+    ? payment.sstData
+    : [payment.sstData];
+  return { PAYSYS: rowsToMapper(sstData, paySysMapper(payment.version)) };
 };
 
 const paymentMapper = (payment, index) => {

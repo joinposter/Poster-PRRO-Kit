@@ -67,6 +67,10 @@ const getPaymentDetails = (type) => {
 };
 
 const getBarcodeBlock = (product) => {
+  // eslint-disable-next-line no-magic-numbers
+  if (product.version >= 5 && product.barcodes?.length) {
+    return { BARCODE: product.barcodes };
+  }
   if (hasProductBarcode(product)) {
     const { barcodes } = product;
     return { BARCODE: barcodes.join(" ") };

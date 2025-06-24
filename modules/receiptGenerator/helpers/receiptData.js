@@ -130,7 +130,10 @@ export const prepareDataForPrintReceipt = (data) => ({
   headerServiceData: data.headerServiceData,
   productsData: data.products.map((product) => ({
     uktzed: getProductUktzed(product.name),
-    barcodes: product.barcodes?.join(" ") || null,
+    barcodes:
+      (Array.isArray(product.barcodes)
+        ? product.barcodes.join(" ")
+        : product.barcodes) || null,
     exciseStamp: product.marking?.join(" ") || null,
     name: getProductName(product.name),
     count: product.count,

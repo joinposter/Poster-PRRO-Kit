@@ -18,7 +18,11 @@ import {
   getRoundSum,
   getReceiptTotal,
   getTaxSum,
+  getProductCount,
+  getProductPrice,
+  getProductDiscount,
 } from "../../../helpers/centsFormat.js";
+import { roundWithPrecision } from "../../../helpers/round.js";
 
 const getProductUktzed = (name) =>
   name.includes("#") ? `${name.split("#")[0]}` : null;
@@ -35,12 +39,21 @@ const expandedTaxesName = (tax) =>
     ? `Без ПДВ ${tax.program}`
     : `${tax.name} ${tax.program} ${tax.percent}%`;
 
-const getTaxesData = (data) => {
+const productsSum = ({ products }) => {
+  return products.reduce((acc, product) => {
+    const sum =
+      roundWithPrecision(getProductCount(product) * getProductPrice(product)) -
+      (getProductDiscount(product) || 0);
+    return acc + sum;
+  }, 0);
+};
+
+const getTaxesAndPaymentsData = (data) => {
   const cardSum = data.payments.find(findCardPayment)?.sum;
   const cashSum = data.payments.find(findCashPayment)?.sum;
 
   return {
-    total: getReceiptTotal(data) - getRoundSum(data),
+    productsSum: productsSum(data),
     card: cardSum
       ? formatToFixedDecimal(convertKopecksToGrivnas(cardSum))
       : null,
@@ -141,7 +154,7 @@ export const prepareDataForPrintReceipt = (data) => ({
     taxPrograms: product.taxPrograms,
     discount: product.discount,
   })),
-  taxesData: getTaxesData(data),
+  taxesAndPaymentsData: getTaxesAndPaymentsData(data),
   roundData: getRoundReceiptData(data),
   sstData: getSstData(data),
   footerData: getFooterData({

@@ -20,7 +20,8 @@ const productsData = (data) => getProductsData(data.productsData);
 
 const summaryData = (data) =>
   getSummaryBlock({
-    taxesAndPaymentsData: data.taxesAndPaymentsData,
+    paymentsData: data.paymentsData,
+    taxesData: data.taxesData,
     roundData: data.roundData,
     currency: data.receiptConfig?.currency || defaultReceiptConfig.currency,
   });

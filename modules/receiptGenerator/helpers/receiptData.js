@@ -48,18 +48,29 @@ const productsSum = ({ products }) => {
   }, 0);
 };
 
-const getTaxesAndPaymentsData = (data) => {
+const getPaymentsData = (data) => {
   const cardSum = data.payments.find(findCardPayment)?.sum;
   const cashSum = data.payments.find(findCashPayment)?.sum;
 
   return {
     productsSum: productsSum(data),
+    total: getReceiptTotal(data) - getRoundSum(data),
     card: cardSum
       ? formatToFixedDecimal(convertKopecksToGrivnas(cardSum))
       : null,
     cash: cashSum
       ? formatToFixedDecimal(convertKopecksToGrivnas(cashSum))
       : null,
+    taxes: [...data.taxes].sort(sortByProgram).map((tax) => ({
+      name: expandedTaxesName(tax),
+      value: getTaxSum(tax),
+      program: tax.program,
+    })),
+  };
+};
+
+const getTaxesData = (data) => {
+  return {
     taxes: [...data.taxes].sort(sortByProgram).map((tax) => ({
       name: expandedTaxesName(tax),
       value: getTaxSum(tax),
@@ -133,7 +144,7 @@ const getSstData = ({ sstData, type }) => {
   };
 };
 
-export const prepareDataForPrintReceipt = (data) => ({
+export const preparedDataForPrintReceipt = (data) => ({
   qrOptions: data.qrOptions,
   fiscalId: data.fiscalId,
   dateTime: getDateTime({ date: data.dateTime }),
@@ -154,7 +165,8 @@ export const prepareDataForPrintReceipt = (data) => ({
     taxPrograms: product.taxPrograms,
     discount: product.discount,
   })),
-  taxesAndPaymentsData: getTaxesAndPaymentsData(data),
+  paymentsData: getPaymentsData(data),
+  taxesData: getTaxesData(data),
   roundData: getRoundReceiptData(data),
   sstData: getSstData(data),
   footerData: getFooterData({

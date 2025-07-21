@@ -1,10 +1,11 @@
 import { priceFormat } from "../helpers/receipt.js";
 
-const getSummaryBlock = ({ taxesAndPaymentsData, roundData, currency }) => [
+const getSummaryBlock = ({ paymentsData, taxesData, roundData, currency }) => [
   {
     type: "summary",
     lines: [
-      ...taxesAndPaymentsBlock(taxesAndPaymentsData, currency),
+      ...paymentsBlock(paymentsData, currency),
+      ...taxesBlock(taxesData),
       ...(roundData ? getRoundData(roundData, currency) : []),
     ].filter(Boolean),
     delimeter: " ",
@@ -14,7 +15,7 @@ const getSummaryBlock = ({ taxesAndPaymentsData, roundData, currency }) => [
   },
 ];
 
-const taxesAndPaymentsBlock = (data, currency) =>
+const paymentsBlock = (data, currency) =>
   [
     {
       name: "Готівка",
@@ -37,6 +38,10 @@ const taxesAndPaymentsBlock = (data, currency) =>
       value: `${priceFormat(data.productsSum)} ${currency}`,
       bold: true,
     },
+  ].filter(Boolean);
+
+const taxesBlock = (data) =>
+  [
     ...data.taxes.map((tax) => ({
       name: tax.name,
       value: priceFormat(tax.value),

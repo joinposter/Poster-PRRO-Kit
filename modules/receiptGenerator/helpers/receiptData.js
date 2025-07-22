@@ -61,11 +61,6 @@ const getPaymentsData = (data) => {
     cash: cashSum
       ? formatToFixedDecimal(convertKopecksToGrivnas(cashSum))
       : null,
-    taxes: [...data.taxes].sort(sortByProgram).map((tax) => ({
-      name: expandedTaxesName(tax),
-      value: getTaxSum(tax),
-      program: tax.program,
-    })),
   };
 };
 
@@ -144,7 +139,7 @@ const getSstData = ({ sstData, type }) => {
   };
 };
 
-export const preparedDataForPrintReceipt = (data) => ({
+export const prepareDataForPrintReceipt = (data) => ({
   qrOptions: data.qrOptions,
   fiscalId: data.fiscalId,
   dateTime: getDateTime({ date: data.dateTime }),

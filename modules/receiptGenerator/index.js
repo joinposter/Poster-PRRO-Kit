@@ -1,6 +1,6 @@
 import receipt from "receipt";
 import defaultReceiptConfig from "./config/receipt.js";
-import { preparedDataForPrintReceipt } from "./helpers/receiptData.js";
+import { prepareDataForPrintReceipt } from "./helpers/receiptData.js";
 import { initReceipt } from "./helpers/receipt.js";
 import getFiscalReceiptData from "./templateData/getFiscalReceiptData.js";
 import renderFiscalReceipt from "./templateBlocks/htmlFiscalReceipt.js";
@@ -9,7 +9,7 @@ import getXZReportData from "./templateData/getXZReportData.js";
 import renderXZReport from "./templateBlocks/htmlXZReport.js";
 
 const generateHtmlFiscalReceipt = (data) => {
-  const receiptData = preparedDataForPrintReceipt(data);
+  const receiptData = prepareDataForPrintReceipt(data);
   const fiscalReceiptData = getFiscalReceiptData(receiptData, true);
   return renderFiscalReceipt(fiscalReceiptData);
 };
@@ -24,7 +24,7 @@ const generateHtmlServiceTransactionReceipt = (data) => {
 
 const generateTextFiscalReceipt = (data) => {
   initReceipt(data.receiptConfig || defaultReceiptConfig);
-  const receiptData = preparedDataForPrintReceipt(data);
+  const receiptData = prepareDataForPrintReceipt(data);
   const fiscalReceiptData = getFiscalReceiptData(receiptData);
   return receipt.create(fiscalReceiptData);
 };
@@ -47,7 +47,7 @@ const generateHTMLXZReport = (data) => {
 };
 
 const getPreparedDataForPrintReceipt = (data) =>
-  preparedDataForPrintReceipt(data);
+  prepareDataForPrintReceipt(data);
 
 export {
   generateTextFiscalReceipt,

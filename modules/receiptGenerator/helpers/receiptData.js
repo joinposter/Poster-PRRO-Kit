@@ -53,8 +53,8 @@ const getPaymentsData = (data) => {
   const cashSum = data.payments.find(findCashPayment)?.sum;
 
   return {
-    productsSum: productsSum(data),
-    total: getReceiptTotal(data) - getRoundSum(data),
+    productsSum: formatToFixedDecimal(productsSum(data)),
+    total: formatToFixedDecimal(getReceiptTotal(data) - getRoundSum(data)),
     card: cardSum
       ? formatToFixedDecimal(convertKopecksToGrivnas(cardSum))
       : null,

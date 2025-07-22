@@ -46,6 +46,9 @@ const generateHTMLXZReport = (data) => {
   return renderXZReport(xzReportData);
 };
 
+const getPreparedDataForPrintReceipt = (data) =>
+  prepareDataForPrintReceipt(data);
+
 export {
   generateTextFiscalReceipt,
   generateHtmlFiscalReceipt,
@@ -53,4 +56,5 @@ export {
   generateHtmlServiceTransactionReceipt,
   generateXZReport,
   generateHTMLXZReport,
+  getPreparedDataForPrintReceipt,
 };

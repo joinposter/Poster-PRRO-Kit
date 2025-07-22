@@ -1,10 +1,11 @@
 import { priceFormat } from "../helpers/receipt.js";
 
-const getSummaryBlock = ({ taxesData, roundData, currency }) => [
+const getSummaryBlock = ({ paymentsData, taxesData, roundData, currency }) => [
   {
     type: "summary",
     lines: [
-      ...taxesBlock(taxesData, currency),
+      ...paymentsBlock(paymentsData, currency),
+      ...taxesBlock(taxesData),
       ...(roundData ? getRoundData(roundData, currency) : []),
     ].filter(Boolean),
     delimeter: " ",
@@ -14,29 +15,32 @@ const getSummaryBlock = ({ taxesData, roundData, currency }) => [
   },
 ];
 
-const taxesBlock = (data, currency) =>
+const paymentsBlock = (data, currency) => [
+  {
+    name: "Готівка",
+    value: `${priceFormat(data.cash)} ${currency}`,
+    hidden: !data.cash,
+  },
+  {
+    name: "Безготівкова",
+    value: `${priceFormat(data.card)} ${currency}`,
+    hidden: !data.card,
+  },
+  {
+    name: "    Картка",
+    value: " ",
+    hidden: !data.card,
+  },
+  { type: "ruler" },
+  {
+    name: "Сума",
+    value: `${priceFormat(data.productsSum)} ${currency}`,
+    bold: true,
+  },
+];
+
+const taxesBlock = (data) =>
   [
-    {
-      name: "Готівка",
-      value: `${priceFormat(data.cash)} ${currency}`,
-      hidden: !data.cash,
-    },
-    {
-      name: "Безготівкова",
-      value: `${priceFormat(data.card)} ${currency}`,
-      hidden: !data.card,
-    },
-    {
-      name: "    Картка",
-      value: " ",
-      hidden: !data.card,
-    },
-    { type: "ruler" },
-    {
-      name: "Сума",
-      value: `${priceFormat(data.total)} ${currency}`,
-      bold: true,
-    },
     ...data.taxes.map((tax) => ({
       name: tax.name,
       value: priceFormat(tax.value),

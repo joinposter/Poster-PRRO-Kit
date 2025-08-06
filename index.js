@@ -39,6 +39,7 @@ import {
   getDocument,
   getDocumentHash,
   buildXMLDocument,
+  buildXMLDocumentInUint8Array,
 } from "./modules/XMLDocuments/index.js";
 
 import {
@@ -74,6 +75,7 @@ export {
   getDocument,
   getDocumentHash,
   buildXMLDocument,
+  buildXMLDocumentInUint8Array,
   taxProgramValidation,
   getTaxesData,
   getTaxPrograms,

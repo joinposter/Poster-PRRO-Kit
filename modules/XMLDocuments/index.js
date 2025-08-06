@@ -63,8 +63,7 @@ const getDocument = (request) => {
     [DOCUMENT_TYPE_Z_REPORT]: getZReportDocument,
     [DOCUMENT_TYPE_SHIFT_CLOSE]: getShiftCloseDocument,
     [DOCUMENT_TYPE_STORNO]: getStornoDocument,
-    [DOCUMENT_TYPE_CASHIER_REGISTRATION]: (data) =>
-      buildXMLDocumentInUint8Array(getCashierRegistrationDocument(data)),
+    [DOCUMENT_TYPE_CASHIER_REGISTRATION]: getCashierRegistrationDocument,
   };
 
   return documentsGetterMap[requestType]
@@ -72,4 +71,10 @@ const getDocument = (request) => {
     : {};
 };
 
-export { XMLToObject, getDocument, getDocumentHash, buildXMLDocument };
+export {
+  XMLToObject,
+  getDocument,
+  getDocumentHash,
+  buildXMLDocument,
+  buildXMLDocumentInUint8Array,
+};

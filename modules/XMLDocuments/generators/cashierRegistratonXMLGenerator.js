@@ -2,6 +2,7 @@ import { getRowNum } from "./commonXMLTagGenerator.js";
 
 const getCashierRegistrationDocument = (data) => {
   const {
+    cDoc,
     documentNumber,
     regionCode,
     districtCode,
@@ -31,7 +32,7 @@ const getCashierRegistrationDocument = (data) => {
   const DECLAR = {
     DECLARHEAD: {
       TIN: organizationTin,
-      C_DOC: "J13",
+      C_DOC: cDoc,
       C_DOC_SUB: "918",
       C_DOC_VER: 2,
       C_DOC_TYPE: 0,

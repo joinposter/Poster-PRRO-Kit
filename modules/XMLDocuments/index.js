@@ -35,7 +35,11 @@ const encodeXml = (xml) => {
 
 const encodeXmlInUint8Array = (xml) => {
   const encodedXml = iconv.encode(xml, XML_ENCODING);
-  return new Uint8Array(encodedXml);
+  return new Uint8Array(
+    encodedXml.buffer,
+    encodedXml.byteOffset,
+    encodedXml.byteLength,
+  );
 };
 
 const XMLToObject = xml2js.parseStringPromise;

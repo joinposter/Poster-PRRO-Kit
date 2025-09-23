@@ -1,5 +1,6 @@
 /* eslint-disable no-magic-numbers */
 import { pipe } from "../../../../helpers/functional.js";
+import cleanUpReceiptText from "../../helpers/cleanUpReceiptText.js";
 
 /**
  * Data example:
@@ -58,11 +59,11 @@ const addData = ({ chunk, formattedLines, config, formatters }) => {
         return [formatters.ruler(), NEW_LINE];
       }
 
+      const name = cleanUpReceiptText(line.name);
+      const value = cleanUpReceiptText(line.value);
+
       const delimeterLength =
-        config.width -
-        line.name.length -
-        line.value.length -
-        NUMBER_OF_DELIMETERS;
+        config.width - name.length - value.length - NUMBER_OF_DELIMETERS;
       const count = delimeterLength >= 0 ? delimeterLength : 0;
 
       return [

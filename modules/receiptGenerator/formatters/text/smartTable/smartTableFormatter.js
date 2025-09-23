@@ -1,29 +1,17 @@
 /* eslint-disable no-magic-numbers */
 import narrowTableFormatter from "./narrowTableFormatter.js";
 import wideTableFormatter from "./wideTableFormatter.js";
+import cleanUpReceiptText from "../../../helpers/cleanUpReceiptText.js";
 
-const RE_ASCII_CONTROL_CHARS = /[\x00-\x1F]+/g;
-const RE_UNICODE_CONTROL_CHARS = /[\u0001-\u001A]+/g;
+const cleanRow = (row) => row.map(cleanUpReceiptText);
 
-const cleanControlChars = (value) => {
-  if (typeof value === "string") {
-    return value
-      .replace(RE_ASCII_CONTROL_CHARS, " ")
-      .replace(RE_UNICODE_CONTROL_CHARS, " ")
-  }
-
-  return value;
-};
-
-const cleanTableParams = (params) => {
-  return {
-    ...params,
-    items: params.items.map(item => ({
-      ...item,
-      row: item.row.map(cleanControlChars)
-    }))
-  };
-};
+const cleanTableParams = (params) => ({
+  ...params,
+  items: params.items.map((item) => ({
+    ...item,
+    row: cleanRow(item.row),
+  })),
+});
 
 function smartTableFormatter(params, config) {
   const cleanedParams = cleanTableParams(params);

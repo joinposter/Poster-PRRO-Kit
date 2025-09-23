@@ -1,6 +1,7 @@
-/* eslint-disable no-magic-numbers, no-control-regex */
+/* eslint-disable no-magic-numbers */
 import { table, getBorderCharacters } from "table";
 import { pipe } from "../../../../helpers/functional.js";
+import cleanUpReceiptText from "../../helpers/cleanUpReceiptText.js";
 
 /**
  * Data example:
@@ -56,19 +57,12 @@ const filterByHideField = (line) => !line.hide;
 
 const filterHidden = (data) => data.filter(filterByHideField);
 
-const RE_ASCII_CONTROL_CHARS = /[\x00-\x1F]+/g;
-const RE_UNICODE_CONTROL_CHARS = /[\u0001-\u001A]+/g;
-
-const replaceNonPrintableSymbolForValue = (line) => {
-  if (typeof line.value === "string") {
-    line.value
-      .replace(RE_ASCII_CONTROL_CHARS, " ")
-      .replace(RE_UNICODE_CONTROL_CHARS, " ");
-  }
-  return line;
-};
 const replaceNonPrintableSymbol = (data) =>
-  data.map(replaceNonPrintableSymbolForValue);
+  data.map((line) => ({
+    ...line,
+    name: cleanUpReceiptText(line.name),
+    value: cleanUpReceiptText(line.value),
+  }));
 
 const prepareTableRow = (line) => [line.name, line.value];
 

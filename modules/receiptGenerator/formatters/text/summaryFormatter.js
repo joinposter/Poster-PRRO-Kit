@@ -66,10 +66,7 @@ const addData = ({ chunk, formattedLines, config, formatters }) => {
         config.width - name.length - value.length - NUMBER_OF_DELIMETERS;
       const count = delimeterLength >= 0 ? delimeterLength : 0;
 
-      return [
-        `${line.name} ${chunk.delimeter.repeat(count)} ${line.value}`,
-        NEW_LINE,
-      ];
+      return [`${name} ${chunk.delimeter.repeat(count)} ${value}`, NEW_LINE];
     });
 
   return {

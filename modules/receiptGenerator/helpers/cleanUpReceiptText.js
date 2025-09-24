@@ -9,7 +9,6 @@ const cleanUpReceiptText = (s) =>
     .replace(RE_ASCII, " ")
     .replace(RE_UNICODE_CTRL, " ")
     .replace(RE_EMOJI, "")
-    .normalize("NFKD")
     .trim();
 
 export default cleanUpReceiptText;

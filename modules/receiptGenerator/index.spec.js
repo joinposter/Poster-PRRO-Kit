@@ -440,48 +440,48 @@ describe("receiptGenerator", () => {
 });
 
 describe("cleanUpReceiptText", () => {
-  it("видаляє emoji на початку", () => {
+  it("should delete emoji on start", () => {
     const input = "❤️ Фіджи Батьківна";
     const output = cleanUpReceiptText(input);
     expect(output).toBe("Фіджи Батьківна");
   });
 
-  it("видаляє emoji в середині", () => {
+  it("should delete inner emoji", () => {
     const input = "Фіджи ❤️ Батьківна";
     const output = cleanUpReceiptText(input);
     expect(output).toBe("Фіджи  Батьківна");
   });
 
-  it("видаляє кілька emoji", () => {
+  it("should delete multi emoji", () => {
     const input = "🔥✅Родина 🎉";
     const output = cleanUpReceiptText(input);
     expect(output).toBe("Родина");
   });
 
-  it("залишає текст без emoji", () => {
+  it("should not change text without emoji", () => {
     const input = "Клієнт: Батьківна Фіджи";
     const output = cleanUpReceiptText(input);
     expect(output).toBe("Клієнт: Батьківна Фіджи");
   });
 
-  it("видаляє ASCII control символи", () => {
+  it("should delete ASCII control symbols", () => {
     const input = "Тест\u0002Рядок\u0007";
     const output = cleanUpReceiptText(input);
     expect(output).toBe("Тест Рядок");
   });
 
-  it("обробляє null та undefined", () => {
+  it("should handle null and undefined", () => {
     expect(cleanUpReceiptText(null)).toBe("");
     expect(cleanUpReceiptText(undefined)).toBe("");
   });
 
-  it("не змінює числа", () => {
+  it("should not delete numbers", () => {
     const input = "Сума: 123,45 грн";
     const output = cleanUpReceiptText(input);
     expect(output).toBe("Сума: 123,45 грн");
   });
 
-  it("нормалізує подвійні пробіли після emoji", () => {
+  it("should trim empty space", () => {
     const input = "  😀 Hello 😀 ";
     const output = cleanUpReceiptText(input);
     expect(output).toBe("Hello");

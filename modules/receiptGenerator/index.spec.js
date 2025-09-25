@@ -13,6 +13,7 @@ import {
   generateTextServiceTransactionReceipt,
   generateXZReport,
 } from "./index.js";
+import cleanUpReceiptText from "./helpers/cleanUpReceiptText.js";
 
 describe("receiptGenerator", () => {
   it("generateFiscalReceipt should has this structure", () => {
@@ -435,5 +436,54 @@ describe("receiptGenerator", () => {
         receiptConfig: defaultReceiptConfig,
       }),
     ).toEqual(expectedReceipt);
+  });
+});
+
+describe("cleanUpReceiptText", () => {
+  it("should delete emoji on start", () => {
+    const input = "❤️ Фіджи Батьківна";
+    const output = cleanUpReceiptText(input);
+    expect(output).toBe(" Фіджи Батьківна");
+  });
+
+  it("should delete inner emoji", () => {
+    const input = "Фіджи ❤️ Батьківна";
+    const output = cleanUpReceiptText(input);
+    expect(output).toBe("Фіджи  Батьківна");
+  });
+
+  it("should delete multi emoji", () => {
+    const input = "🔥✅Родина 🎉";
+    const output = cleanUpReceiptText(input);
+    expect(output).toBe("Родина ");
+  });
+
+  it("should not change text without emoji", () => {
+    const input = "Клієнт: Батьківна Фіджи";
+    const output = cleanUpReceiptText(input);
+    expect(output).toBe("Клієнт: Батьківна Фіджи");
+  });
+
+  it("should delete ASCII control symbols", () => {
+    const input = "Тест\u0002Рядок\u0007";
+    const output = cleanUpReceiptText(input);
+    expect(output).toBe("Тест Рядок ");
+  });
+
+  it("should handle null and undefined", () => {
+    expect(cleanUpReceiptText(null)).toBe("");
+    expect(cleanUpReceiptText(undefined)).toBe("");
+  });
+
+  it("should not delete numbers", () => {
+    const input = "Сума: 123,45 грн";
+    const output = cleanUpReceiptText(input);
+    expect(output).toBe("Сума: 123,45 грн");
+  });
+
+  it("should not trim empty space", () => {
+    const input = "  😀 Hello 😀 ";
+    const output = cleanUpReceiptText(input);
+    expect(output).toBe("   Hello  ");
   });
 });

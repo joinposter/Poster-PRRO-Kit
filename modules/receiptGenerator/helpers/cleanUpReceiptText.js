@@ -7,7 +7,6 @@ const cleanUpReceiptText = (s) =>
   String(s ?? "")
     .replace(RE_ASCII, " ")
     .replace(RE_UNICODE_CTRL, " ")
-    .replace(RE_EMOJI, "")
-    .trim();
+    .replace(RE_EMOJI, "");
 
 export default cleanUpReceiptText;

@@ -60,7 +60,7 @@ describe("receiptGenerator", () => {
       "----------------------------------------",
       "Готівка                      1000,00 грн",
       "Безготівкова                  295,00 грн",
-      "Картка                                  ",
+      "    Картка                              ",
       "----------------------------------------",
       "Сума                         1295,00 грн",
       "ПДВ 0% Г 0%                         0,00",
@@ -130,7 +130,7 @@ describe("receiptGenerator", () => {
       "----------------------------------------",
       "Готівка                      1000,00 грн",
       "Безготівкова                  295,00 грн",
-      "Картка                                  ",
+      "    Картка                              ",
       "----------------------------------------",
       "Сума                         1295,00 грн",
       "ПДВ 0% Г 0%                         0,00",
@@ -195,7 +195,7 @@ describe("receiptGenerator", () => {
       "----------------------------------------",
       "Готівка                      1000,00 грн",
       "Безготівкова                  295,00 грн",
-      "Картка                                  ",
+      "    Картка                              ",
       "----------------------------------------",
       "Сума                         1295,00 грн",
       "ПДВ 0% Г 0%                         0,00",
@@ -443,7 +443,7 @@ describe("cleanUpReceiptText", () => {
   it("should delete emoji on start", () => {
     const input = "❤️ Фіджи Батьківна";
     const output = cleanUpReceiptText(input);
-    expect(output).toBe("Фіджи Батьківна");
+    expect(output).toBe(" Фіджи Батьківна");
   });
 
   it("should delete inner emoji", () => {
@@ -455,7 +455,7 @@ describe("cleanUpReceiptText", () => {
   it("should delete multi emoji", () => {
     const input = "🔥✅Родина 🎉";
     const output = cleanUpReceiptText(input);
-    expect(output).toBe("Родина");
+    expect(output).toBe("Родина ");
   });
 
   it("should not change text without emoji", () => {
@@ -467,7 +467,7 @@ describe("cleanUpReceiptText", () => {
   it("should delete ASCII control symbols", () => {
     const input = "Тест\u0002Рядок\u0007";
     const output = cleanUpReceiptText(input);
-    expect(output).toBe("Тест Рядок");
+    expect(output).toBe("Тест Рядок ");
   });
 
   it("should handle null and undefined", () => {
@@ -481,9 +481,9 @@ describe("cleanUpReceiptText", () => {
     expect(output).toBe("Сума: 123,45 грн");
   });
 
-  it("should trim empty space", () => {
+  it("should not trim empty space", () => {
     const input = "  😀 Hello 😀 ";
     const output = cleanUpReceiptText(input);
-    expect(output).toBe("Hello");
+    expect(output).toBe("   Hello  ");
   });
 });

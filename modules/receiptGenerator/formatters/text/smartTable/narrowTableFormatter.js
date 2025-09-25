@@ -43,7 +43,8 @@ const narrowTableFormatter = (chunk, config, formatters) => {
 
 const formatAdditionalData = (data, width) => {
   const dataString = data.toString();
-  const padding = " ".repeat(width - dataString.length);
+  const paddingLength = Math.max(0, width - dataString.length);
+  const padding = " ".repeat(paddingLength);
   return dataString + padding + NEW_LINE;
 };
 

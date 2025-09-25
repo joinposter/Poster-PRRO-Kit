@@ -3,7 +3,6 @@ import iconv from "iconv-lite";
 import { XML_ENCODING } from "./const/xml.js";
 import { asyncPipe, pipe } from "../../helpers/functional.js";
 import {
-  DOCUMENT_TYPE_CASHIER_REGISTRATION,
   DOCUMENT_TYPE_OFFLINE_FINISH,
   DOCUMENT_TYPE_OFFLINE_START,
   DOCUMENT_TYPE_RECEIPT,
@@ -24,7 +23,6 @@ import getZReportDocument from "./generators/zReportXMLGenerator.js";
 import getShiftCloseDocument from "./generators/shiftCloseXMLGenerator.js";
 import getShiftOpenDocument from "./generators/shiftOpenXMLGenerator.js";
 import getStornoDocument from "./generators/stornoXMLGenerator.js";
-import getCashierRegistrationDocument from "./generators/cashierRegistratonXMLGenerator.js";
 
 const builder = new xml2js.Builder({ xmldec: { encoding: XML_ENCODING } });
 
@@ -67,7 +65,6 @@ const getDocument = (request) => {
     [DOCUMENT_TYPE_Z_REPORT]: getZReportDocument,
     [DOCUMENT_TYPE_SHIFT_CLOSE]: getShiftCloseDocument,
     [DOCUMENT_TYPE_STORNO]: getStornoDocument,
-    [DOCUMENT_TYPE_CASHIER_REGISTRATION]: getCashierRegistrationDocument,
   };
 
   return documentsGetterMap[requestType]
